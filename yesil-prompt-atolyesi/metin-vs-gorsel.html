@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metin vs Görsel · Yeşil Prompt Atölyesi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/css/theme.css" rel="stylesheet">
+  <link href="assets/css/fullpage.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap">
+    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
+    <button class="nav-toggle" aria-label="Menü">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Giriş</a>
+      <a href="modeller.html">Modeller &amp; Tarih</a>
+      <a href="token-hesaplayici.html">Token Hesaplayıcı</a>
+      <a href="metin-vs-gorsel.html" class="active">Metin vs Görsel</a>
+      <a href="gorsel-vs-video.html">Görsel vs Video</a>
+    </div>
+  </div></nav>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- 1 · KAVRAM -->
+    <section class="fp-section tone-hero" id="kavram" data-title="Neden görsel pahalı?">
+      <div class="fp-inner">
+        <div class="grid cols-2" style="align-items:center">
+          <div class="reveal">
+            <span class="eyebrow">🖼️ Bölüm 3</span>
+            <h2 class="slide-title">1 token = 1 hafif geçiş<br>1 görsel = 20–50 ağır geçiş</h2>
+            <p class="slide-lead">
+              Metinde her token tek bir hafif geçiştir. Görsel ise <strong>gürültüden</strong> başlar ve
+              difüzyon modelinden geçen <strong>onlarca adımda</strong> adım adım netleşir — üstelik her
+              adım 2 boyutlu bir ızgara üzerinde tam bir geçiş.
+            </p>
+            <ul class="text-soft">
+              <li><strong>Metin:</strong> 1 boyutlu dizi, hafif geçiş.</li>
+              <li><strong>Görsel (difüzyon):</strong> 2B ızgara × 20–50 adım.</li>
+              <li><strong>Sonuç:</strong> 1 görsel ≈ neredeyse tam bir telefon şarjı.</li>
+            </ul>
+            <div class="src">Kaynak: Luccioni vd. / Hugging Face–CMU ölçümleri.</div>
+          </div>
+          <div class="reveal">
+            <div class="card card-top" style="text-align:center">
+              <div style="display:flex; justify-content:space-around; align-items:center">
+                <div><div style="font-size:2.4rem">💬</div><div class="text-soft">Metin</div><div style="font-family:var(--font-head);font-weight:800;font-size:1.6rem;color:var(--green-700)">1×</div><div class="src">hafif geçiş</div></div>
+                <div style="font-size:1.6rem;color:var(--ink-mute)">vs</div>
+                <div><div style="font-size:2.4rem">🖼️</div><div class="text-soft">Görsel</div><div style="font-family:var(--font-head);font-weight:800;font-size:1.6rem;color:var(--amber)">30×</div><div class="src">ağır geçiş</div></div>
+              </div>
+              <hr class="divider">
+              <p class="text-soft" style="margin:0">Sağdaki simülasyonu oynat → gürültüden netliğe kaç adımda geçtiğini gör.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · DİFÜZYON SİMÜLASYONU -->
+    <section class="fp-section tone-a" id="difuzyon" data-title="Difüzyon simülasyonu">
+      <div class="fp-inner">
+        <div style="text-align:center; margin-bottom:1rem">
+          <span class="eyebrow reveal">🌀 Canlı</span>
+          <h2 class="slide-title reveal">Gürültüden görsele: adım adım</h2>
+        </div>
+        <div class="grid cols-2 reveal" style="align-items:center">
+          <div class="card card-top" style="text-align:center">
+            <canvas id="diffCanvas" style="width:260px; max-width:100%; aspect-ratio:1/1; image-rendering:pixelated; border-radius:14px; border:1px solid var(--line)"></canvas>
+          </div>
+          <div class="card card-top">
+            <div class="text-mute" style="font-size:.85rem">Difüzyon adımı</div>
+            <div><span id="diffStep" style="font-family:var(--font-head);font-weight:800;font-size:2.4rem;color:var(--green-700)">0</span>
+              <span class="text-mute"> / <span id="diffMax">40</span> ağır geçiş</span></div>
+            <p class="text-soft" style="font-size:.92rem">Her adım = büyük modelden tam bir geçiş. İşte metinle arasındaki enerji farkı tam burada doğuyor.</p>
+            <div style="display:flex; gap:.5rem; flex-wrap:wrap">
+              <button id="diffPlay" class="btn btn-primary btn-sm">▶ Üret</button>
+              <button id="diffStepBtn" class="btn btn-ghost btn-sm">+1 adım</button>
+              <button id="diffReset" class="btn btn-ghost btn-sm">↺ Sıfırla</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · KARŞILAŞTIRMA (birimlerle) -->
+    <section class="fp-section tone-b" id="karsilastirma" data-title="Karşılaştırma">
+      <div class="fp-inner">
+        <div style="text-align:center; margin-bottom:1rem">
+          <span class="eyebrow reveal">📊 Eşdeğerler</span>
+          <h2 class="slide-title reveal">Aynı enerji, anlaşılır dille</h2>
+          <p class="slide-lead reveal" style="margin:0 auto">kWh yerine: telefon şarjı, video izleme ve LED ampul süresiyle.</p>
+        </div>
+        <div id="compareCards" class="grid cols-3 reveal"></div>
+        <p class="src reveal" style="text-align:center; margin-top:1rem">Değerler config/models.config.js → COMPARE_BASELINE'dan gelir; eğitim amaçlı tahminlerdir.</p>
+        <div class="reveal" style="text-align:center; margin-top:1rem">
+          <a class="btn btn-primary" href="gorsel-vs-video.html">Sırada: Görsel vs Video →</a>
+        </div>
+      </div>
+    </section>
+
+  </div></div>
+
+  <script src="assets/js/config/units.config.js"></script>
+  <script src="assets/js/config/models.config.js"></script>
+  <script src="assets/js/core/units.js"></script>
+  <script src="assets/js/pages/metin-vs-gorsel.js"></script>
+  <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/nav.js"></script>
+</body>
+</html>

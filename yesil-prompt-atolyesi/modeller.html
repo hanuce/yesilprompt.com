@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modeller &amp; Tarihsel Gelişim · Yeşil Prompt Atölyesi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/css/theme.css" rel="stylesheet">
+  <link href="assets/css/fullpage.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap">
+    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
+    <button class="nav-toggle" aria-label="Menü">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Giriş</a>
+      <a href="modeller.html" class="active">Modeller &amp; Tarih</a>
+      <a href="token-hesaplayici.html">Token Hesaplayıcı</a>
+      <a href="metin-vs-gorsel.html">Metin vs Görsel</a>
+      <a href="gorsel-vs-video.html">Görsel vs Video</a>
+    </div>
+  </div></nav>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- 1 · BARAJ vs MUSLUK -->
+    <section class="fp-section tone-hero" id="baraj-musluk" data-title="Eğitim vs Kullanım">
+      <div class="fp-inner">
+        <div style="text-align:center; margin-bottom:1.2rem">
+          <span class="eyebrow reveal">📚 Bölüm 1 · Temel kavram</span>
+          <h2 class="slide-title reveal">Baraj inşası mı, musluk mu?</h2>
+          <p class="slide-lead reveal" style="margin:0 auto">Bir modelin hayatında üç ayrı şey var. Karıştırılınca her şey yanlış anlaşılır.</p>
+        </div>
+        <div class="grid cols-3 reveal">
+          <div class="card card-top"><div class="metric"><div class="icon">🧊</div></div>
+            <h3>Model</h3><p class="text-soft" style="margin:0">Ağırlıkları (parametreleri) donmuş dev bir matematiksel fonksiyon. Hazır, sabit.</p></div>
+          <div class="card card-top"><div class="metric"><div class="icon">🏗️</div></div>
+            <h3>Eğitim</h3><p class="text-soft" style="margin:0">Bu ağırlıkların internet ölçeğinde veriyle, binlerce GPU'da <strong>bir kez</strong> öğrenilmesi. Baraj inşası: devasa, tek seferlik.</p></div>
+          <div class="card card-top"><div class="metric"><div class="icon">🚰</div></div>
+            <h3>Kullanım</h3><p class="text-soft" style="margin:0">Her soru sorduğunda yapılan <strong>küçük</strong> işlem. Musluğu her açışın — ama milyarlarca kez → toplamda yine büyük.</p></div>
+        </div>
+        <p class="src reveal" style="text-align:center; margin-top:1.2rem">Bu yüzden bireysel "verimli prompt" davranışı önemli: asıl kümülatif yük milyarlarca kullanımdan gelir.</p>
+      </div>
+    </section>
+
+    <!-- 2 · TOKEN NEDİR -->
+    <section class="fp-section tone-a" id="token-nedir" data-title="Token nedir?">
+      <div class="fp-inner">
+        <div class="grid cols-2" style="align-items:center">
+          <div class="reveal">
+            <span class="eyebrow">🔤 Token</span>
+            <h2 class="slide-title">Token neden enerji harcar?</h2>
+            <p class="slide-lead">
+              Yapay zeka kelimeleri bizim gibi okumaz; onları <strong>token</strong> denen parçalara böler.
+              Her token, milyarlarca parametreden bir <strong>geçiş</strong> ister → GPU elektrik çeker →
+              ısınır → soğutma <span class="text-water">suyu</span> harcanır.
+            </p>
+            <ul class="text-soft">
+              <li><strong>Girdi token'ı ucuz</strong> (toplu işlenir — "prefill").</li>
+              <li><strong>Çıktı token'ı pahalı</strong> (tek tek, sırayla üretilir — "decode"). Cevap uzadıkça maliyet artar.</li>
+              <li>Kaba dönüşüm: ~1000 token ≈ 750 kelime (İngilizce).</li>
+            </ul>
+          </div>
+          <div class="reveal">
+            <div class="card card-top">
+              <div class="label">"Sürdürülebilir yapay zeka" nasıl parçalanır?</div>
+              <div style="padding:.6rem; background:var(--mint-50); border-radius:12px; border:1px solid var(--line)">
+                <span class="tok" style="background:#e7f6ee">Sürdür</span><span class="tok" style="background:#e8f5fc">üle</span><span class="tok" style="background:#fdf3e2">bilir</span><span class="tok" style="background:#e7f6ee"> yapay</span><span class="tok" style="background:#e8f5fc"> zeka</span>
+              </div>
+              <p class="text-soft" style="margin:.8rem 0 0">
+                <strong>Mit:</strong> "Önce İngilizceye çevriliyor" ❌ — Hayır. Tokenizer metni kendi dilinde
+                doğrudan böler; ayrı bir çeviri adımı yoktur. Canlı denemek için
+                <a href="token-hesaplayici.html">Token Hesaplayıcı</a>'ya geç.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · ZAMAN TÜNELİ -->
+    <section class="fp-section tone-b" id="zaman-tuneli" data-title="Tarihsel gelişim">
+      <div class="fp-inner">
+        <div style="text-align:center; margin-bottom:1.2rem">
+          <span class="eyebrow reveal">🕰️ Kısa tarih</span>
+          <h2 class="slide-title reveal">Transformer'dan "düşünen" modellere</h2>
+        </div>
+        <div id="timeline" class="reveal"></div>
+      </div>
+    </section>
+
+    <!-- 4 · EĞİTİM MALİYETİ (baraj birimi) -->
+    <section class="fp-section tone-c" id="egitim-maliyeti" data-title="Eğitim maliyeti">
+      <div class="fp-inner">
+        <div style="text-align:center; margin-bottom:1.2rem">
+          <span class="eyebrow reveal">⚡ Tek seferlik ama dev</span>
+          <h2 class="slide-title reveal">Bir modeli eğitmek ne harcar?</h2>
+          <p class="slide-lead reveal" style="margin:0 auto">Sayılar soyut kalmasın diye telefon şarjı ve baraj diliyle gösteriyoruz.</p>
+        </div>
+        <div id="trainingCards" class="grid cols-3 reveal"></div>
+        <p class="src reveal" style="text-align:center; margin-top:1rem">
+          Kaynaklar: Patterson vd. 2021 (GPT-3) · Meta model kartları (Llama) · Luccioni vd. 2022 (BLOOM). Eğitim amaçlı tahminlerdir.
+        </p>
+      </div>
+    </section>
+
+    <!-- 5 · NEDEN AZ FİRMA -->
+    <section class="fp-section tone-a" id="neden-az-firma" data-title="Neden az firma?">
+      <div class="fp-inner">
+        <div class="grid cols-2" style="align-items:center">
+          <div class="reveal">
+            <span class="eyebrow">🏢 Ölçek</span>
+            <h2 class="slide-title">Neden herkes model yapamıyor?</h2>
+            <p class="slide-lead">
+              Frontier model eğitmek <strong>on/yüz milyonlarca dolar + dev enerji</strong> ister.
+              Bu yüzden gerçek anlamda frontier model eğiten yalnızca <strong>~8–10 kuruluş</strong> var.
+            </p>
+            <p class="text-soft">
+              Gördüğümüz yüzlerce "yapay zekâ uygulaması" çoğunlukla bu az sayıda temel modelin üstüne
+              kurulu (API, ince ayar, sarmalayıcı). Yani "çok model" değil — <strong>az sayıda temel model +
+              çok sayıda paketleme</strong>.
+            </p>
+          </div>
+          <div class="reveal">
+            <div class="card card-top">
+              <div class="label">Frontier model eğiten başlıca kuruluşlar</div>
+              <div style="display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.4rem">
+                <span class="chip">OpenAI</span><span class="chip">Google DeepMind</span>
+                <span class="chip">Anthropic</span><span class="chip">Meta</span>
+                <span class="chip">xAI</span><span class="chip">Mistral</span>
+                <span class="chip">DeepSeek</span><span class="chip">Alibaba (Qwen)</span>
+              </div>
+              <hr class="divider">
+              <a class="btn btn-primary" href="token-hesaplayici.html">Sıra sende → Token Hesaplayıcı</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div></div>
+
+  <script src="assets/js/config/units.config.js"></script>
+  <script src="assets/js/core/units.js"></script>
+  <script src="assets/js/pages/modeller.js"></script>
+  <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/nav.js"></script>
+</body>
+</html>

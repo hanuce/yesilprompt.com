@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Görsel vs Video · Yeşil Prompt Atölyesi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/css/theme.css" rel="stylesheet">
+  <link href="assets/css/fullpage.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap">
+    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
+    <button class="nav-toggle" aria-label="Menü">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Giriş</a>
+      <a href="modeller.html">Modeller &amp; Tarih</a>
+      <a href="token-hesaplayici.html">Token Hesaplayıcı</a>
+      <a href="metin-vs-gorsel.html">Metin vs Görsel</a>
+      <a href="gorsel-vs-video.html" class="active">Görsel vs Video</a>
+    </div>
+  </div></nav>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- 1 · KAVRAM -->
+    <section class="fp-section tone-hero" id="kavram" data-title="Video = görsel + zaman">
+      <div class="fp-inner">
+        <div class="grid cols-2" style="align-items:center">
+          <div class="reveal">
+            <span class="eyebrow">🎬 Bölüm 4</span>
+            <h2 class="slide-title">Video = görsel + <span class="text-water">zaman</span></h2>
+            <p class="slide-lead">
+              Bir video, arka arkaya gösterilen <strong>kareler</strong>dir. Saniyede 24 kare oynayan
+              5 saniyelik bir video = <strong>120 kare</strong>. Her kare, kabaca bir görsel üretmek gibi.
+              Yani video, görsele kıyasla bambaşka bir ölçekte enerji ister.
+            </p>
+            <ul class="text-soft">
+              <li><strong>Metin:</strong> 1 boyut (dizi).</li>
+              <li><strong>Görsel:</strong> 2 boyut (ızgara) × difüzyon adımları.</li>
+              <li><strong>Video:</strong> 2 boyut + <strong>zaman</strong> → katlanarak büyür.</li>
+            </ul>
+          </div>
+          <div class="reveal">
+            <div class="card card-top" style="text-align:center">
+              <div style="font-size:.9rem" class="text-mute">Kaba sezgi</div>
+              <div style="display:flex; justify-content:space-around; align-items:flex-end; margin:.6rem 0">
+                <div><div style="font-size:2rem">🖼️</div><div style="font-weight:800;color:var(--green-700)">1×</div><div class="src">görsel</div></div>
+                <div><div style="font-size:2rem">🎞️</div><div style="font-weight:800;color:var(--amber)">~120×</div><div class="src">5 sn video (24 fps)</div></div>
+              </div>
+              <hr class="divider">
+              <p class="text-soft" style="margin:0">Gerçekte modeller kareleri tamamen bağımsız üretmez (optimizasyon var), ama büyüklük sırası budur.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · VIDEO HESAPLAYICI -->
+    <section class="fp-section tone-a" id="video-hesap" data-title="Video hesaplayıcı">
+      <div class="fp-inner">
+        <div style="text-align:center; margin-bottom:1rem">
+          <span class="eyebrow reveal">🧮 Hesapla</span>
+          <h2 class="slide-title reveal">Bir video kaça mal olur?</h2>
+          <p class="slide-lead reveal" style="margin:0 auto">Model ve süreyi seç; maliyeti görsel sayısı ve anlaşılır birimlerle gör.</p>
+        </div>
+        <div class="grid cols-2 reveal" style="align-items:stretch">
+          <div class="card card-top">
+            <label class="label">Video modeli</label>
+            <select id="videoModel" class="field" style="margin-bottom:1rem"></select>
+
+            <label class="label" style="display:flex; justify-content:space-between">
+              <span>Video süresi</span><span class="text-soft"><b id="durLbl">5</b> saniye</span></label>
+            <input id="duration" type="range" min="1" max="30" step="1" value="5">
+
+            <hr class="divider">
+            <div class="text-mute" style="font-size:.85rem">Bu video kabaca şuna denk:</div>
+            <div style="margin-top:.4rem"><span id="frameCount" style="font-family:var(--font-head);font-weight:800;font-size:1.8rem;color:var(--green-700)">120</span> <span class="text-mute">kare ≈ o kadar görsel üretimi</span></div>
+            <div style="margin-top:.4rem"><span id="vsImage" class="chip">1 görsele kıyasla ×0</span></div>
+          </div>
+
+          <div class="card card-top" style="display:flex; flex-direction:column">
+            <div style="text-align:center">
+              <span id="vStatus" class="status amber">⚠️ Orta</span>
+              <div class="text-mute" style="margin-top:.8rem; font-size:.85rem">Bu kadar enerji şuna eşdeğer:</div>
+              <div id="vHuman" style="font-family:var(--font-head); font-weight:800; font-size:1.9rem; color:var(--green-800); line-height:1.15; margin:.2rem 0">—</div>
+              <div id="vTech" class="src">—</div>
+            </div>
+            <div id="vMetrics" class="grid cols-3" style="margin-top:1rem; gap:.7rem"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · SONUÇ / DERS -->
+    <section class="fp-section tone-b" id="ders" data-title="Ders">
+      <div class="fp-inner">
+        <div style="text-align:center; margin-bottom:1rem">
+          <span class="eyebrow reveal">🌿 Ders</span>
+          <h2 class="slide-title reveal">Doğru görevi doğru araca ver</h2>
+        </div>
+        <div class="grid cols-3 reveal">
+          <div class="card card-top"><div style="font-size:1.8rem">💬</div><h3>Metin yeterse</h3><p class="text-soft" style="margin:0">En ucuz yol. Fikri önce metinde olgunlaştır.</p></div>
+          <div class="card card-top"><div style="font-size:1.8rem">🖼️</div><h3>Görsel gerekiyorsa</h3><p class="text-soft" style="margin:0">Net prompt yaz, tek seferde üret. Re-roll'u en aza indir.</p></div>
+          <div class="card card-top"><div style="font-size:1.8rem">🎬</div><h3>Video en pahalı</h3><p class="text-soft" style="margin:0">Gerçekten gerekli mi? Kısa tut, denemeyi planla; her saniye katlanır.</p></div>
+        </div>
+        <div class="card reveal" style="margin-top:1.2rem; background:var(--mint-50); text-align:center">
+          <strong>Altın kural:</strong> Önce ucuzda prova (metin) → sonra pahalıda üret (görsel) → video yalnızca şartsa.
+          Her seçimde <span class="text-green">en az toplam maliyeti</span> hedefle.
+        </div>
+        <div class="reveal" style="text-align:center; margin-top:1.2rem">
+          <a class="btn btn-primary" href="token-hesaplayici.html">↺ Hesaplayıcıda dene</a>
+          <a class="btn btn-ghost" href="index.html">Başa dön</a>
+        </div>
+      </div>
+    </section>
+
+  </div></div>
+
+  <script src="assets/js/config/units.config.js"></script>
+  <script src="assets/js/config/models.config.js"></script>
+  <script src="assets/js/core/units.js"></script>
+  <script src="assets/js/pages/gorsel-vs-video.js"></script>
+  <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/nav.js"></script>
+</body>
+</html>
