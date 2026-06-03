@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yeşil Prompt Atölyesi · Giriş</title>
+  <meta name="description" content="Yapay zekânın enerji ve su maliyetini anlamak ve verimli prompt yazmak için interaktif eğitim atölyesi." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="nav"><div class="wrap">
+    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
+    <button class="nav-toggle" aria-label="Menü">☰</button>
+    <div class="nav-links">
+      <a href="index.html" class="active">Giriş</a>
+      <a href="modeller.html">Modeller &amp; Tarih</a>
+      <a href="token-lab.html">Token Lab</a>
+      <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>
+      <a href="sergi.html">Yeşil Prompt Resim Sergisi</a>
+    </div>
+  </div></nav>
+
+  <!-- ===== SLAYTLAR ===== -->
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- 1 · HERO -->
+    <section class="fp-section tone-hero" id="giris" data-title="Giriş">
+      <div class="fp-inner center">
+        <h1 class="slide-title reveal hero-title">
+          Yapay zekânın görünmeyen bedelini anla,<br>
+          verimli ve <span class="text-grad">yeşil</span> prompt yaz.
+        </h1>
+        <p class="slide-lead reveal hero-lead center-x">
+          Bu atölyede modellerin <strong>nasıl oluştuğunu</strong>, token ile <strong>enerji ve su</strong>
+          ilişkisini ve <strong>prompt mühendisliğini</strong> öğreniyoruz. Sonunda ürettiğin eserleri,
+          her birinin çevre maliyetiyle birlikte <a href="sergi.html">Yeşil Prompt Resim Sergisi</a>’nde sergiliyoruz.
+        </p>
+        <div class="reveal cluster-c">
+          <a class="btn btn-primary" href="modeller.html">📚 Atölyeye başla</a>
+          <a class="btn btn-ghost" href="sergi.html">🖼️ Resim Sergisi’ni gör</a>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Kaydır ya da sağ-alttaki okları kullan
+      </div>
+    </section>
+
+    <!-- 2 · ETİK SORULAR -->
+    <section class="fp-section tone-a" id="sorular" data-title="Başlamadan: birkaç soru">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">Düşün · Sorgula</span>
+          <h2 class="slide-title reveal">Başlamadan: birkaç soru</h2>
+          <p class="slide-lead reveal lead-c">Doğru cevap aramıyoruz; birlikte düşünüyoruz. Atölye boyunca bu sorulara döneceğiz.</p>
+        </div>
+        <div id="ethicsCards" class="grid cols-3 reveal"></div>
+      </div>
+    </section>
+
+    <!-- 3 · KÜNYE -->
+    <section class="fp-section tone-b" id="kunye" data-title="Künye">
+      <div class="fp-inner">
+        <div class="grid cols-2 items-center">
+          <div class="reveal">
+            <span class="eyebrow">🪪 Etkinlik künyesi</span>
+            <h2 class="slide-title">Bu atölye hakkında</h2>
+            <p class="slide-lead">
+              Sürdürülebilir Yeşil Prompt Atölyesi; veri okuryazarlığı, yapay zekâ okuryazarlığı ve
+              sürdürülebilir sanat temalarını birleştirir. Aşağıdaki künye, atölyenin sunulduğu proje
+              bilgisini taşır.
+            </p>
+          </div>
+          <div class="reveal">
+            <div id="kunyeBox" class="kunye"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · MATERYAL & KAYNAK HAVUZU -->
+    <section class="fp-section tone-c" id="materyaller" data-title="Materyaller & Kaynaklar">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">Ek kaynaklar</span>
+          <h2 class="slide-title reveal">Materyaller &amp; Kaynaklar</h2>
+          <p class="slide-lead reveal lead-c">Atölyede kullanacağımız dosya, araç ve okuma bağlantılarının havuzu.</p>
+        </div>
+        <div class="card reveal">
+          <div id="materialsPool" class="pool"></div>
+        </div>
+        <p class="src reveal center mt-lg">© 2026 Yeşil Prompt Atölyesi · Tüm sayılar eğitim amaçlı tahminlerdir · Sunucu yok — saf statik site.</p>
+      </div>
+    </section>
+
+  </div></div>
+
+  <!-- ===== SCRIPTLER ===== -->
+  <script src="assets/js/config/units.config.js"></script>
+  <script src="assets/js/config/site.config.js"></script>
+  <script src="assets/js/core/units.js"></script>
+  <script src="assets/js/pages/giris.js"></script>
+  <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/nav.js"></script>
+</body>
+</html>

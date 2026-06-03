@@ -38,10 +38,11 @@
     /* --- Alt ileri/geri --- */
     const arrows = document.createElement('div');
     arrows.className = 'fp-arrows';
+    /* Dikey yığın: yukarı ok · sayaç · aşağı ok (görünüm style.css → .fp-arrows) */
     arrows.innerHTML =
-      '<button data-prev aria-label="Önceki">&#8593;</button>' +
+      '<button data-prev aria-label="Önceki slayt">&#8593;</button>' +
       '<span class="count"></span>' +
-      '<button data-next aria-label="Sonraki">&#8595;</button>';
+      '<button data-next aria-label="Sonraki slayt">&#8595;</button>';
     document.body.appendChild(arrows);
     const prevBtn = arrows.querySelector('[data-prev]');
     const nextBtn = arrows.querySelector('[data-next]');
@@ -58,7 +59,7 @@
       track.style.transform = 'translateY(' + (-index * root.clientHeight) + 'px)';
       sections.forEach((s, i) => s.classList.toggle('active', i === index));
       dots.querySelectorAll('button').forEach((b, i) => b.classList.toggle('active', i === index));
-      countEl.textContent = (index + 1) + ' / ' + sections.length;
+      countEl.textContent = (index + 1) + '/' + sections.length;
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index === sections.length - 1;
       // URL hash güncelle (paylaşılabilir derin link)
