@@ -1,9 +1,11 @@
 /* =========================================================
    ⚙️ MODEL EĞİTİMİ VERİLERİ — BURAYI DÜZENLEYEBİLİRSİN
    ---------------------------------------------------------
-   "Model nasıl eğitilir?" bölümü: hangi veriyle, ne kadar
-   tekrarla (epoch), ne kadar enerjiyle. Hepsi GERÇEK, atıflı
-   kaynaklardan; uydurma yok.
+   "Veri" ve "Bir modeli eğitmek ne harcar?" bölümleri. Gerçek,
+   atıflı kaynaklara dayanır; tahmin olanlar AÇIKÇA tahmin diye
+   işaretlenmiştir.
+   (Not: "Model nedir, nasıl eğitilir?" slaytının kod / örnek veri /
+   epoch animasyonu içeriği doğrudan modeller.html içindedir.)
    ========================================================= */
 
 /* --- 1) GPT-3 hangi veriyle eğitildi? (Brown vd., 2020) ---
@@ -46,22 +48,18 @@ window.DATA_PROJECTS = [
 ];
 
 /* --- 3) Eğitim ENERJİSİ (tek seferlik ama dev) ---
-   gwh sadece gösterim; wh = gerçek hesap (gwh * 1e9). */
+   Bilinen modeller: GPT, Llama, Claude, Qwen, DeepSeek.
+   gwh sadece gösterim; wh = gerçek hesap (gwh * 1e9).
+   src 'tahmin' olanlar resmî veri YOK; sınıf-içi büyüklük tahminidir. */
 window.TRAINING_COSTS = [
-  { model: 'GPT-3 (175B)', gwh: 1.287, wh: 1.287e9, co2: '~552 t CO₂', src: 'Patterson vd., 2021',
+  { model: 'GPT (GPT-3, 175B)', gwh: 1.287, wh: 1.287e9, co2: '~552 t CO₂', src: 'Patterson vd., 2021',
     extra: 'Binlerce GPU, haftalarca; tek seferlik.' },
-  { model: 'Llama ailesi', gwh: 2.638, wh: 2.638e9, co2: '~1.015 t CO₂', src: 'Meta model kartları',
+  { model: 'Llama (Meta)', gwh: 2.638, wh: 2.638e9, co2: '~1.015 t CO₂', src: 'Meta model kartları',
     extra: '~2048 A100 GPU; Llama 2-70B tek başına ~1,7 milyon GPU-saat.' },
-  { model: 'BLOOM (176B)', gwh: 0.433, wh: 0.433e9, co2: '~25 t CO₂', src: 'Luccioni vd., 2022',
-    extra: 'Düşük-karbon şebekede eğitildiği için CO₂’si görece düşük.' }
-];
-
-/* --- 4) Eğitim mantığı: katman katman, epoch epoch (anlatım) --- */
-window.TRAINING_FACTS = [
-  { icon: '🧩', title: 'Model = kod + ağırlıklar',
-    body: 'Model, Transformer mimarisini çalıştıran kod + eğitimle “öğrenilmiş” milyarlarca sayıdır (parametre/ağırlık). Kod aynıdır; değerli olan, eğitimle ayarlanan ağırlıklardır.' },
-  { icon: '📚', title: 'Eğitim = veriyi tahmin ettire ettire ayarlamak',
-    body: 'Modele milyarlarca cümle gösterilir; “bir sonraki token ne?” diye tahmin ettirilir, her hatada ağırlıklar minik adımlarla düzeltilir. Bu, katman katman (deep) yapılır.' },
-  { icon: '🔁', title: 'Epoch = verinin kaç kez görüldüğü',
-    body: 'Bir “epoch” tüm verinin bir kez geçmesidir. GPT-3’te kaliteli Wikipedia ~3 kez, devasa Common Crawl ise 1 kezden az görüldü. Yani çok değil, DOĞRU veriyi doğru sıklıkta görmek önemli.' }
+  { model: 'Claude (Anthropic)', gwh: 8.0, wh: 8.0e9, co2: 'tahmin', src: 'Resmî veri yok · tahmin',
+    extra: 'Anthropic enerji rakamı yayımlamaz; frontier ölçek için büyüklük tahminidir.' },
+  { model: 'Qwen (Alibaba)', gwh: 3.5, wh: 3.5e9, co2: 'tahmin', src: 'Resmî veri yok · tahmin',
+    extra: 'Çok dilli, açık ağırlıklı büyük aile; rakam sınıf-içi tahmindir.' },
+  { model: 'DeepSeek (V3)', gwh: 2.0, wh: 2.0e9, co2: 'düşük maliyet vurgusu', src: 'DeepSeek-V3 teknik raporu, 2024',
+    extra: '~2,79 milyon H800 GPU-saat; verimlilikle dikkat çekti.' }
 ];

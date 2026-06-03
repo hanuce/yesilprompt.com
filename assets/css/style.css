@@ -365,17 +365,10 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 .tl-title { font-weight: 700; margin: 0 0 .15rem; }
 @media (max-width: 640px) { .tl-item { grid-template-columns: 64px 1fr; } }
 
-/* --- 14.6 MODEL AİLELERİ (logo + ülke) --- */
-.family-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-@media (max-width: 900px) { .family-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .family-grid { grid-template-columns: 1fr; } }
-.family-card { display: flex; gap: .9rem; align-items: flex-start; padding: 1rem 1.1rem; }
-.family-logo { flex: none; width: 46px; height: 46px; border-radius: 12px; object-fit: contain;
-  background: var(--mint-50); border: 1px solid var(--line); padding: 6px; }
-.family-name { font-weight: 800; margin: 0; }
-.family-meta { font-size: .8rem; color: var(--ink-mute); margin: .1rem 0 .35rem; }
-.family-meta .flag { margin-right: .25rem; }
-.family-blurb { font-size: .86rem; color: var(--ink-soft); margin: 0; }
+/* --- 14.6 MODEL AİLELERİ ---
+   Kartlar artık standart .grid.cols-3 + .card.card-top ile çizilir
+   ("Güvenlik & etik" slaytındaki kartlarla aynı sade görünüm);
+   özel .family-* kuralı gerekmez. */
 
 /* --- 14.7 YAPAY ZEKA RALLİSİ (değer barları) --- */
 .rally { display: flex; flex-direction: column; gap: .7rem; }
@@ -453,6 +446,70 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 .refs li:last-child { border-bottom: 0; }
 .refs a { color: var(--water); word-break: break-all; }
 .ref-tag { font-size: .72rem; color: var(--ink-mute); }   /* metin içi (Yazar, Yıl) */
+
+/* ===== 15) EK BİLEŞENLER (modeller: kod, epoch animasyonu, YZ çağı grafiği) ===
+   Hepsi EKLEMELİDİR; yukarıdaki hiçbir kural değiştirilmemiştir. */
+
+/* --- 15.1 SÖZDE (PSEUDO) KOD KUTUSU --- */
+.code-box { font-family: ui-monospace, 'SF Mono', monospace; font-size: .8rem; line-height: 1.6;
+  background: var(--mint-50); border: 1px solid var(--line); border-left: 4px solid var(--green-500);
+  border-radius: 10px; padding: .75rem .9rem; margin: 0; overflow-x: auto; white-space: pre; color: var(--ink); }
+.code-box code { font-family: inherit; }
+
+/* --- 15.2 EĞİTİM (EPOCH) ANİMASYONU --- */
+.epoch-track { display: flex; flex-wrap: wrap; gap: .4rem; padding: .75rem .85rem;
+  background: var(--mint-50); border: 1px solid var(--line); border-radius: 12px; }
+.epoch-tok { padding: .25rem .6rem; border-radius: 8px; background: var(--mint-100); color: var(--ink-soft);
+  font-family: ui-monospace, 'SF Mono', monospace; font-size: .85rem; }
+.fp-section.active .epoch-tok { animation: epochSweep 4.6s ease-in-out infinite; }
+.fp-section.active .epoch-tok:nth-child(1) { animation-delay: 0s; }
+.fp-section.active .epoch-tok:nth-child(2) { animation-delay: .18s; }
+.fp-section.active .epoch-tok:nth-child(3) { animation-delay: .36s; }
+.fp-section.active .epoch-tok:nth-child(4) { animation-delay: .54s; }
+.fp-section.active .epoch-tok:nth-child(5) { animation-delay: .72s; }
+.fp-section.active .epoch-tok:nth-child(6) { animation-delay: .90s; }
+.fp-section.active .epoch-tok:nth-child(7) { animation-delay: 1.08s; }
+.fp-section.active .epoch-tok:nth-child(8) { animation-delay: 1.26s; }
+.fp-section.active .epoch-tok:nth-child(9) { animation-delay: 1.44s; }
+@keyframes epochSweep {
+  0%, 60%, 100% { background: var(--mint-100); color: var(--ink-soft); transform: none; box-shadow: none; }
+  8% { background: var(--green-600); color: #fff; transform: translateY(-3px);
+       box-shadow: 0 6px 14px -6px var(--green-600); }
+}
+
+/* --- 15.3 YAPAY ZEKA ÇAĞI — DEĞER GRAFİĞİ (SVG çizgi) --- */
+.era-chart { width: 100%; height: auto; display: block; }
+.era-grid { stroke: var(--line); stroke-width: 1; }
+.era-axis { fill: var(--ink-mute); font-size: 11px; font-family: var(--font-body); }
+.era-line { fill: none; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.era-dot { stroke: #fff; stroke-width: 1; }
+.era-nvidia { stroke: var(--green-600); }
+.era-openai { stroke: var(--violet); }
+.era-anthropic { stroke: var(--water); }
+.era-trgdp { stroke: var(--red); }
+.era-trrez { stroke: var(--amber); }
+circle.era-nvidia { fill: var(--green-600); }
+circle.era-openai { fill: var(--violet); }
+circle.era-anthropic { fill: var(--water); }
+circle.era-trgdp { fill: var(--red); }
+circle.era-trrez { fill: var(--amber); }
+.fp-section.active .era-line { stroke-dasharray: 2200; stroke-dashoffset: 2200; animation: eraDraw 1.7s ease forwards; }
+@keyframes eraDraw { to { stroke-dashoffset: 0; } }
+.era-legend { display: flex; flex-wrap: wrap; gap: .6rem 1.1rem; justify-content: center; margin-top: .7rem; }
+.era-key { font-size: .82rem; font-weight: 700; display: inline-flex; align-items: center; gap: .4rem; }
+.era-key::before { content: ""; width: 16px; height: 3px; border-radius: 2px; background: currentColor; }
+.era-key.era-nvidia { color: var(--green-700); }
+.era-key.era-openai { color: var(--violet); }
+.era-key.era-anthropic { color: var(--water); }
+.era-key.era-trgdp { color: var(--red); }
+.era-key.era-trrez { color: var(--amber); }
+
+/* Hareket azaltma tercihi: animasyonları durdur */
+@media (prefers-reduced-motion: reduce) {
+  .fp-section.active .epoch-tok { animation: none; }
+  .fp-section.active .era-line { animation: none; stroke-dashoffset: 0; }
+}
+
 
 /* Yazdırma: slayt kilidini aç, kontrol/nokta gizle */
 @media print {

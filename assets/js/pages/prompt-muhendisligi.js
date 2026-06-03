@@ -6,17 +6,18 @@
 (function () {
   const $ = (id) => document.getElementById(id);
 
-  /* --- Shot tipleri (örnekle öğretme) --- */
+  /* --- Shot tipleri (örnekle öğretme · resim çizdirme üzerinden) ---
+     Bu atölyede resim çizdireceğimiz için örnekler görsel promptu odaklı. */
   const SHOTS = [
     { tag: 'Zero-shot', title: 'Örneksiz', emoji: '0️⃣',
-      body: 'Hiç örnek vermeden doğrudan görevi yazarsın. Model genel bilgisiyle yapar.',
-      ex: 'Şu cümlenin duygusu ne?\n“Bugün her şey harika geçti.”' },
+      body: 'Hiç örnek/stil vermeden doğrudan ne çizilmesini istediğini yazarsın. Model stili kendi seçer.',
+      ex: 'Bir bardak suyun içinde yüzen küçük bir yeşil yaprak çiz.' },
     { tag: 'One-shot', title: 'Tek örnek', emoji: '1️⃣',
-      body: 'Bir örnek vererek istediğin deseni gösterirsin.',
-      ex: 'Örnek: “Film güzeldi.” → Olumlu\nŞimdi: “Yemek berbattı.” →' },
+      body: 'Tek bir stil örneği vererek istediğin görünümü gösterir, sonra yeni nesneyi istersin.',
+      ex: 'Örnek stil: “düz vektör, pastel renkler, kalın dış çizgi.”\nAynı stilde: bir bisiklet çiz.' },
     { tag: 'Few-shot', title: 'Birkaç örnek', emoji: '🔢',
-      body: 'Birkaç örnekle deseni netçe öğretirsin; tutarlılık artar.',
-      ex: '“Harika!” → Olumlu\n“Berbat.” → Olumsuz\n“İdare eder.” → Nötr\n“Bayıldım!” →' }
+      body: 'Birkaç örnekle stili netçe öğretirsin; üretilen görsellerde tutarlılık artar.',
+      ex: 'elma → düz vektör, pastel, kalın çizgi\nev → düz vektör, pastel, kalın çizgi\nkedi → düz vektör, pastel, kalın çizgi\nağaç →' }
   ];
 
   /* --- İyi promptun parçaları --- */

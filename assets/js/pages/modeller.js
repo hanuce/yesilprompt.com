@@ -2,12 +2,16 @@
    MODELLER & TARİH sayfası — render mantığı
    İçerik config dosyalarından gelir:
      timeline.config.js   → AI_TIMELINE
-     training.config.js   → GPT3_DATA, DATA_PROJECTS, TRAINING_COSTS, TRAINING_FACTS
+     training.config.js   → GPT3_DATA, DATA_PROJECTS, TRAINING_COSTS
      families.config.js   → MODEL_FAMILIES
-     valuations.config.js → RALLY
+     valuations.config.js → AI_ERA
+   Not: "Transformer teknolojisi" ve "Model nedir, nasıl eğitilir?"
+   slaytları (kod, örnek veri, epoch animasyonu) doğrudan
+   modeller.html içinde statik durur; render gerektirmez.
    ========================================================= */
 (function () {
   const $ = (id) => document.getElementById(id);
+  const slug = (s) => s.toLowerCase().replace(/[^a-z]/g, '');
 
   /* --- 1) Zaman tüneli --- */
   function renderTimeline() {
@@ -24,19 +28,7 @@
     ).join('') + '</div>';
   }
 
-  /* --- 2) Eğitim mantığı kartları --- */
-  function renderFacts() {
-    const host = $('trainingFacts'); if (!host || !window.TRAINING_FACTS) return;
-    host.innerHTML = window.TRAINING_FACTS.map(f =>
-      '<div class="card card-top">' +
-        '<div class="big-emoji">' + f.icon + '</div>' +
-        '<h3>' + f.title + '</h3>' +
-        '<p class="text-soft m-0">' + f.body + '</p>' +
-      '</div>'
-    ).join('');
-  }
-
-  /* --- 3) GPT-3 hangi veriyle eğitildi (tablo) --- */
+  /* --- 2) GPT-3 hangi veriyle eğitildi (tablo) --- */
   function renderGpt3() {
     const host = $('gpt3Table'); if (!host || !window.GPT3_DATA) return;
     const d = window.GPT3_DATA;
@@ -51,7 +43,7 @@
     if (cap) cap.textContent = d.params + ' · ' + d.trainedTokens + ' üzerinde eğitildi.';
   }
 
-  /* --- 4) Veri düzenleme / sınıflandırma projeleri --- */
+  /* --- 3) Veri düzenleme / sınıflandırma projeleri --- */
   function renderDataProjects() {
     const host = $('dataProjects'); if (!host || !window.DATA_PROJECTS) return;
     host.innerHTML = window.DATA_PROJECTS.map(p =>
@@ -63,7 +55,7 @@
     ).join('');
   }
 
-  /* --- 5) Eğitim enerjisi kartları --- */
+  /* --- 4) Eğitim enerjisi kartları --- */
   function renderCosts() {
     const host = $('trainingCards'); if (!host || !window.TRAINING_COSTS) return;
     const U = window.Units;
@@ -84,68 +76,79 @@
     }).join('');
   }
 
-  /* --- 6) Model aileleri (logo + ülke) --- */
+  /* --- 5) Model aileleri (ülke + tanıtım) ---
+     "Güvenlik & etik" slaytıyla aynı sade kart düzeni:
+     üstte bayrak ikonu, başlık, ülke·kurum, kısa açıklama. */
   function renderFamilies() {
     const host = $('families'); if (!host || !window.MODEL_FAMILIES) return;
-    host.innerHTML = '<div class="family-grid">' + window.MODEL_FAMILIES.map(f => {
-      const initial = f.name.trim().charAt(0);
-      return (
-        '<div class="card family-card">' +
-          '<img class="family-logo" src="' + f.logo + '" alt="' + f.name + ' logosu" ' +
-               'data-initial="' + initial + '">' +
-          '<div>' +
-            '<p class="family-name">' + f.name + '</p>' +
-            '<div class="family-meta"><span class="flag">' + f.flag + '</span>' + f.country + ' · ' + f.org + '</div>' +
-            '<p class="family-blurb">' + f.blurb + '</p>' +
-          '</div>' +
-        '</div>'
-      );
-    }).join('') + '</div>';
-
-    // Logo dosyası yoksa: baş harfli şık yer tutucuya düş
-    host.querySelectorAll('.family-logo').forEach(img => {
-      img.addEventListener('error', function () {
-        const span = document.createElement('span');
-        span.className = 'family-logo ph';
-        span.textContent = this.dataset.initial;
-        this.replaceWith(span);
-      });
-    });
+    host.innerHTML = '<div class="grid cols-3">' + window.MODEL_FAMILIES.map(f =>
+      '<div class="card card-top">' +
+        '<div class="big-emoji">' + f.flag + '</div>' +
+        '<h3 class="m-0">' + f.name + '</h3>' +
+        '<div class="src mb">' + f.country + ' · ' + f.org + '</div>' +
+        '<p class="text-soft m-0">' + f.blurb + '</p>' +
+      '</div>'
+    ).join('') + '</div>';
   }
 
-  /* --- 7) Yapay Zeka Rallisi (barlar + zaman çizelgesi) --- */
-  function renderRally() {
-    const host = $('rally'); if (!host || !window.RALLY) return;
-    const R = window.RALLY;
-    const all = R.companies.concat(R.ai);
-    const max = Math.max.apply(null, all.map(c => c.valT));
-    const bar = (c) => {
-      const w = Math.max(4, (c.valT / max) * 100);
-      return (
-        '<div class="rally-row">' +
-          '<div class="rally-name">' + c.name + '<br><span class="tag">' + c.tag + '</span></div>' +
-          '<div class="rally-track"><span class="rally-bar ' + (c.kind === 'ai' ? 'ai' : '') + '" data-w="' + w + '"></span></div>' +
-          '<div class="rally-val">' + c.valT.toLocaleString('tr-TR') + ' T$</div>' +
-        '</div>'
-      );
-    };
-    host.innerHTML = '<div class="rally">' + all.map(bar).join('') + '</div>';
-    // Dinamik bar genişliği: yazılı markup'ta inline stil yok; runtime'da uygulanır.
-    host.querySelectorAll('.rally-bar').forEach(b => { b.style.width = b.dataset.w + '%'; });
+  /* --- 6) Yapay Zeka Çağı: etkiler + değer grafiği + kilometre taşları --- */
+  function eraChartSVG(E) {
+    const W = 560, H = 320, padL = 40, padR = 14, padT = 16, padB = 34;
+    const years = E.years, n = years.length;
+    let maxV = 0;
+    E.series.forEach(s => s.values.forEach(v => { if (v != null && v > maxV) maxV = v; }));
+    const niceMax = Math.max(1, Math.ceil(maxV));
+    const x = (i) => padL + (i / (n - 1)) * (W - padL - padR);
+    const y = (v) => H - padB - (v / niceMax) * (H - padT - padB);
 
-    const ms = $('rallyMilestones');
-    if (ms) ms.innerHTML = '<div class="timeline">' + R.milestones.map(m =>
-      '<div class="tl-item"><div class="tl-year">' + m.year + '</div>' +
-      '<div class="tl-body"><p class="text-soft m-0">' + m.text + '</p></div></div>'
+    let grid = '';
+    for (let g = 0; g <= niceMax; g++) {
+      const gy = y(g);
+      grid += '<line class="era-grid" x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '"></line>';
+      grid += '<text class="era-axis" x="' + (padL - 6) + '" y="' + (gy + 3) + '" text-anchor="end">' + g + '</text>';
+    }
+    let xlab = '';
+    years.forEach((yr, i) => {
+      xlab += '<text class="era-axis" x="' + x(i) + '" y="' + (H - padB + 16) + '" text-anchor="middle">' + yr + '</text>';
+    });
+    let lines = '';
+    E.series.forEach(s => {
+      const cls = 'era-' + (s.key || slug(s.name));
+      const pts = [];
+      s.values.forEach((v, i) => { if (v != null) pts.push(x(i) + ',' + y(v)); });
+      lines += '<polyline class="era-line ' + cls + '" points="' + pts.join(' ') + '"></polyline>';
+      s.values.forEach((v, i) => {
+        if (v != null) lines += '<circle class="era-dot ' + cls + '" cx="' + x(i) + '" cy="' + y(v) + '" r="3"></circle>';
+      });
+    });
+    const legend = '<div class="era-legend">' + E.series.map(s =>
+      '<span class="era-key era-' + (s.key || slug(s.name)) + '">' + s.name + '</span>'
     ).join('') + '</div>';
+    return '<svg class="era-chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
+      'aria-label="YZ şirketlerinin yıllara göre değeri (trilyon dolar)">' +
+      grid + xlab + lines + '</svg>' + legend;
+  }
 
-    const asOf = $('rallyAsOf');
-    if (asOf) asOf.textContent = R.asOf;
+  function renderEra() {
+    const E = window.AI_ERA; if (!E) return;
+    const asOf = $('eraAsOf'); if (asOf) asOf.textContent = E.asOf;
+
+    const ih = $('eraImpacts');
+    if (ih) ih.innerHTML = E.impacts.map(p =>
+      '<div class="card card-top">' +
+        '<div class="big-emoji">' + p.icon + '</div>' +
+        '<h3 class="m-0">' + p.area + '</h3>' +
+        '<p class="text-soft m-0">' + p.ex + '</p>' +
+      '</div>'
+    ).join('');
+
+    const ch = $('eraChart');
+    if (ch) ch.innerHTML = eraChartSVG(E);
   }
 
   function init() {
-    renderTimeline(); renderFacts(); renderGpt3(); renderDataProjects();
-    renderCosts(); renderFamilies(); renderRally();
+    renderTimeline(); renderGpt3(); renderDataProjects();
+    renderCosts(); renderFamilies(); renderEra();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

@@ -37,20 +37,134 @@
       </div>
     </section>
 
-    <!-- 2 · MODEL NEDİR / NASIL EĞİTİLİR -->
-    <section class="fp-section tone-a" id="model-nedir" data-title="Model nedir?">
+    <!-- 2 · TRANSFORMER TEKNOLOJİSİ + DONANIM (CPU/GPU/NPU birleşik) -->
+    <section class="fp-section tone-a" id="transformer" data-title="Transformer nedir?">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">⚡ Mimari + Donanım</span>
+          <h2 class="slide-title reveal">Transformer teknolojisi nedir?</h2>
+          <p class="slide-lead reveal lead-c">2017’deki “Attention Is All You Need” mimarisi; bugünkü tüm büyük modellerin temeli. Neyi sağladı — ve bu hesabı hangi çip yapıyor?</p>
+        </div>
+
+        <div class="grid cols-3 reveal mb-lg">
+          <div class="card card-top">
+            <div class="big-emoji">🧠</div>
+            <h3>Dikkat (attention)</h3>
+            <p class="text-soft m-0">Model, cümledeki tüm kelimeleri aynı anda birbiriyle ilişkilendirir. “O” zamiri kime gidiyor, hangi kelime hangisini bağlıyor — hepsini bir bakışta yakalar.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">⏩</div>
+            <h3>Paralel işleme</h3>
+            <p class="text-soft m-0">Eski modeller kelimeleri sırayla, tek tek işlerdi. Transformer bütün diziyi <b>aynı anda</b> işler. İşte bu paralellik, devasa veriyle hızlı eğitimi mümkün kıldı.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">📈</div>
+            <h3>Ölçeklenebilirlik</h3>
+            <p class="text-soft m-0">Mimari büyüdükçe (daha çok katman + veri) yetenek de artıyor. Bu “ölçek yasası”, GPT-3’ten bugünkü dev modellere giden yolu açtı.</p>
+          </div>
+        </div>
+
+        <h3 class="center reveal">Bu hesabı hangi çip yapar? <span class="text-soft">(CPU · GPU · NPU)</span></h3>
+        <p class="slide-lead reveal lead-c center mb">Transformer’ın “düşünmesi” milyarlarca matris çarpımıdır. Paralel yapısı, GPU donanımıyla birebir örtüşür.</p>
+        <div class="grid cols-3 reveal">
+          <div class="card card-top">
+            <div class="big-emoji">🧮</div>
+            <h3>CPU — genel beyin</h3>
+            <p class="text-soft m-0">Az sayıda güçlü çekirdek; sıralı, çok yönlü işler. Her işi yapar ama dev paralel matris çarpımında yavaş kalır.</p>
+            <p class="src mt mb-0">Geçmiş: bilişimin temeli.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🎮</div>
+            <h3>GPU — paralel motor</h3>
+            <p class="text-soft m-0">Binlerce küçük çekirdek; aynı anda binlerce çarpım. Transformer’ın paralel yapısı tam buna uyar — oyun grafikleri için doğdu, 2012’den beri derin öğrenmenin motoru oldu.</p>
+            <p class="src mt mb-0">Bugün: eğitim ve çıkarımın kalbi (NVIDIA).</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">📱</div>
+            <h3>NPU — sinir ağı çipi</h3>
+            <p class="text-soft m-0">Yapay sinir ağı işlemlerine özel; telefonda/dizüstünde düşük güçle, cihaz-üstü (on-device) YZ çalıştırır.</p>
+            <p class="src mt mb-0">Gelecek: verimli, cihazda çalışan YZ.</p>
+          </div>
+        </div>
+        <p class="src reveal center mt">Yön: CPU çağı → GPU çağı (bugün) → NPU ile enerji-verimli, cihaz-üstü YZ.</p>
+      </div>
+    </section>
+
+    <!-- 3 · MODEL NEDİR / NASIL EĞİTİLİR (kod + veri + epoch animasyonu) -->
+    <section class="fp-section tone-b" id="model-nedir" data-title="Model nedir?">
       <div class="fp-inner">
         <div class="section-head">
           <span class="eyebrow reveal">🧠 Temel</span>
           <h2 class="slide-title reveal">Model nedir, nasıl eğitilir?</h2>
           <p class="slide-lead reveal lead-c">Model = Transformer’ı çalıştıran kod + eğitimle öğrenilmiş milyarlarca sayı (ağırlık).</p>
         </div>
-        <div id="trainingFacts" class="grid cols-3 reveal"></div>
+
+        <div class="grid cols-2 items-stretch reveal mb">
+          <!-- MODEL: örnek (pseudo) Python kodu -->
+          <div class="card card-top col-card">
+            <div class="chip mb">🧩 Model</div>
+            <p class="text-soft m-0 mb">Model, Transformer’ı çalıştıran <b>kod</b> + eğitimle ayarlanan milyarlarca <b>ağırlıktır</b>. Kod herkeste aynı olabilir; değerli olan ağırlıklardır. Sözde (pseudo) Python ile iskeleti:</p>
+            <pre class="code-box"><code>import torch
+import torch.nn as nn
+
+class KucukTransformer(nn.Module):
+    def __init__(self, kelime_sayisi, boyut=512, katman=12):
+        super().__init__()
+        self.gomme  = nn.Embedding(kelime_sayisi, boyut)   # kelime → sayı vektörü
+        self.bloklar = nn.ModuleList(
+            TransformerBlok(boyut) for _ in range(katman)  # dikkat + ileri besleme
+        )
+        self.cikis  = nn.Linear(boyut, kelime_sayisi)      # → sonraki kelime tahmini
+
+    def forward(self, x):
+        h = self.gomme(x)
+        for blok in self.bloklar:          # katman katman işle
+            h = blok(h)
+        return self.cikis(h)               # her kelime için olasılık
+
+model = KucukTransformer(kelime_sayisi=50000)
+# Ağırlıklar RASTGELE başlar; eğitimle anlamlı hâle gelir.</code></pre>
+          </div>
+
+          <!-- VERİ: örnek eğitim verisi -->
+          <div class="card card-top col-card">
+            <div class="chip mb">📚 Veri</div>
+            <p class="text-soft m-0 mb">Modele “bir sonraki kelimeyi” tahmin ettiririz. Örnek bir eğitim verisi (girdi → hedef):</p>
+            <pre class="code-box"><code>"Türkiye’nin başkenti"        → "Ankara"
+"Bir elin nesi var, iki"      → "elin"
+"Su, 100 derecede"            → "kaynar"
+"Yapay zeka veriden"          → "öğrenir"
+"Güneş doğudan"               → "doğar"</code></pre>
+            <p class="src mt mb-0">Milyarlarca böyle örnek; her biri ağırlıkları azıcık düzeltir. “Her veri” değil, temizlenip <b>düzenlenmiş</b> veri.</p>
+          </div>
+        </div>
+
+        <!-- EĞİTİM: epoch animasyonu -->
+        <div class="card card-top reveal">
+          <div class="chip mb">🔁 Eğitim</div>
+          <p class="text-soft m-0 mb">Bir <b>epoch</b>, tüm verinin baştan sona bir kez geçmesidir. Model her kelimeyi sırayla okur, bir sonrakini tahmin eder, hatasına göre ağırlıklarını minik adımlarla düzeltir — ve bunu tekrar tekrar (epoch epoch) yapar. Aşağıdaki tarama, verinin baştan sona okunduğu <b>bir epoch’u</b> canlandırır; döngü her tekrarladığında yeni bir epoch demektir:</p>
+          <div class="epoch-track" aria-hidden="true">
+            <span class="epoch-tok">Yapay</span>
+            <span class="epoch-tok">zeka</span>
+            <span class="epoch-tok">veriyi</span>
+            <span class="epoch-tok">baştan</span>
+            <span class="epoch-tok">sona</span>
+            <span class="epoch-tok">okur,</span>
+            <span class="epoch-tok">tahmin</span>
+            <span class="epoch-tok">eder,</span>
+            <span class="epoch-tok">öğrenir.</span>
+          </div>
+          <div class="between mt">
+            <span class="src">← veri başı</span>
+            <span class="src">her epoch’ta ağırlıklar biraz daha iyileşir</span>
+            <span class="src">veri sonu →</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 3 · EĞİTİM VERİSİ (GPT-3) -->
-    <section class="fp-section tone-b" id="egitim-verisi" data-title="Eğitim verisi">
+    <!-- 4 · VERİ (GPT-3 karışımı) -->
+    <section class="fp-section tone-c" id="veri-gpt3" data-title="Veri">
       <div class="fp-inner">
         <div class="grid cols-2 items-center">
           <div class="reveal">
@@ -73,8 +187,8 @@
       </div>
     </section>
 
-    <!-- 4 · VERİ PROJELERİ -->
-    <section class="fp-section tone-c" id="veri-projeleri" data-title="Veriyi kim düzenliyor?">
+    <!-- 5 · VERİ PROJELERİ -->
+    <section class="fp-section tone-a" id="veri-projeleri" data-title="Veriyi kim düzenliyor?">
       <div class="fp-inner">
         <div class="section-head">
           <span class="eyebrow reveal">🗂️ Gerçek tasnifler</span>
@@ -85,23 +199,23 @@
       </div>
     </section>
 
-    <!-- 5 · EĞİTİM ENERJİSİ -->
-    <section class="fp-section tone-a" id="egitim-enerjisi" data-title="Eğitim enerjisi">
+    <!-- 6 · EĞİTİM ENERJİSİ -->
+    <section class="fp-section tone-b" id="egitim-enerjisi" data-title="Eğitim enerjisi">
       <div class="fp-inner">
         <div class="section-head">
           <span class="eyebrow reveal">⚡ Tek seferlik ama dev</span>
           <h2 class="slide-title reveal">Bir modeli eğitmek ne harcar?</h2>
-          <p class="slide-lead reveal lead-c">Sayılar soyut kalmasın diye telefon şarjı ve baraj üretimi diliyle.</p>
+          <p class="slide-lead reveal lead-c">Bilinen modeller (GPT · Llama · Claude · Qwen · DeepSeek) telefon şarjı ve baraj üretimi diliyle.</p>
         </div>
         <div id="trainingCards" class="grid cols-3 reveal"></div>
         <p class="src reveal center mt">
-          Kaynaklar: Patterson vd. (2021) · Meta model kartları · Luccioni vd. (2022). Eğitim amaçlı tahminlerdir.
+          Kaynaklar: Patterson vd. (2021) · Meta model kartları · DeepSeek-V3 teknik raporu (2024). “Tahmin” işaretli rakamlar resmî değildir, sınıf-içi büyüklük tahminidir.
         </p>
       </div>
     </section>
 
-    <!-- 6 · GÜVENLİK & ETİK AYARI -->
-    <section class="fp-section tone-b" id="guvenlik" data-title="Güvenlik & etik">
+    <!-- 7 · GÜVENLİK & ETİK AYARI -->
+    <section class="fp-section tone-c" id="guvenlik" data-title="Güvenlik & etik">
       <div class="fp-inner">
         <div class="section-head">
           <span class="eyebrow reveal">🛡️ Hizalama (alignment)</span>
@@ -135,38 +249,6 @@
       </div>
     </section>
 
-    <!-- 7 · CPU / GPU / NPU -->
-    <section class="fp-section tone-c" id="islemciler" data-title="CPU · GPU · NPU">
-      <div class="fp-inner">
-        <div class="section-head">
-          <span class="eyebrow reveal">🔌 Donanım</span>
-          <h2 class="slide-title reveal">CPU · GPU · NPU — ne neye yarar?</h2>
-          <p class="slide-lead reveal lead-c">Modelin “düşünmesi” milyarlarca matris çarpımıdır. Bunu hangi çip, nasıl yapar?</p>
-        </div>
-        <div class="grid cols-3 reveal">
-          <div class="card card-top">
-            <div class="big-emoji">🧮</div>
-            <h3>CPU — genel beyin</h3>
-            <p class="text-soft m-0">Az sayıda güçlü çekirdek; sıralı, çok yönlü işler. Her işi yapar ama dev paralel matris çarpımında yavaş kalır.</p>
-            <p class="src mt mb-0">Geçmiş: bilişimin temeli.</p>
-          </div>
-          <div class="card card-top">
-            <div class="big-emoji">🎮</div>
-            <h3>GPU — paralel motor</h3>
-            <p class="text-soft m-0">Binlerce küçük çekirdek; aynı anda binlerce çarpım. Oyun grafikleri için doğdu, 2012’den beri derin öğrenmenin motoru oldu.</p>
-            <p class="src mt mb-0">Bugün: eğitim ve çıkarımın kalbi (NVIDIA).</p>
-          </div>
-          <div class="card card-top">
-            <div class="big-emoji">📱</div>
-            <h3>NPU — sinir ağı çipi</h3>
-            <p class="text-soft m-0">Yapay sinir ağı işlemlerine özel; telefonda/dizüstünde düşük güçle, cihaz-üstü (on-device) YZ çalıştırır.</p>
-            <p class="src mt mb-0">Gelecek: verimli, cihazda çalışan YZ.</p>
-          </div>
-        </div>
-        <p class="src reveal center mt">Yön: CPU çağı → GPU çağı (bugün) → NPU ile enerji-verimli, cihaz-üstü YZ.</p>
-      </div>
-    </section>
-
     <!-- 8 · NEDEN HERKES YAPAMIYOR + AİLELER -->
     <section class="fp-section tone-a" id="aileler" data-title="Model aileleri">
       <div class="fp-inner">
@@ -182,27 +264,26 @@
       </div>
     </section>
 
-    <!-- 9 · YAPAY ZEKA RALLİSİ -->
-    <section class="fp-section tone-b" id="ralli" data-title="Yapay Zeka Rallisi">
+    <!-- 9 · YAPAY ZEKA ÇAĞI (etkiler + değer grafiği) -->
+    <section class="fp-section tone-b" id="cag" data-title="Yapay Zeka Çağı">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">📈 Yapay Zeka Rallisi</span>
-          <h2 class="slide-title reveal">YZ şirketleri dünyanın en pahalı şirketleri arasında</h2>
-          <p class="slide-lead reveal lead-c">Değerler trilyon dolar (T$) · <b id="rallyAsOf"></b> itibarıyla. Mor barlar YZ girişimleri.</p>
+          <span class="eyebrow reveal">🌍 Yapay Zeka Çağı</span>
+          <h2 class="slide-title reveal">Yapay Zeka Çağı</h2>
+          <p class="slide-lead reveal lead-c">YZ artık eğitimden sağlığa, üretimden savunmaya her alanda. Ve onu üreten şirketler dünyanın en değerlileri arasında — <b id="eraAsOf"></b> itibarıyla.</p>
         </div>
-        <div class="grid cols-2 items-start">
-          <div class="reveal">
-            <div class="card card-top"><div id="rally"></div></div>
-          </div>
-          <div class="reveal">
-            <div class="card">
-              <div class="label">Kaç yılda nereden nereye?</div>
-              <div id="rallyMilestones"></div>
-            </div>
+
+        <div id="eraImpacts" class="grid cols-3 reveal mb-lg"></div>
+
+        <div class="reveal">
+          <div class="card card-top">
+            <div class="label">YZ şirketlerinin değeri vs. Türkiye ekonomisi — yıllara göre eğim (trilyon $)</div>
+            <p class="text-soft m-0 mb">Karşılaştırma için: en değerli YZ şirketleri, T.C. ekonomi büyüklüğü (GSYİH) ve TCMB rezervi aynı eksende.</p>
+            <div id="eraChart"></div>
           </div>
         </div>
         <p class="src reveal center mt">
-          Kaynaklar: CompaniesMarketCap (2026) · Axios/CNBC (2026) · Crunchbase (2026). Piyasa değerleri her gün değişir; tahminler kesin değildir.
+          Kaynaklar: CompaniesMarketCap · Axios/CNBC · Crunchbase (2026) · IMF/Dünya Bankası (GSYİH) · TCMB (rezerv). Değerler değişir; yaklaşıktır.
         </p>
       </div>
     </section>
@@ -226,7 +307,7 @@
             <li>Ouyang, L., vd. (2022). Training language models to follow instructions with human feedback (InstructGPT). <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2203.02155" target="_blank" rel="noopener">https://arxiv.org/abs/2203.02155</a></li>
             <li>Bai, Y., vd. (2022). Constitutional AI: Harmlessness from AI feedback. <em>Anthropic</em>. <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">https://arxiv.org/abs/2212.08073</a></li>
             <li>Patterson, D., vd. (2021). Carbon emissions and large neural network training. <a href="https://arxiv.org/abs/2104.10350" target="_blank" rel="noopener">https://arxiv.org/abs/2104.10350</a></li>
-            <li>Luccioni, A. S., Viguier, S., &amp; Ligozat, A.-L. (2022). Estimating the carbon footprint of BLOOM. <em>JMLR</em>. <a href="https://arxiv.org/abs/2211.02001" target="_blank" rel="noopener">https://arxiv.org/abs/2211.02001</a></li>
+            <li>DeepSeek-AI. (2024). DeepSeek-V3 technical report. <em>arXiv</em>. <a href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">https://arxiv.org/abs/2412.19437</a></li>
             <li>CompaniesMarketCap. (2026). <em>Companies ranked by market capitalization</em>. <a href="https://companiesmarketcap.com/" target="_blank" rel="noopener">https://companiesmarketcap.com/</a></li>
             <li>Axios. (2026, 28 Mayıs). Anthropic tops OpenAI as most valuable AI startup. <a href="https://www.axios.com/2026/05/28/anthropic-ai-fundraising-openai" target="_blank" rel="noopener">https://www.axios.com/2026/05/28/anthropic-ai-fundraising-openai</a></li>
           </ol>
