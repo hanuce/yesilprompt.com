@@ -7,7 +7,7 @@ Site; öğrencilerin bir metin sorgusunun, bir görsel üretiminin ya da bir mod
 eğitilmesinin neye mal olduğunu **canlı hesaplayarak** görmesini amaçlar. Sayılar eğitim
 amaçlı tahminlerdir ve her sayfada kaynakça ile birlikte sunulur.
 
-🔗 **Canlı site:** [yesilprompt.com](https://yesilprompt.com)
+🔗 **Canlı site:** [yesilprompt](https://hanuce.github.io/yesilprompt.com/index.html#giris)
 
 ---
 
@@ -56,9 +56,6 @@ python -m http.server 8080      # veya:  npx serve .
 Ardından tarayıcıda `http://localhost:8080` adresini açın.
 
 ## Katkı ve proje notları
-
-Sitenin yapısı, geliştirme kuralları ve içerik düzenleme rehberi ayrı bir belgede toplanmıştır:
-👉 **[SITE_RULES.md](SITE_RULES.md)**
 
 Atölyenin pedagojik planı ve kaynakları için `plans/` klasörüne bakabilirsiniz.
 
