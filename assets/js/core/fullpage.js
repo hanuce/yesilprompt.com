@@ -119,6 +119,19 @@
       rt = setTimeout(() => { track.style.transition = prev; }, 60);
     });
 
+    /* --- Sayfa içi #hash bağlantıları ---
+       "↓ Galeriye gör" gibi <a href="#galeri"> linkleri normalde
+       kaydırma yapamaz (slaytlar transform ile taşınır). Hedef bir
+       .fp-section ise tarayıcı davranışını iptal edip o slayta gideriz. */
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const i = sections.findIndex(s => s.id && '#' + s.id === a.getAttribute('href'));
+      if (i < 0) return;
+      e.preventDefault();
+      go(i);
+    });
+
     /* --- Dokunma --- */
     let touchY = null;
     root.addEventListener('touchstart', (e) => { touchY = e.touches[0].clientY; }, { passive: true });

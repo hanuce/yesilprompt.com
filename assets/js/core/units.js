@@ -8,6 +8,7 @@
    Kullanım:
      Units.equivalents(0.5)   → { phones, videoMin, ledMin, dam, waterMl, co2g }
      Units.human(0.5)         → "≈ 2,5 dk video izleme"  (en uygun birimi seçer)
+     Units.phoneText(0.5)     → "telefon şarjının %4 kadarı"  (HEP telefon şarjı)
      Units.fmt(1234.5)        → "1.234,5"
    ========================================================= */
 (function () {
@@ -46,12 +47,27 @@
     return fmt(minutes / 1440, 1) + ' gün';
   }
 
-  /* En anlaşılır tek cümle (otomatik birim seçer) */
+  /* En anlaşılır tek cümle (otomatik birim seçer).
+     DİKKAT: birim değere göre değişir (şarj / video / LED). Aynı listede
+     yan yana duran değerleri karşılaştırmak için UYGUN DEĞİLDİR —
+     onun için phoneText() kullan. */
   function human(wh) {
     const e = equivalents(wh);
     if (e.phones >= 0.5) return '≈ ' + fmt(e.phones, 1) + ' telefon şarjı';
     if (e.videoMin >= 1) return '≈ ' + dur(e.videoMin) + ' video izleme';
     return '≈ ' + dur(e.ledMin) + ' LED ampul';
+  }
+
+  /* HER ZAMAN telefon şarjı cinsinden (sergi ve hesaplayıcı damgası).
+     Tek bir birimde kalmak, eserleri birbiriyle karşılaştırılabilir kılar.
+     Bir şarjdan küçük değerler yüzde olarak verilir — "0,04 telefon şarjı"
+     kimseye bir şey anlatmaz, "telefon şarjının %4 kadarı" anlatır. */
+  function phoneText(wh) {
+    const p = wh / (C.phoneChargeWh || 12);
+    if (p >= 1) return fmt(p, 1) + ' telefon şarjı';
+    const pct = p * 100;
+    if (pct < 0.1) return 'telefon şarjının %0,1 kadarından az';
+    return 'telefon şarjının %' + fmt(pct, pct < 1 ? 2 : 0) + ' kadarı';
   }
 
   /* Baraj cümlesi: büyük (eğitim) enerjiler için */
@@ -64,5 +80,5 @@
     return d.name + '’nın ' + fmt(d.hours * 60, 0) + ' dakikalık üretimi';
   }
 
-  window.Units = { fmt, equivalents, human, dur, damSentence };
+  window.Units = { fmt, equivalents, human, phoneText, dur, damSentence };
 })();

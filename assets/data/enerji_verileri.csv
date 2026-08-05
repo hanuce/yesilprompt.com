@@ -12,6 +12,5 @@ Aktivite,Tur,Enerji_Wh,CO2_Salinimi_Gram,Su_Tuketimi_mL,Kaynak
 1 kg cikolata uretimi,Fiziksel,5300.00,19000.00,17000000.00,"Our World in Data - Poore & Nemecek 2018"
 1 bardak inek sutu (200ml),Fiziksel,260.00,600.00,125000.00,"Our World in Data - Poore & Nemecek 2018"
 1 hamburger (siyir eti),Fiziksel,9700.00,33000.00,2350000.00,"Our World in Data - Poore & Nemecek 2018"
-Model egitimi GPT-3 (175B),Egitim,1287000000.00,552000000.00,2640000000.00,"Patterson vd. 2021"
-Model egitimi Llama ailesi (toplam),Egitim,2638000000.00,1015000000.00,5400000000.00,"Meta model kartlari"
-Model egitimi BLOOM (176B),Egitim,433000000.00,25000000.00,890000000.00,"Luccioni vd. 2022 - JMLR"
+Model egitimi GPT-3 (175B),Egitim,1287000000.00,552000000.00,4749030000.00,"Patterson vd. 2021 - su 3.69 L/kWh ile turetildi"
+Model egitimi Llama ailesi (toplam),Egitim,2638000000.00,1015000000.00,9734220000.00,"Meta model kartlari - su 3.69 L/kWh ile turetildi"

@@ -7,7 +7,11 @@ Site; öğrencilerin bir metin sorgusunun, bir görsel üretiminin ya da bir mod
 eğitilmesinin neye mal olduğunu **canlı hesaplayarak** görmesini amaçlar. Sayılar eğitim
 amaçlı tahminlerdir ve her sayfada kaynakça ile birlikte sunulur.
 
-🔗 **Canlı site:** [yesilprompt](https://hanuce.github.io/yesilprompt.com/index.html#giris)
+**Anasayfa doğrudan sergidir.** Ziyaretçiyi önce eserler karşılar: her birinin altında
+prompt, model, deneme sayısı ve çevre maliyeti yazar. Atölyenin tamamına buradaki
+"Atölyeye gir" tuşundan geçilir.
+
+🔗 **Canlı site:** [yesilprompt](https://hanuce.github.io/yesilprompt.com/)
 
 ---
 
@@ -21,26 +25,38 @@ amaçlı tahminlerdir ve her sayfada kaynakça ile birlikte sunulur.
   nasıl eğitildiği, model aileleri ve sektörün büyüme grafikleri.
 - **Prompt mühendisliği** — daha az kaynakla daha iyi sonuç almanın yolları; örneklerle önce/sonra
   karşılaştırmaları.
-- **Yeşil Prompt Resim Sergisi** — her eserin altında çevreye maliyetinin yer aldığı kürasyonlu galeri.
+- **Görsel maliyet hesaplayıcı** — 29 görsel üretim aracı arasından seçip kendi eserinin
+  enerji/su/karbon maliyetini hesaplar ve sergiye eklenecek etiketi üretir. Ölçüme dayanan
+  değerler ile sınıf tahminleri **ayrı ayrı işaretlenir**.
+- **Yeşil Prompt Resim Sergisi** — menüsüz, karanlık bir sergi salonu. Esere tıklayınca prompt,
+  model, deneme sayısı ve çevre maliyeti okunur.
 
 ## Sayfalar
 
 | Sayfa | İçerik |
 |---|---|
-| **Giriş** | Tanıtım, etik sorular, künye, materyal ve kaynak havuzu |
+| **Sergi** (anasayfa) | Menüsüz karanlık galeri, enerji damgalı eserler, sinematik fon müziği |
+| **Atölye Girişi** | Tanıtım, etik sorular, künye, materyal ve kaynak havuzu |
 | **Modeller & Tarih** | Yapay zeka tarihi, modelin nasıl eğitildiği, donanım, model aileleri, sektör büyümesi |
 | **Token Lab** | Token nedir, canlı tokenizer, çok dillilik, enerji & su hesaplayıcı |
 | **Prompt Mühendisliği** | Shot tipleri, iyi promptun parçaları, Yeşil Prompt Kuralları |
-| **Yeşil Prompt Resim Sergisi** | Enerji damgalı görsel galerisi |
+| **Hesaplayıcı** | Kendi görselinin maliyetini hesapla, araçları karşılaştır, sergi etiketini üret |
 
-Her sayfa tam ekran slaytlardan oluşur; fare tekeri, ok tuşları, dokunma ya da yan noktalarla
-slaytlar arasında gezilir.
+Anasayfada üst menü yoktur: ziyaretçiyi doğrudan eserler karşılar, gezinme sağ alttaki iki
+yuvarlak düğmeyle olur. Eserler kendi en/boy oranlarına göre dizilir — bir satırda kaç eser
+olacağını görsellerin biçimi belirler. **Atölye sayfaları** ise tam ekran slaytlardan oluşur;
+fare tekeri, ok tuşları, dokunma ya da yan noktalarla gezilir.
 
 ## Teknoloji
 
 Saf **HTML + CSS + JavaScript**. Çerçeve, build adımı veya sunucu yoktur — site doğrudan
 GitHub Pages'te yayınlanır ve tüm hesaplamalar tarayıcıda çalışır. Tek dış bağımlılıklar
 Google Fonts ve `gpt-tokenizer` (CDN üzerinden) ile gerçek token sayımıdır.
+
+Serginin **fon müziği bir ses dosyası değildir**: Web Audio API ile tarayıcıda anlık üretilir
+(0 KB indirme, telif sorunu yok, hiç bitmez). Sinematik bir doku — derin pedal, org/yaylı
+katmanlar, arpej ostinato ve katedral yankısı. Ayarları `assets/js/config/site.config.js`
+içindeki `AMBIENT` bloğundan değiştirilebilir; ziyaretçi her an kapatabilir.
 
 İçerik (model değerleri, birim katsayıları, galeri, künye) `assets/js/config/` altındaki
 yapılandırma dosyalarında tutulur; böylece metin ve veri, kod mantığından ayrı düzenlenebilir.

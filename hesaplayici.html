@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hesaplayıcı · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Ürettiğin görselin tahmini enerji, su ve karbon maliyetini hesapla; sergi etiketini oluştur." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap">
+    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
+    <button class="nav-toggle" aria-label="Menü">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Sergi</a>
+      <a href="atolye.html">Atölye Girişi</a>
+      <a href="modeller.html">Modeller &amp; Tarih</a>
+      <a href="token-lab.html">Token Lab</a>
+      <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>
+      <a href="hesaplayici.html" class="active">Hesaplayıcı</a>
+    </div>
+  </div></nav>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- 1 · HESAPLAYICI -->
+    <section class="fp-section tone-hero" id="hesapla" data-title="Hesaplayıcı">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🧮 Kendi eserini ölç</span>
+          <h2 class="slide-title reveal">Görsel Maliyet Hesaplayıcı</h2>
+          <p class="slide-lead reveal lead-c">
+            Ürettiğin görselin tahmini <strong>enerji · su · karbon</strong> maliyetini hesapla.
+            Çıkan damga, doğrudan <a href="index.html">Resim Galerisi</a>’nde yayımlanan etikettir.
+          </p>
+        </div>
+
+        <div class="grid cols-2 reveal items-stretch">
+
+          <!-- GİRDİLER -->
+          <div class="card card-top">
+            <label class="label" for="toolSel">Hangi aracı kullandın?</label>
+            <select id="toolSel" class="field"></select>
+            <p class="src" id="toolNote"></p>
+
+            <label class="label label-row mt"><span>Görüntü boyutu</span><span class="text-soft" id="pxNote"></span></label>
+            <select id="sizeSel" class="field"></select>
+
+            <label class="label label-row mt">
+              <span>Tek denemede kaç görsel üretiliyor?</span>
+              <span class="text-soft"><b id="varLbl">1</b> görsel</span>
+            </label>
+            <input id="variants" type="range" min="1" max="8" step="1" value="1">
+            <p class="src">
+              Çoğu araç tek “üret” tıklamasında birden fazla alternatif verir
+              (ör. Midjourney 4’lü ızgara). Sen bir tanesini seçsen bile
+              <b>hepsinin enerjisi harcanır</b> — kullandığın araçta kaç geliyorsa onu gir.
+            </p>
+
+            <label class="label label-row mt">
+              <span>Deneme sayısı (kaç kez “üret” dedin?)</span>
+              <span class="text-soft">×<b id="attLbl">1</b></span>
+            </label>
+            <input id="attempts" type="range" min="1" max="15" step="1" value="1">
+            <p class="src">En büyük kaldıraç budur: her deneme tam bir üretim demektir.</p>
+
+            <label class="label mt" for="promptIn">Kullandığın prompt</label>
+            <textarea id="promptIn" class="field" rows="3">2050, yenilenebilir enerjiyle çalışan İstanbul; güneş panelli çatılar, yeşil teraslar, izometrik illüstrasyon</textarea>
+            <p class="src" id="promptNote"></p>
+
+            <div class="grid cols-2 grid-tight mt">
+              <div>
+                <label class="label" for="titleIn">Eser adı</label>
+                <input id="titleIn" class="field" type="text" value="Yenilenebilir İstanbul, 2050">
+              </div>
+              <div>
+                <label class="label" for="byIn">Üreten (isteğe bağlı)</label>
+                <input id="byIn" class="field" type="text" placeholder="Öğrenci adı">
+              </div>
+            </div>
+          </div>
+
+          <!-- SONUÇ -->
+          <div class="card card-top col-card">
+            <div class="center">
+              <span id="status" class="status green">🌱 Verimli</span>
+              <div class="text-mute mt">Bu kadar enerji şuna eşdeğer:</div>
+              <div id="human" class="huge-num">—</div>
+              <div id="tech" class="src">—</div>
+            </div>
+
+            <div id="metrics" class="grid cols-3 grid-tight mt"></div>
+
+            <hr class="divider">
+            <div class="text-mute mb">Sergi damgası</div>
+            <div id="stampPreview" class="stamp-preview"></div>
+
+            <div id="breakdown" class="mt"></div>
+          </div>
+        </div>
+
+        <!-- SERGİ ETİKETİ ÇIKTISI -->
+        <div class="card reveal mt-lg">
+          <div class="between mb">
+            <div>
+              <div class="label m-0">Galeriye eklemek için hazır satır</div>
+              <p class="src m-0">Bunu <code>assets/js/config/site.config.js</code> → <b>GALLERY</b> listesine yapıştır.</p>
+            </div>
+            <button id="copyBtn" class="btn btn-ghost btn-sm">📋 Kopyala</button>
+          </div>
+          <pre class="code-box"><code id="stampCode"></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · ARAÇ KARŞILAŞTIRMA -->
+    <section class="fp-section tone-a" id="araclar" data-title="Araçlar">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🧰 Karşılaştır</span>
+          <h2 class="slide-title reveal">Hangi araç ne harcıyor?</h2>
+          <p class="slide-lead reveal lead-c">
+            1024×1024 tek görsel için tahmini enerji. <span class="tag tag-est">tahmin</span>
+            rozetli satırlarda <strong>yayımlanmış ölçüm yoktur</strong>; sayı benzer mimariden ölçeklenmiştir.
+          </p>
+        </div>
+        <div class="card reveal tool-scroll">
+          <table class="table" id="toolTable"></table>
+        </div>
+        <p class="src reveal center mt">
+          <span class="tag tag-free">ücretsiz</span> üyeliksiz ya da ücretsiz kotayla denenebilir ·
+          <span class="tag tag-open">açık</span> ağırlıkları indirilebilir, kendi cihazında çalışır.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3 · YÖNTEM -->
+    <section class="fp-section tone-b" id="yontem" data-title="Nasıl hesaplıyoruz?">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📐 Şeffaflık</span>
+          <h2 class="slide-title reveal">Bu sayılar nereden geliyor?</h2>
+          <p class="slide-lead reveal lead-c">
+            Bir aracın enerjisini bilmek, üreticinin bunu yayımlamasına bağlıdır — çoğu yayımlamaz.
+            Bu yüzden burada ne bildiğimizi ve ne tahmin ettiğimizi ayrı ayrı gösteriyoruz.
+          </p>
+        </div>
+
+        <div class="grid cols-3 reveal mb-lg">
+          <div class="card card-top">
+            <div class="big-emoji">📏</div>
+            <h3>Formül</h3>
+            <pre class="code-box"><code>Toplam = Temel × Boyut × Görsel × Deneme
+
+Temel  = 1024×1024 için Wh
+Boyut  = (en × boy) ÷ (1024×1024)
+Görsel = tek denemede üretilen alternatif sayısı
+Su     = Wh ÷ 1000 × 3,69 L
+CO₂    = Wh × 0,125 g</code></pre>
+            <p class="src mt mb-0">Enerji, piksel sayısıyla yaklaşık orantılı kabul edilir.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🎯</div>
+            <h3>Ölçüm çapaları</h3>
+            <p class="text-soft m-0">Literatürün iki ucu arasına yerleştiriyoruz:</p>
+            <ul class="list-soft">
+              <li><b>~0,3 Wh</b> — damıtılmış, 1-8 adımlı yeni modeller</li>
+              <li><b>~1,5 Wh</b> — SDXL, ~30 adım <span class="ref-tag">(Luccioni vd., 2024)</span></li>
+              <li><b>~2,9 Wh</b> — büyük difüzyon üst sınırı</li>
+            </ul>
+            <p class="src mb-0">Ölçümü olan modeller bu çapalara doğrudan oturur.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">⚠️</div>
+            <h3>Neyi bilmiyoruz</h3>
+            <p class="text-soft m-0">
+              Midjourney, Seedream, GPT Image, Grok gibi <b>kapalı modeller hiçbir enerji verisi
+              yayımlamaz.</b> Onların sayısı, benzer boyut ve adım sayısındaki ölçülmüş modellerden
+              türetilmiş <b>sınıf tahminidir</b> — mertebe doğrudur, kesin değer değildir.
+            </p>
+            <p class="src mt mb-0">Bu yüzden tabloda “tahmin” rozeti vardır.</p>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <h3 class="mt-0">Prompt uzunluğu enerjiyi ne kadar etkiler?</h3>
+          <p class="text-soft m-0">
+            Görselde <strong>neredeyse hiç</strong>. Metin modelinde her token bir maliyet yaratır;
+            görselde ise ağır iş, promptu okuyan küçük metin kodlayıcıda değil,
+            <strong>görüntüyü onlarca adımda arıtan difüzyon modelindedir</strong>. Bu yüzden burada
+            prompt uzunluğu hesaba katılmaz — ama <em>promptun netliği</em> deneme sayısını düşürerek
+            toplam maliyeti en çok etkileyen şeydir.
+          </p>
+          <p class="src mt mb-0">
+            Yani mesaj yine aynı: <b>kısa prompt değil, net prompt.</b> Ayrıntı için
+            <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · KAYNAKÇA -->
+    <section class="fp-section tone-c" id="kaynakca" data-title="Kaynakça (APA)">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📚 Kaynakça</span>
+          <h2 class="slide-title reveal">Kaynakça (APA)</h2>
+        </div>
+        <div class="card reveal">
+          <ol class="refs">
+            <li>Luccioni, S., Jernite, Y., &amp; Strubell, E. (2024). Power hungry processing: Watts driving the cost of AI deployment? <em>FAccT</em>. <a href="https://arxiv.org/abs/2311.16863" target="_blank" rel="noopener">https://arxiv.org/abs/2311.16863</a></li>
+            <li>Hugging Face. (2025). <em>AI Energy Score Leaderboard</em>. <a href="https://huggingface.co/spaces/AIEnergyScore/Leaderboard" target="_blank" rel="noopener">https://huggingface.co/spaces/AIEnergyScore/Leaderboard</a></li>
+            <li>ML.ENERGY. (2025). <em>ML.ENERGY Leaderboard</em>. <a href="https://ml.energy/leaderboard/" target="_blank" rel="noopener">https://ml.energy/leaderboard/</a></li>
+            <li>How hungry is AI? (2025). Enerji + su + karbon (PUE/WUE; 3,69 L/kWh). <a href="https://arxiv.org/html/2505.09598v1" target="_blank" rel="noopener">https://arxiv.org/html/2505.09598v1</a></li>
+            <li>Google. (2025). <em>Measuring the environmental impact of delivering AI at Google scale</em>. <a href="https://arxiv.org/abs/2508.15734" target="_blank" rel="noopener">https://arxiv.org/abs/2508.15734</a></li>
+            <li>MIT Technology Review. (2023). Making an image with generative AI uses as much energy as charging your phone. <a href="https://www.technologyreview.com/2023/12/01/1084189/" target="_blank" rel="noopener">https://www.technologyreview.com/2023/12/01/1084189/</a></li>
+          </ol>
+        </div>
+        <div class="reveal center mt">
+          <a class="btn btn-primary" href="index.html">Eserini sergiye ekle →</a>
+        </div>
+      </div>
+    </section>
+
+  </div></div>
+
+  <script src="assets/js/core/tokenize.js"></script>
+  <script src="assets/js/config/units.config.js"></script>
+  <script src="assets/js/config/imagetools.config.js"></script>
+  <script src="assets/js/core/units.js"></script>
+  <script type="module" src="assets/js/core/tokenizer.module.js"></script>
+  <script src="assets/js/pages/hesaplayici.js"></script>
+  <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/nav.js"></script>
+</body>
+</html>

@@ -21,7 +21,7 @@
     const host = $('ethicsCards'); if (!host) return;
     host.innerHTML = ETHICS.map((q, i) =>
       '<div class="card q-card">' +
-        '<span class="q-num">?' + '</span>' +
+        '<span class="q-num">' + (i + 1) + '</span>' +
         '<span class="q-txt text-soft">' + q + '</span>' +
       '</div>'
     ).join('');

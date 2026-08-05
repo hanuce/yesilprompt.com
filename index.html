@@ -3,109 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yeşil Prompt Atölyesi · Giriş</title>
-  <meta name="description" content="Yapay zekânın enerji ve su maliyetini anlamak ve verimli prompt yazmak için interaktif eğitim atölyesi." />
+  <title>Yeşil Prompt Resim Galerisi</title>
+  <meta name="description" content="Her eserin altında çevre maliyetinin yer aldığı, yapay zekâ ile üretilmiş kürasyonlu bir resim galerisi." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
-<body>
+<body class="gal-page">
 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="nav"><div class="wrap">
-    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
-    <button class="nav-toggle" aria-label="Menü">☰</button>
-    <div class="nav-links">
-      <a href="index.html" class="active">Giriş</a>
-      <a href="modeller.html">Modeller &amp; Tarih</a>
-      <a href="token-lab.html">Token Lab</a>
-      <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>
-      <a href="sergi.html">Yeşil Prompt Resim Sergisi</a>
-    </div>
-  </div></nav>
+  <!-- ===== BAŞLIK ===== -->
+  <header class="gal-head">
+    <h1 class="gal-title">Yeşil Prompt <span class="text-grad">Resim Galerisi</span></h1>
+  </header>
 
-  <!-- ===== SLAYTLAR ===== -->
-  <div class="fp-root"><div class="fp-track">
+  <!-- ===== ESERLER (menü ve açıklama yok) ===== -->
+  <main id="gallery" class="gal-grid" aria-label="Yeşil Prompt Resim Galerisi"></main>
 
-    <!-- 1 · HERO -->
-    <section class="fp-section tone-hero" id="giris" data-title="Giriş">
-      <div class="fp-inner center">
-        <h1 class="slide-title reveal hero-title">
-          Yapay zekânın görünmeyen bedelini anla,<br>
-          verimli ve <span class="text-grad">yeşil</span> prompt yaz.
-        </h1>
-        <p class="slide-lead reveal hero-lead center-x">
-          Bu atölyede modellerin <strong>nasıl oluştuğunu</strong>, token ile <strong>enerji ve su</strong>
-          ilişkisini ve <strong>prompt mühendisliğini</strong> öğreniyoruz. Sonunda ürettiğin eserleri,
-          her birinin çevre maliyetiyle birlikte <a href="sergi.html">Yeşil Prompt Resim Sergisi</a>’nde sergiliyoruz.
-        </p>
-        <div class="reveal cluster-c">
-          <a class="btn btn-primary" href="modeller.html">📚 Atölyeye başla</a>
-          <a class="btn btn-ghost" href="sergi.html">🖼️ Resim Sergisi’ni gör</a>
-        </div>
-      </div>
-      <div class="scroll-hint">
-        <div class="mouse"></div>
-        Kaydır ya da sağ-alttaki okları kullan
-      </div>
-    </section>
+  <!-- ===== SAĞ ALT: yüzen düğmeler ===== -->
+  <div class="fab-dock">
 
-    <!-- 2 · ETİK SORULAR -->
-    <section class="fp-section tone-a" id="sorular" data-title="Başlamadan: birkaç soru">
-      <div class="fp-inner">
-        <div class="section-head">
-          <span class="eyebrow reveal">Düşün · Sorgula</span>
-          <h2 class="slide-title reveal">Başlamadan: birkaç soru</h2>
-          <p class="slide-lead reveal lead-c">Doğru cevap aramıyoruz; birlikte düşünüyoruz. Atölye boyunca bu sorulara döneceğiz.</p>
-        </div>
-        <div id="ethicsCards" class="grid cols-3 reveal"></div>
-      </div>
-    </section>
+    <button id="musicBtn" class="fab fab-ghost" type="button" aria-pressed="false" aria-label="Fon müziğini aç">
+      <span class="fab-label">Müzik</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M11 5 6 9H3v6h3l5 4V5z"/>
+        <path class="ico-wave" d="M15.5 9.5a3.5 3.5 0 0 1 0 5"/>
+        <path class="ico-wave" d="M18.5 7a7 7 0 0 1 0 10"/>
+        <path class="ico-mute" d="M22 9.5 16 15.5M16 9.5l6 6"/>
+      </svg>
+    </button>
 
-    <!-- 3 · KÜNYE -->
-    <section class="fp-section tone-b" id="kunye" data-title="Künye">
-      <div class="fp-inner">
-        <div class="grid cols-2 items-center">
-          <div class="reveal">
-            <span class="eyebrow">🪪 Etkinlik künyesi</span>
-            <h2 class="slide-title">Bu atölye hakkında</h2>
-            <p class="slide-lead">
-              Sürdürülebilir Yeşil Prompt Atölyesi; veri okuryazarlığı, yapay zekâ okuryazarlığı ve
-              sürdürülebilir sanat temalarını birleştirir. Aşağıdaki künye, atölyenin sunulduğu proje
-              bilgisini taşır.
-            </p>
-          </div>
-          <div class="reveal">
-            <div id="kunyeBox" class="kunye"></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <a id="sergiCta" class="fab fab-primary" href="atolye.html" aria-label="Atölyeye gir">
+      <span class="fab-label">Atölyeye gir</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <path d="M10 16.5 14.5 12 10 7.5"/>
+        <path d="M14.5 12H3.5"/>
+      </svg>
+    </a>
 
-    <!-- 4 · MATERYAL & KAYNAK HAVUZU -->
-    <section class="fp-section tone-c" id="materyaller" data-title="Materyaller & Kaynaklar">
-      <div class="fp-inner">
-        <div class="section-head">
-          <span class="eyebrow reveal">Ek kaynaklar</span>
-          <h2 class="slide-title reveal">Materyaller &amp; Kaynaklar</h2>
-          <p class="slide-lead reveal lead-c">Atölyede kullanacağımız dosya, araç ve okuma bağlantılarının havuzu.</p>
-        </div>
-        <div class="card reveal">
-          <div id="materialsPool" class="pool"></div>
-        </div>
-        <p class="src reveal center mt-lg">© 2026 Yeşil Prompt Atölyesi · Tüm sayılar eğitim amaçlı tahminlerdir · Sunucu yok — saf statik site.</p>
-      </div>
-    </section>
+  </div>
 
-  </div></div>
+  <!-- ===== LIGHTBOX ===== -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Eser detayı" hidden>
+    <button id="boxClose" class="box-btn box-close" type="button" aria-label="Kapat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+    <button id="boxPrev" class="box-btn box-prev" type="button" aria-label="Önceki eser">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14.5 5 7.5 12l7 7"/>
+      </svg>
+    </button>
+    <button id="boxNext" class="box-btn box-next" type="button" aria-label="Sonraki eser">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9.5 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <div class="box-stage" id="boxMedia"></div>
+    <div class="box-bar" id="boxInfo"></div>
+  </div>
 
   <!-- ===== SCRIPTLER ===== -->
   <script src="assets/js/config/units.config.js"></script>
   <script src="assets/js/config/site.config.js"></script>
   <script src="assets/js/core/units.js"></script>
-  <script src="assets/js/pages/giris.js"></script>
-  <script src="assets/js/core/fullpage.js"></script>
-  <script src="assets/js/core/nav.js"></script>
+  <script src="assets/js/core/ambient.js"></script>
+  <script src="assets/js/pages/anasayfa.js"></script>
 </body>
 </html>

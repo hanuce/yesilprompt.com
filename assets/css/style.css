@@ -19,7 +19,8 @@
      11) TAM EKRAN SLAYT MOTORU
      12) SLAYT KONTROLÜ (dikey, sağ-alt) + nokta göstergesi
      13) YARDIMCI DÜZEN SINIFLARI (eski inline stillerin yerine)
-     14) BİLEŞENLER (hero, zaman tüneli, model aileleri, rally, galeri, künye…)
+     14) BİLEŞENLER (hero, zaman tüneli, difüzyon, shot kartları, galeri, künye…)
+     15) EK BİLEŞENLER (kod kutusu, epoch animasyonu, YZ çağı grafiği)
    ================================================================= */
 
 
@@ -155,16 +156,14 @@ img { max-width: 100%; display: block; }
 
 .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
   box-shadow: var(--shadow); padding: 1.5rem; }
-.card-hover { transition: transform .2s, box-shadow .2s, border-color .2s; }
-.card-hover:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--green-300); }
 .card-top { border-top: 4px solid var(--green-500); }
-.card-link { text-decoration: none; color: inherit; display: block; }
-.card-mint { background: var(--mint-50); }
 
 .chip { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .8rem; border-radius: 999px;
   background: var(--mint-100); color: var(--green-800); font-weight: 600; font-size: .85rem;
   border: 1px solid var(--line); text-decoration: none; }
 a.chip:hover { border-color: var(--green-400); }
+
+.big-emoji { font-size: 1.8rem; }   /* kart üstü ikon (emoji) */
 
 .grid { display: grid; gap: 1.25rem; }
 .cols-2 { grid-template-columns: repeat(2, 1fr); }
@@ -330,6 +329,11 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 .list-soft { color: var(--ink-soft); }
 .list-soft li { margin: .25rem 0; }
 
+/* Yalnızca ekran okuyucular için: gözle görünmez ama sesli okunur.
+   Bir etiketin yerini emoji aldığında, metin karşılığı burada saklanır. */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
 
 /* ===== 14) BİLEŞENLER =========================================== */
 
@@ -370,39 +374,19 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
    ("Güvenlik & etik" slaytındaki kartlarla aynı sade görünüm);
    özel .family-* kuralı gerekmez. */
 
-/* --- 14.7 YAPAY ZEKA RALLİSİ (değer barları) --- */
-.rally { display: flex; flex-direction: column; gap: .7rem; }
-.rally-row { display: grid; grid-template-columns: 150px 1fr 92px; gap: .8rem; align-items: center; }
-.rally-name { font-weight: 600; color: var(--ink-soft); font-size: .9rem; }
-.rally-name .tag { font-size: .72rem; color: var(--ink-mute); }
-.rally-track { height: 16px; border-radius: 999px; background: var(--mint-100); overflow: hidden; }
-.rally-bar { display: block; height: 100%; border-radius: 999px;
-  background: linear-gradient(90deg, var(--green-500), var(--leaf)); }
-.rally-bar.ai { background: linear-gradient(90deg, var(--violet), #a98cff); }
-.rally-val { font-family: var(--font-head); font-weight: 800; color: var(--green-800); text-align: right; font-size: .95rem; }
-@media (max-width: 640px) { .rally-row { grid-template-columns: 110px 1fr 70px; } .rally-val { font-size: .82rem; } }
-
-/* --- 14.8 KARŞILAŞTIRMA "vs" (metin/görsel/video) --- */
-.vs-wrap { display: flex; justify-content: space-around; align-items: center; gap: .6rem; }
-.vs-item { text-align: center; }
-.vs-emoji { font-size: 2.4rem; }
-.vs-num { font-family: var(--font-head); font-weight: 800; font-size: 1.6rem; }
-.vs-sep { font-size: 1.6rem; color: var(--ink-mute); }
-.big-emoji { font-size: 1.8rem; }
-
-/* --- 14.9 DİFÜZYON SİMÜLASYONU --- */
+/* --- 14.7 DİFÜZYON SİMÜLASYONU --- */
 .diff-canvas { width: 260px; max-width: 100%; aspect-ratio: 1 / 1; image-rendering: pixelated;
   border-radius: 14px; border: 1px solid var(--line); }
 .big-num { font-family: var(--font-head); font-weight: 800; font-size: 2.4rem; color: var(--green-700); }
 .huge-num { font-family: var(--font-head); font-weight: 800; font-size: 1.9rem; color: var(--green-800); line-height: 1.15; margin: .2rem 0; }
 
-/* --- 14.10 HESAPLAYICI sayaç vurguları --- */
+/* --- 14.8 HESAPLAYICI sayaç vurguları --- */
 .count-xl { font-family: var(--font-head); font-weight: 800; font-size: 2rem; color: var(--green-700); }
 .count-lg { font-weight: 700; font-size: 1.2rem; }
 .engine-badge { margin-left: auto; }
 .breakdown-row { display: flex; justify-content: space-between; }
 
-/* --- 14.11 SHOT / PROMPT MÜHENDİSLİĞİ kartları --- */
+/* --- 14.9 SHOT / PROMPT MÜHENDİSLİĞİ kartları --- */
 .shot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 @media (max-width: 900px) { .shot-grid { grid-template-columns: 1fr; } }
 .prompt-box { font-family: ui-monospace, 'SF Mono', monospace; font-size: .86rem; background: var(--mint-50);
@@ -414,29 +398,16 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
   font-weight: 800; color: #fff; background: linear-gradient(135deg, var(--green-500), var(--green-700)); }
 .rule-card .rule-txt { align-self: center; }
 
-/* --- 14.12 GALERİ (Yeşil Prompt Resim Sergisi) --- */
-.gallery { columns: 3 260px; column-gap: 1.1rem; }
-.gallery-item { break-inside: avoid; margin: 0 0 1.1rem; border-radius: var(--radius-sm); overflow: hidden;
-  border: 1px solid var(--line); box-shadow: var(--shadow); background: #fff; transition: transform .2s, box-shadow .2s; }
-.gallery-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-.gallery-figure { margin: 0; }
-.gallery-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: var(--mint-100); display: block; }
-.gallery-cap { padding: .8rem .9rem; }
-.gallery-title { font-family: var(--font-head); font-weight: 700; font-size: .96rem; margin: 0 0 .15rem; }
-.gallery-stamp { font-size: .76rem; color: var(--ink-mute); line-height: 1.5; }
-.gallery-stamp b { color: var(--green-700); }
-.gallery-empty { border: 2px dashed var(--line); border-radius: var(--radius); padding: 2rem; text-align: center; color: var(--ink-mute); }
-
-/* Placeholder görsel (gerçek resim gelene kadar şık degrade) */
-.ph { display: grid; place-items: center; aspect-ratio: 1 / 1; width: 100%;
-  background: linear-gradient(135deg, var(--mint-100), var(--water-50));
-  color: var(--green-700); font-size: 2.4rem; }
+/* --- 14.10 ESER YER TUTUCU RENKLERİ ---
+   Gerçek resim gelene kadar gösterilen degradeler. Hem sergi
+   ızgarasında (.gal-ph) hem lightbox'ta (.box-ph) kullanılır;
+   düzenleri 16. bölümdedir. */
 .ph-a { background: linear-gradient(135deg, #d9f2e4, #cfe9fb); }
 .ph-b { background: linear-gradient(135deg, #e9e2fb, #d9f2e4); }
 .ph-c { background: linear-gradient(135deg, #fdeccf, #d9f2e4); }
 .ph-d { background: linear-gradient(135deg, #cfe9fb, #fde2ec); }
 
-/* --- 14.13 KAYNAKÇA (APA listesi) --- */
+/* --- 14.11 KAYNAKÇA (APA listesi) --- */
 .refs { list-style: none; padding: 0; margin: 0; counter-reset: ref; }
 .refs li { position: relative; padding: .5rem 0 .5rem 2rem; border-bottom: 1px solid var(--line);
   font-size: .86rem; color: var(--ink-soft); line-height: 1.6; }
@@ -504,10 +475,252 @@ circle.era-trrez { fill: var(--amber); }
 .era-key.era-trgdp { color: var(--red); }
 .era-key.era-trrez { color: var(--amber); }
 
-/* Hareket azaltma tercihi: animasyonları durdur */
+/* ===== 16) RESİM GALERİSİ (index.html) ==========================
+   Anasayfa, atölyeyle AYNI beyaz-nane tabanı kullanır; ayrıldığı yer
+   şu: üst menü ve açıklama metni yoktur. Başlıktan sonra doğrudan
+   eserler gelir, gezinme sağ alttaki yuvarlak düğmelerle olur.
+
+   Eserler sabit 3'lü ızgarada, yeşil çerçeveli ve gölgeli durur —
+   zeminden yükselmiş, çerçevelenmiş tablolar gibi.
+
+   Buradaki her şey EKLEMEDİR; 1-15. bölümlerdeki hiçbir kural
+   değişmemiştir. Mevcut değişkenler (--green-*, --shadow…) yeniden
+   kullanılır; yalnızca galeriye özel birkaç ölçü eklenir. */
+:root {
+  --gal-bg:     var(--mint-50);   /* galeri zemini — atölyenin nane tabanı */
+  --gal-border: 3px;              /* eser çerçevesi kalınlığı */
+  --gal-gap:    1.7rem;           /* eserler arası boşluk */
+  /* Yükselti gölgesi: eser zeminden kalkmış gibi dursun */
+  --gal-lift:    0 10px 22px -12px rgba(13,90,50,.42), 0 22px 48px -26px rgba(13,90,50,.5);
+  --gal-lift-hi: 0 18px 32px -14px rgba(13,90,50,.5),  0 34px 70px -30px rgba(13,90,50,.6);
+}
+
+/* --- 16.1 SAYFA + BAŞLIK --- */
+.gal-page { background: var(--gal-bg); min-height: 100%; }
+.gal-page.box-open { overflow: hidden; }
+
+.gal-head { text-align: center; padding: 3.4rem 22px 2.2rem; }
+.gal-title { font-family: var(--font-head); font-weight: 800; letter-spacing: -0.02em;
+  font-size: clamp(1.9rem, 4.6vw, 3rem); line-height: 1.12; margin: 0; color: var(--ink); }
+
+/* --- 16.2 SABİT 3'LÜ IZGARA ---
+   Her eser kare olarak kırpılır; satırlar hizalı ve düzenli kalır.
+   Dar ekranda 2'ye, telefonda 1'e iner. */
+.gal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gal-gap);
+  max-width: 1180px; margin: 0 auto; padding: .5rem 26px 5.5rem; }
+@media (max-width: 900px) { .gal-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .gal-grid { grid-template-columns: 1fr; gap: 1.3rem; padding: .5rem 18px 5rem; } }
+
+.gal-item {
+  position: relative; display: block; width: 100%; overflow: hidden;
+  margin: 0; padding: 0; cursor: zoom-in; font: inherit; color: inherit;
+  background: #fff;
+  border: var(--gal-border) solid var(--green-500);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--gal-lift);
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+.gal-item:hover, .gal-item:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--green-600);
+  box-shadow: var(--gal-lift-hi);
+}
+.gal-item:focus { outline: none; }
+.gal-item:focus-visible { outline: 3px solid var(--green-300); outline-offset: 3px; }
+
+.gal-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block;
+  transition: transform .7s cubic-bezier(.2,.7,.3,1); }
+.gal-item:hover .gal-img { transform: scale(1.05); }
+
+/* Yer tutucu (gerçek resim gelene kadar) */
+.gal-ph { display: grid; place-items: center; width: 100%; aspect-ratio: 1 / 1; font-size: 2.8rem;
+  transition: transform .7s cubic-bezier(.2,.7,.3,1); }
+.gal-item:hover .gal-ph { transform: scale(1.05); }
+
+/* Eser adı: normalde gizli, üzerine gelince alttan yükselen ince bir perde */
+.gal-veil { position: absolute; inset: auto 0 0 0; display: flex; align-items: flex-end;
+  justify-content: space-between; gap: .8rem; padding: 2.4rem .9rem .75rem;
+  background: linear-gradient(to top, rgba(6,26,15,.88), rgba(6,26,15,.4) 55%, transparent);
+  opacity: 0; transform: translateY(8px); transition: opacity .28s ease, transform .28s ease; }
+.gal-item:hover .gal-veil, .gal-item:focus-visible .gal-veil { opacity: 1; transform: none; }
+.gal-name { font-family: var(--font-head); font-weight: 700; font-size: 1rem; line-height: 1.25;
+  color: #fff; text-align: left; }
+.gal-wh { flex: none; font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+  color: var(--green-300); padding-bottom: .15rem; white-space: nowrap; }
+
+.gal-empty { grid-column: 1 / -1; color: var(--ink-mute); text-align: center;
+  border: 2px dashed var(--line); border-radius: var(--radius); padding: 3.5rem 2rem; }
+.gal-empty code { font-family: ui-monospace, 'SF Mono', monospace; font-size: .85rem; color: var(--green-700); }
+
+/* --- 16.3 LIGHTBOX — ışık esere düşer, bilgi altta kompakt durur ---
+   Sayfa açık renk, lightbox koyu: esere bakarken göz dağılmasın.
+   Koyu bağlamın tonları burada, yalnızca lightbox'a kapalı tanımlıdır. */
+.lightbox { position: fixed; inset: 0; z-index: 2000; background: rgba(6,10,7,.97);
+  display: flex; flex-direction: column; padding: 3.2rem 4.6rem 1.4rem; gap: 1rem;
+  --box-ink: #ece9e2; --box-mute: #7e8a80; --box-frame: rgba(255,255,255,.15); }
+.lightbox[hidden] { display: none; }
+
+.box-stage { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.box-img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;
+  border: 1px solid var(--box-frame); box-shadow: 0 40px 90px -40px #000; }
+.box-ph { display: grid; place-items: center; height: 100%; aspect-ratio: 1 / 1; font-size: 5rem;
+  border: 1px solid var(--box-frame); }
+
+/* Bilgi şeridi: tek blok, dar, ortalı — resme yer bırakır */
+.box-bar { flex: none; width: 100%; max-width: 780px; margin: 0 auto; }
+.box-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.box-title { font-family: var(--font-head); font-weight: 700;
+  font-size: clamp(1.15rem, 2.1vw, 1.55rem); line-height: 1.2; margin: 0; color: #fff; }
+.box-pos { flex: none; font-size: .7rem; letter-spacing: .16em; color: var(--box-mute); }
+.box-prompt { margin: .4rem 0 .7rem; font-size: .85rem; line-height: 1.55; color: #a9b0a7;
+  font-style: italic; }
+/* "Prompt:" etiketi — promptun kendisi italik, etiket düz dursun */
+.box-prompt b { font-style: normal; font-weight: 600; color: var(--box-mute); }
+.box-chips { display: flex; flex-wrap: wrap; gap: .35rem .45rem; }
+.box-chip { display: inline-flex; align-items: center; gap: .4rem; font-size: .78rem;
+  color: var(--box-ink); background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.09); border-radius: 999px; padding: .3rem .7rem .3rem .55rem; }
+/* Etiketin yerini alan emoji — küçük ve silik değil, ikon gibi durmalı */
+.box-chip b { font-size: .95rem; line-height: 1; font-weight: 400;
+  letter-spacing: 0; text-transform: none; font-style: normal; }
+
+.box-btn { position: fixed; z-index: 2001; border: 0; cursor: pointer; color: #9aa39a;
+  background: rgba(255,255,255,.06); border-radius: 50%; display: grid; place-items: center;
+  padding: 0; transition: background .2s, color .2s; }
+.box-btn:hover { background: rgba(255,255,255,.14); color: #fff; }
+.box-btn svg { width: 20px; height: 20px; }
+.box-close { top: 16px; right: 18px; width: 42px; height: 42px; }
+.box-prev, .box-next { top: 50%; transform: translateY(-50%); width: 48px; height: 48px; }
+.box-prev { left: 14px; }
+.box-next { right: 14px; }
+
+@media (max-width: 900px) {
+  .lightbox { padding: 3.4rem 1rem 1rem; }
+  .box-prev, .box-next { top: auto; bottom: 12px; transform: none; width: 42px; height: 42px; }
+  .box-prev { left: 12px; } .box-next { right: 12px; }
+  .box-bar { padding-bottom: 3.2rem; }
+}
+
+/* --- 16.4 SAĞ ALT YÜZEN DÜĞMELER ---
+   Atölye kapısı + müzik. Üzerine gelince etiket soldan açılır. */
+.fab-dock { position: fixed; right: 20px; bottom: 20px; z-index: 900;
+  display: flex; align-items: center; gap: 10px; }
+
+.fab { position: relative; display: inline-grid; place-items: center; flex: none;
+  width: 52px; height: 52px; border-radius: 50%; border: 1px solid transparent;
+  cursor: pointer; text-decoration: none; padding: 0; font: inherit;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease; }
+.fab:hover { transform: translateY(-3px); }
+.fab svg { width: 22px; height: 22px; }
+
+.fab-primary { width: 58px; height: 58px;
+  background: linear-gradient(135deg, var(--green-500), var(--green-700)); color: #fff;
+  box-shadow: 0 14px 30px -10px rgba(22,163,74,.75); }
+.fab-primary:hover { color: #fff; box-shadow: 0 20px 40px -12px rgba(22,163,74,.9); }
+.fab-primary svg { width: 25px; height: 25px; }
+
+.fab-ghost { background: rgba(255,255,255,.92); color: var(--ink-mute);
+  border-color: var(--line); box-shadow: var(--shadow); backdrop-filter: blur(8px); }
+.fab-ghost:hover { color: var(--green-700); border-color: var(--green-300); }
+.fab-ghost.on { color: var(--green-700); border-color: var(--green-400);
+  background: var(--mint-100); }
+
+/* Ses ikonu: kapalıyken çarpı, açıkken dalgalar */
+.ico-wave, .ico-mute { transition: opacity .2s ease; }
+.fab-ghost .ico-wave { opacity: 0; }
+.fab-ghost .ico-mute { opacity: 1; }
+.fab-ghost.on .ico-wave { opacity: 1; }
+.fab-ghost.on .ico-mute { opacity: 0; }
+.fab-ghost.on .ico-wave { animation: fabPulse 2.4s ease-in-out infinite; }
+.fab-ghost.on .ico-wave:last-of-type { animation-delay: .3s; }
+@keyframes fabPulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
+/* Etiket: düğmenin solunda, üzerine gelince açılır */
+.fab-label { position: absolute; right: calc(100% + 10px); white-space: nowrap;
+  font-size: .76rem; font-weight: 600; color: var(--green-800);
+  background: rgba(255,255,255,.95); border: 1px solid var(--line);
+  padding: .34rem .7rem; border-radius: 999px; box-shadow: var(--shadow);
+  opacity: 0; transform: translateX(6px); pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease; }
+.fab:hover .fab-label, .fab:focus-visible .fab-label { opacity: 1; transform: none; }
+
+@media (max-width: 640px) {
+  .fab-dock { right: 14px; bottom: 14px; gap: 8px; }
+  .fab { width: 46px; height: 46px; }
+  .fab-primary { width: 52px; height: 52px; }
+  .fab-label { display: none; }
+}
+
+
+/* ===== 17) HESAPLAYICI ==========================================
+   Sayfa düzeninin tamamı mevcut bileşenlerden kurulur
+   (.card .grid .metric .status .field .code-box .table).
+   Burada yalnızca başka yerde karşılığı olmayan üç şey var:
+   dayanak rozetleri, damga önizlemesi ve uzun tablonun kaydırması. */
+
+/* --- 17.1 DAYANAK / ERİŞİM ROZETLERİ ---
+   Bir sayının ölçüme mi tahmine mi dayandığını göstermek
+   içeriğin doğruluğu kadar önemlidir (bkz. SITE_RULES 1.4). */
+.tag { display: inline-block; font-size: .66rem; font-weight: 700; letter-spacing: .04em;
+  padding: .12rem .45rem; border-radius: 6px; border: 1px solid; margin-right: .25rem;
+  white-space: nowrap; vertical-align: middle; }
+.tag-meas { color: var(--green-800); background: var(--mint-100); border-color: var(--green-300); }
+.tag-est  { color: var(--amber);     background: #fdf3e2;         border-color: #f3d49a; }
+.tag-free { color: var(--water);     background: var(--water-50);  border-color: #b6dff5; }
+.tag-open { color: var(--violet);    background: #f0e9fb;          border-color: #d5c6f5; }
+
+/* --- 17.2 SERGİ DAMGASI ÖNİZLEMESİ ---
+   Galerideki lightbox çipleriyle aynı dili konuşur; fark, açık
+   zeminde durmasıdır. Öğrenci burada gördüğünü orada da görür. */
+.stamp-preview { display: flex; flex-wrap: wrap; gap: .35rem .45rem; }
+.stamp-chip { display: inline-flex; align-items: center; gap: .4rem; font-size: .78rem;
+  color: var(--ink); background: var(--mint-50); border: 1px solid var(--line);
+  border-radius: 999px; padding: .3rem .7rem .3rem .55rem; }
+.stamp-chip b { font-size: .95rem; line-height: 1; font-weight: 400; }
+
+/* --- 17.3 UZUN ARAÇ TABLOSU ---
+   Liste büyüdükçe slayt içinde taşmasın diye kendi içinde kayar. */
+.tool-scroll { max-height: 56vh; overflow-y: auto; overflow-x: auto; }
+.tool-scroll .table { min-width: 640px; }
+.tool-scroll thead th { position: sticky; top: 0; background: #fff; z-index: 1;
+  box-shadow: inset 0 -1px 0 var(--line); }
+
+
+/* ===== HAREKET AZALTMA TERCİHİ ==================================
+   Kural: sitedeki TÜM animasyon ve hareketli geçişler burada kapanır.
+   Görünürlük korunur (içerik kaybolmaz), yalnızca HAREKET kalkar:
+   slayt anında geçer, kartlar zıplamaz, tarama/çizim animasyonu durur.
+   Yeni bir animasyon eklersen onu da bu bloğa eklemeyi unutma. */
 @media (prefers-reduced-motion: reduce) {
+  /* Slayt motoru: kaydırma yerine anında geçiş */
+  .fp-track { transition: none; }
+
+  /* Slayt içi giriş animasyonu: kaymadan, doğrudan görünür */
+  .fp-section .reveal { transition: none; transform: none; }
+  .fp-section.active .reveal { transition-delay: 0s; }
+
+  /* Kaydır ipucu: yanıp sönen tekerlek durur */
+  .scroll-hint .mouse::after { animation: none; }
+
+  /* Hover'da yükselme / büyüme hareketleri */
+  .btn { transition: background .15s, border-color .15s; }
+  .btn-primary:hover { transform: none; }
+  .fp-dots button { transition: none; }   /* aktif nokta büyük kalır, sadece geçiş kalkar */
+  .nav-links { transition: none; }
+
+  /* Anlatım animasyonları (15. bölüm) */
   .fp-section.active .epoch-tok { animation: none; }
   .fp-section.active .era-line { animation: none; stroke-dashoffset: 0; }
+
+  /* Sergi salonu (16. bölüm) */
+  .gal-item { transition: none; }
+  .gal-img, .gal-ph { transition: none; }
+  .gal-item:hover .gal-img, .gal-item:hover .gal-ph { transform: none; }
+  .gal-veil { transition: none; }           /* üzerine gelince anında görünür, kaymaz */
+  .fab { transition: background .2s, border-color .2s, color .2s; }
+  .fab:hover { transform: none; }
+  .fab-label { transition: opacity .2s ease; transform: none; }
+  .fab-ghost.on .ico-wave { animation: none; opacity: 1; }
 }
 
 
@@ -518,4 +731,13 @@ circle.era-trrez { fill: var(--amber); }
   .fp-track { transform: none !important; }
   .fp-section { height: auto; page-break-inside: avoid; }
   .fp-dots, .fp-arrows, .nav, .scroll-hint { display: none !important; }
+
+  /* Galeri: katalog gibi bassın — ekran kontrolleri çıkmasın */
+  .fab-dock, .lightbox { display: none !important; }
+  .gal-page { background: #fff; }
+  .gal-item { break-inside: avoid; box-shadow: none; }
+  .gal-veil { opacity: 1; transform: none; background: none; position: static;
+    padding: .4rem .2rem 0; }
+  .gal-name { color: #000; }
+  .gal-wh { color: var(--green-800); }
 }
