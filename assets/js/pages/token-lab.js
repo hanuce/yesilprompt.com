@@ -91,7 +91,7 @@
       const outWh = calc.outTokens / 1000 * m.outWh1k;
       const effortWh = window.EFFORT_LEVELS[calc.effort].hidden / 1000 * m.outWh1k;
       perRun = inWh + outWh + effortWh;
-      breakdown = { 'Girdi token (prefill)': inWh, 'Çıktı token (decode)': outWh, 'Efor / gizli düşünme': effortWh };
+      breakdown = { 'Girdi: promptu okumak': inWh, 'Çıktı: cevabı yazmak': outWh, 'Cevaptan önceki düşünme': effortWh };
     } else if (calc.mode === 'image') {
       const m = window.IMAGE_MODELS[calc.imageModel];
       perRun = m.whPer;
@@ -116,7 +116,11 @@
     else if (total > 1) { cls = 'amber'; txt = '⚠️ Orta maliyet'; }
     $('status').className = 'status ' + cls; $('status').textContent = txt;
 
-    $('energyHuman').textContent = U_.human(total);
+    /* Eşdeğer HER ZAMAN telefon şarjı cinsinden (bkz. SITE_RULES 7).
+       human() değere göre birim değiştirirdi (şarj / video / LED); o zaman
+       kaydırıcıyı oynatınca birim de değişir ve öğrenci iki sonucu
+       birbiriyle karşılaştıramazdı. */
+    $('energyHuman').textContent = U_.phoneText(total);
     $('energyTech').textContent = 'teknik: ' + U_.fmt(total, 2) + ' Wh  ·  tek üretim ' + U_.fmt(perRun, 2) + ' Wh × ' + calc.attempts + ' deneme';
 
     const tiles = [
@@ -173,7 +177,11 @@
     setMode('text');
   }
 
-  /* ---------- 3) ÇIKTI MALİYETİ: karşılaştırma kartları ---------- */
+  /* ---------- 3) ÇIKTI MALİYETİ: karşılaştırma kartları ----------
+     Üç kart YAN YANA durur ve tek amaçları metin < görsel < video
+     farkını göstermektir. Bu yüzden üçü de TEK birimden — telefon
+     şarjından — okunur. human() kullanılsaydı ikisi LED/video,
+     biri şarj çıkar ve karşılaştırma anlamını yitirirdi. */
   function renderCompare() {
     const host = $('compareCards'); if (!host || !window.COMPARE_BASELINE) return;
     const U_ = U();
@@ -185,7 +193,7 @@
         '<div class="card card-top center">' +
           '<div class="big-emoji">' + icons[k] + '</div>' +
           '<h3>' + c.label + '</h3>' +
-          '<div class="huge-num">' + U_.human(c.wh) + '</div>' +
+          '<div class="huge-num">' + U_.phoneText(c.wh) + '</div>' +
           '<div class="src">' + c.note + ' · ~' + U_.fmt(c.wh, 2) + ' Wh</div>' +
         '</div>'
       );

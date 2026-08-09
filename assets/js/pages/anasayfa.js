@@ -5,10 +5,12 @@
    metni YOKTUR. Ziyaretçiyi doğrudan ilk eser karşılar.
 
    1) Sabit 3'lü ızgara (dar ekranda 2, telefonda 1'e iner).
+      Her eserin altında müze etiketi gibi bir künye durur:
+      eser adı · üreten · model · enerji.
    2) Lightbox — esere tıklayınca; bilgiler altta kompakt bir şerit.
-   3) Sağ altta iki yuvarlak düğme: müzik ve atölye kapısı.
+   3) Sağ altta yuvarlak atölye kapısı düğmesi.
 
-   İçerik config/site.config.js içindedir (SERGI, GALLERY, AMBIENT).
+   İçerik config/site.config.js içindedir (SERGI, GALLERY).
    ========================================================= */
 (function () {
   'use strict';
@@ -21,6 +23,15 @@
       .replace(/[&<>"]/g, function (c) {
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
       });
+  }
+
+  /* Tarih config'e sıralanabilir olsun diye ISO yazılır (2026-03-14);
+     ekranda künyedeki biçimde görünür (14.03.2026). Başka bir biçimde
+     yazılmışsa (ör. "Mart 2026") olduğu gibi bırakılır. */
+  function fmtDate(v) {
+    var s = String(v == null ? '' : v).trim();
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+    return m ? m[3] + '.' + m[2] + '.' + m[1] : s;
   }
 
   var items = [];
@@ -53,13 +64,23 @@
       var wh = totalWh(it);
       var badge = (U_ ? U_.fmt(wh, 1) : wh) + ' Wh';
 
+      /* Künye satırı: üreten ve model. Emojiler lightbox'takilerle
+         aynıdır (👤 üreten, 🧩 model) — dil her yerde tutarlı kalsın.
+         Boş alanlar hiç yazılmaz; tarih burada değil, lightbox'ta durur. */
+      var meta = [];
+      if (it.by)    meta.push('<span title="Üreten">👤 ' + esc(it.by) + '</span>');
+      if (it.model) meta.push('<span title="Model">🧩 ' + esc(it.model) + '</span>');
+
       return (
         '<button class="gal-item" type="button" data-i="' + i + '" ' +
           'aria-label="' + esc(it.title) + ' — büyüt">' +
-          media +
-          '<span class="gal-veil">' +
+          '<span class="gal-frame">' + media + '</span>' +
+          '<span class="gal-cap">' +
             '<span class="gal-name">' + esc(it.title) + '</span>' +
-            '<span class="gal-wh">' + esc(badge) + '</span>' +
+            '<span class="gal-line">' +
+              '<span class="gal-meta">' + meta.join('') + '</span>' +
+              '<span class="gal-wh">⚡ ' + esc(badge) + '</span>' +
+            '</span>' +
           '</span>' +
         '</button>'
       );
@@ -115,6 +136,9 @@
     if ((it.variants || 1) > 1) {
       chips.splice(2, 0, ['🖼️', 'Her denemede', it.variants + ' görsel']);
     }
+    /* Üreten ve tarih en başa: eserin kim tarafından ne zaman
+       yapıldığı, maliyet rakamlarından önce okunur. */
+    if (it.date) chips.unshift(['📅', 'Oluşturulma tarihi', fmtDate(it.date)]);
     if (it.by) chips.unshift(['👤', 'Üreten', it.by]);
 
     return (
@@ -189,7 +213,7 @@
     });
   }
 
-  /* ---------- SAĞ ALT DÜĞMELER ---------- */
+  /* ---------- SAĞ ALT DÜĞME ---------- */
   function wireCta() {
     var a = $('sergiCta'); if (!a) return;
     var S = window.SERGI || {};
@@ -201,29 +225,12 @@
     }
   }
 
-  function wireMusic() {
-    var btn = $('musicBtn');
-    if (!btn || !window.Ambient) { if (btn) btn.hidden = true; return; }
-
-    window.Ambient.onChange(function (on) {
-      btn.classList.toggle('on', on);
-      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.setAttribute('aria-label', on ? 'Fon müziğini kapat' : 'Fon müziğini aç');
-      var lbl = btn.querySelector('.fab-label');
-      if (lbl) lbl.textContent = on ? 'Müzik açık' : 'Müzik';
-    });
-
-    btn.addEventListener('click', function () { window.Ambient.toggle(); });
-    window.Ambient.arm();
-  }
-
   /* ---------- Başlat ---------- */
   function init() {
     items = window.GALLERY || [];
     renderGallery();
     wireBox();
     wireCta();
-    wireMusic();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -32,5 +32,5 @@ window.AI_TIMELINE = [
 
   { year: '2022–Günümüz', title: 'Yapay Zeka Patlaması',
     by: 'OpenAI · Google · Anthropic · Meta · DeepSeek…',
-    body: 'ChatGPT ile üretken YZ herkesin eline geçti. Artık modeller “düşünüyor” (reasoning) ve metni, resmi, sesi birlikte işliyor (çok-kipli). Kullanım ve yatırım patladı.' }
+    body: 'ChatGPT ile üretken YZ herkesin eline geçti. Artık modeller cevap vermeden önce “düşünüyor” ve metni, resmi, sesi birlikte işliyor. Kullanım ve yatırım patladı.' }
 ];

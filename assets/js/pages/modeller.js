@@ -2,7 +2,7 @@
    MODELLER & TARİH sayfası — render mantığı
    İçerik config dosyalarından gelir:
      timeline.config.js   → AI_TIMELINE
-     training.config.js   → GPT3_DATA, DATA_PROJECTS, TRAINING_COSTS
+     training.config.js   → TRAINING_DATA, DATA_PROJECTS, TRAINING_COSTS
      families.config.js   → MODEL_FAMILIES
      valuations.config.js → AI_ERA
    Not: "Transformer teknolojisi" ve "Model nedir, nasıl eğitilir?"
@@ -28,19 +28,26 @@
     ).join('') + '</div>';
   }
 
-  /* --- 2) GPT-3 hangi veriyle eğitildi (tablo) --- */
-  function renderGpt3() {
-    const host = $('gpt3Table'); if (!host || !window.GPT3_DATA) return;
-    const d = window.GPT3_DATA;
+  /* --- 2) Modeller veriyi nereden buluyor (tablo) --- */
+  function renderDataMix() {
+    const host = $('dataTable'); if (!host || !window.TRAINING_DATA) return;
+    const d = window.TRAINING_DATA;
     host.innerHTML =
-      '<thead><tr><th>Veri kaynağı</th><th class="num">Boyut</th><th class="num">Ağırlık</th><th class="num">Epoch</th></tr></thead><tbody>' +
+      '<thead><tr><th>Veri kaynağı</th><th class="num">Boyut</th><th class="num">Pay</th>' +
+      '<th class="num">Kaç kez okundu</th></tr></thead><tbody>' +
       d.rows.map(r =>
         '<tr><td><b>' + r.name + '</b><div class="src">' + r.note + '</div></td>' +
-        '<td class="num">' + r.tokens + '</td><td class="num">' + r.share + '</td>' +
-        '<td class="num text-green"><b>' + r.epochs + '</b></td></tr>'
+        '<td class="num">' + r.size + '</td><td class="num">' + r.share + '</td>' +
+        '<td class="num text-green"><b>' + r.reps + '</b></td></tr>'
       ).join('') + '</tbody>';
-    const cap = $('gpt3Caption');
-    if (cap) cap.textContent = d.params + ' · ' + d.trainedTokens + ' üzerinde eğitildi.';
+
+    const rest = $('dataRest');
+    if (rest) rest.textContent = d.restNote;
+    const cap = $('dataCaption');
+    if (cap) {
+      cap.innerHTML = 'Kaynak: ' + d.cite +
+        ' · <a href="' + d.url + '" target="_blank" rel="noopener">makaleyi aç ↗</a>';
+    }
   }
 
   /* --- 3) Veri düzenleme / sınıflandırma projeleri --- */
@@ -147,7 +154,7 @@
   }
 
   function init() {
-    renderTimeline(); renderGpt3(); renderDataProjects();
+    renderTimeline(); renderDataMix(); renderDataProjects();
     renderCosts(); renderFamilies(); renderEra();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -10,7 +10,9 @@
       "Grep",
       "PowerShell(Start-Process -FilePath \"python\" -ArgumentList \"-m\",\"http.server\",\"8099\" -WorkingDirectory \"C:\\\\Users\\\\X550VX\\\\Documents\\\\GitHub\\\\yesilprompt.com\" -WindowStyle Hidden -PassThru | Select-Object Id)",
       "PowerShell(\\(Invoke-WebRequest -Uri \"http://localhost:8099/sergi.html\" -UseBasicParsing\\).StatusCode)",
-      "WebFetch(domain:artvee.com)"
+      "WebFetch(domain:artvee.com)",
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:ar5iv.labs.arxiv.org)"
     ]
   }
 }

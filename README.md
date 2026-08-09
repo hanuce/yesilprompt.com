@@ -25,25 +25,30 @@ prompt, model, deneme sayısı ve çevre maliyeti yazar. Atölyenin tamamına bu
   nasıl eğitildiği, model aileleri ve sektörün büyüme grafikleri.
 - **Prompt mühendisliği** — daha az kaynakla daha iyi sonuç almanın yolları; örneklerle önce/sonra
   karşılaştırmaları.
-- **Görsel maliyet hesaplayıcı** — 29 görsel üretim aracı arasından seçip kendi eserinin
+- **Ne Kadar?** — 29 görsel üretim aracı arasından seçip kendi eserinin
   enerji/su/karbon maliyetini hesaplar ve sergiye eklenecek etiketi üretir. Ölçüme dayanan
   değerler ile sınıf tahminleri **ayrı ayrı işaretlenir**.
-- **Yeşil Prompt Resim Sergisi** — menüsüz, karanlık bir sergi salonu. Esere tıklayınca prompt,
-  model, deneme sayısı ve çevre maliyeti okunur.
+- **Yeşil Prompt Resim Sergisi** — menüsüz bir sergi salonu. Her eserin altında müze etiketi
+  gibi bir künye durur (eser adı, üreten, model, enerji); esere tıklayınca prompt, oluşturulma
+  tarihi, deneme sayısı ve çevre maliyetinin tamamı okunur.
 
 ## Sayfalar
 
 | Sayfa | İçerik |
 |---|---|
-| **Sergi** (anasayfa) | Menüsüz karanlık galeri, enerji damgalı eserler, sinematik fon müziği |
-| **Atölye Girişi** | Tanıtım, etik sorular, künye, materyal ve kaynak havuzu |
-| **Modeller & Tarih** | Yapay zeka tarihi, modelin nasıl eğitildiği, donanım, model aileleri, sektör büyümesi |
+| **Sergi** (anasayfa) | Menüsüz galeri, künyeli ve enerji damgalı eserler |
+| **Atölye Girişi** | Açılış soruları, materyal ve kaynak havuzu |
+| **Modeller & Tarih** | Yapay zekâ tarihi, Transformer nasıl çalışır, modelin nasıl eğitildiği, eğitim verisi, model aileleri, sektör büyümesi |
 | **Token Lab** | Token nedir, canlı tokenizer, çok dillilik, enerji & su hesaplayıcı |
 | **Prompt Mühendisliği** | Shot tipleri, iyi promptun parçaları, Yeşil Prompt Kuralları |
-| **Hesaplayıcı** | Kendi görselinin maliyetini hesapla, araçları karşılaştır, sergi etiketini üret |
+| **Ne Kadar?** | Kendi görselinin maliyetini hesapla, araçları karşılaştır, sergi etiketini üret |
 
-Anasayfada üst menü yoktur: ziyaretçiyi doğrudan eserler karşılar, gezinme sağ alttaki iki
-yuvarlak düğmeyle olur. Eserler kendi en/boy oranlarına göre dizilir — bir satırda kaç eser
+Sergi dışındaki her sayfa, künye · site haritası · telif bilgisini taşıyan **ortak bir
+footer** ile biter. Karşılaştırılan tüm enerji değerleri tek bir birimden — **telefon
+şarjından** — okunur; böylece iki sonuç her zaman birbiriyle kıyaslanabilir.
+
+Anasayfada üst menü yoktur: ziyaretçiyi doğrudan eserler karşılar, gezinme sağ alttaki
+yuvarlak "Atölyeye gir" düğmesiyle olur. Eserler kendi en/boy oranlarına göre dizilir — bir satırda kaç eser
 olacağını görsellerin biçimi belirler. **Atölye sayfaları** ise tam ekran slaytlardan oluşur;
 fare tekeri, ok tuşları, dokunma ya da yan noktalarla gezilir.
 
@@ -53,10 +58,7 @@ Saf **HTML + CSS + JavaScript**. Çerçeve, build adımı veya sunucu yoktur —
 GitHub Pages'te yayınlanır ve tüm hesaplamalar tarayıcıda çalışır. Tek dış bağımlılıklar
 Google Fonts ve `gpt-tokenizer` (CDN üzerinden) ile gerçek token sayımıdır.
 
-Serginin **fon müziği bir ses dosyası değildir**: Web Audio API ile tarayıcıda anlık üretilir
-(0 KB indirme, telif sorunu yok, hiç bitmez). Sinematik bir doku — derin pedal, org/yaylı
-katmanlar, arpej ostinato ve katedral yankısı. Ayarları `assets/js/config/site.config.js`
-içindeki `AMBIENT` bloğundan değiştirilebilir; ziyaretçi her an kapatabilir.
+Sergide **ses yoktur**: sayfa sessizdir, odak tamamen eserlerin üzerindedir.
 
 İçerik (model değerleri, birim katsayıları, galeri, künye) `assets/js/config/` altındaki
 yapılandırma dosyalarında tutulur; böylece metin ve veri, kod mantığından ayrı düzenlenebilir.

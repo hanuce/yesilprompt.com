@@ -10,7 +10,7 @@ window.MODEL_FAMILIES = [
     blurb: 'Üretken yapay zekâyı 2022’de ChatGPT ile kamuoyuna taşıyan GPT ailesi.' },
 
   { name: 'Gemini', org: 'Google DeepMind',         country: 'ABD',    flag: '🇺🇸',
-    blurb: 'Metin+görsel+ses+video işleyen çok-kipli aile; arama ve Android’e gömülü.' },
+    blurb: 'Metin+görsel+ses+video işleyen metni ve görseli birlikte işleyen aile; arama ve Android’e gömülü.' },
 
   { name: 'Claude', org: 'Anthropic',               country: 'ABD',    flag: '🇺🇸',
     blurb: 'Güvenlik odaklı; “Anayasal YZ” (Constitutional AI) yaklaşımını geliştirdi.' },
@@ -31,5 +31,5 @@ window.MODEL_FAMILIES = [
     blurb: 'Alibaba’nın çok dilli, açık ağırlıklı ailesi (Tongyi Qianwen).' },
 
   { name: 'Nemotron', org: 'NVIDIA',                 country: 'ABD',    flag: '🇺🇸',
-    blurb: 'GPU üreticisi NVIDIA’nın açık ailesi; DeepSeek R1’den damıtılmış sürümleri var.' }
+    blurb: 'GPU üreticisi NVIDIA’nın açık ailesi; DeepSeek R1’den hızlandırılmış sürümleri var.' }
 ];

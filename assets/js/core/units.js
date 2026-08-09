@@ -7,9 +7,14 @@
 
    Kullanım:
      Units.equivalents(0.5)   → { phones, videoMin, ledMin, dam, waterMl, co2g }
-     Units.human(0.5)         → "≈ 2,5 dk video izleme"  (en uygun birimi seçer)
      Units.phoneText(0.5)     → "telefon şarjının %4 kadarı"  (HEP telefon şarjı)
      Units.fmt(1234.5)        → "1.234,5"
+
+   NOT: Eskiden bir de human() vardı; değere göre birim seçerdi
+   (şarj / video / LED). Kaldırıldı — sitedeki her "şuna eşdeğer"
+   cümlesi artık TEK birimden, telefon şarjından okunur. Böylece
+   yan yana duran iki sonuç birbiriyle karşılaştırılabilir kalır.
+   Ayrıntı: SITE_RULES → 7) İÇERİK İLKELERİ.
    ========================================================= */
 (function () {
   const C = window.UNITS_CONFIG || {};
@@ -47,18 +52,7 @@
     return fmt(minutes / 1440, 1) + ' gün';
   }
 
-  /* En anlaşılır tek cümle (otomatik birim seçer).
-     DİKKAT: birim değere göre değişir (şarj / video / LED). Aynı listede
-     yan yana duran değerleri karşılaştırmak için UYGUN DEĞİLDİR —
-     onun için phoneText() kullan. */
-  function human(wh) {
-    const e = equivalents(wh);
-    if (e.phones >= 0.5) return '≈ ' + fmt(e.phones, 1) + ' telefon şarjı';
-    if (e.videoMin >= 1) return '≈ ' + dur(e.videoMin) + ' video izleme';
-    return '≈ ' + dur(e.ledMin) + ' LED ampul';
-  }
-
-  /* HER ZAMAN telefon şarjı cinsinden (sergi ve hesaplayıcı damgası).
+  /* HER ZAMAN telefon şarjı cinsinden — sitedeki TEK eşdeğer birimi.
      Tek bir birimde kalmak, eserleri birbiriyle karşılaştırılabilir kılar.
      Bir şarjdan küçük değerler yüzde olarak verilir — "0,04 telefon şarjı"
      kimseye bir şey anlatmaz, "telefon şarjının %4 kadarı" anlatır. */
@@ -80,5 +74,5 @@
     return d.name + '’nın ' + fmt(d.hours * 60, 0) + ' dakikalık üretimi';
   }
 
-  window.Units = { fmt, equivalents, human, phoneText, dur, damSentence };
+  window.Units = { fmt, equivalents, phoneText, dur, damSentence };
 })();

@@ -20,7 +20,7 @@
       <a href="modeller.html" class="active">Modeller &amp; Tarih</a>
       <a href="token-lab.html">Token Lab</a>
       <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>
-      <a href="hesaplayici.html">Hesaplayıcı</a>
+      <a href="hesaplayici.html">Ne Kadar?</a>
     </div>
   </div></nav>
 
@@ -38,56 +38,92 @@
       </div>
     </section>
 
-    <!-- 2 · TRANSFORMER TEKNOLOJİSİ + DONANIM (CPU/GPU/NPU birleşik) -->
+    <!-- 2 · TRANSFORMER TEKNOLOJİSİ -->
     <section class="fp-section tone-a" id="transformer" data-title="Transformer nedir?">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">⚡ Mimari + Donanım</span>
+          <span class="eyebrow reveal">⚡ Mimari</span>
           <h2 class="slide-title reveal">Transformer teknolojisi nedir?</h2>
-          <p class="slide-lead reveal lead-c">2017’deki “Attention Is All You Need” mimarisi; bugünkü tüm büyük modellerin temeli. Neyi sağladı — ve bu hesabı hangi çip yapıyor?</p>
+          <p class="slide-lead reveal lead-c">
+            2017’de yayımlanan “Attention Is All You Need” makalesinde anlatılan tasarım.
+            Bugün adını duyduğun bütün büyük modeller — GPT, Gemini, Claude, Llama — aynı fikrin üzerine kurulu.
+          </p>
         </div>
 
-        <div class="grid cols-3 reveal mb-lg">
-          <div class="card card-top">
-            <div class="big-emoji">🧠</div>
-            <h3>Dikkat (attention)</h3>
-            <p class="text-soft m-0">Model, cümledeki tüm kelimeleri aynı anda birbiriyle ilişkilendirir. “O” zamiri kime gidiyor, hangi kelime hangisini bağlıyor — hepsini bir bakışta yakalar.</p>
+        <!-- ÖNCESİ / SONRASI -->
+        <div class="grid cols-2 reveal mb">
+          <div class="card">
+            <div class="chip mb">⏳ Transformer’dan önce</div>
+            <p class="text-soft m-0">
+              Model cümleyi <b>soldan sağa, kelime kelime</b> okurdu. Cümlenin sonuna gelindiğinde
+              baştaki kelimeler solmuş olurdu — “Kediyi gören <u>çocuk</u> koştu, çünkü <u>o</u> korkmuştu”
+              cümlesinde <b>o</b>’nun kime gittiğini bulmakta zorlanırdı. Üstelik kelimeler sırayla
+              işlendiği için eğitim de yavaştı.
+            </p>
           </div>
           <div class="card card-top">
-            <div class="big-emoji">⏩</div>
-            <h3>Paralel işleme</h3>
-            <p class="text-soft m-0">Eski modeller kelimeleri sırayla, tek tek işlerdi. Transformer bütün diziyi <b>aynı anda</b> işler. İşte bu paralellik, devasa veriyle hızlı eğitimi mümkün kıldı.</p>
-          </div>
-          <div class="card card-top">
-            <div class="big-emoji">📈</div>
-            <h3>Ölçeklenebilirlik</h3>
-            <p class="text-soft m-0">Mimari büyüdükçe (daha çok katman + veri) yetenek de artıyor. Bu “ölçek yasası”, GPT-3’ten bugünkü dev modellere giden yolu açtı.</p>
+            <div class="chip mb">⚡ Transformer’dan sonra</div>
+            <p class="text-soft m-0">
+              Model cümlenin <b>tamamına aynı anda</b> bakar ve her kelimenin diğerleriyle ne kadar
+              ilgili olduğunu hesaplar. “o” doğrudan “çocuk”a bağlanır — arada kaç kelime olduğu
+              fark etmez. Sıra beklemek gerekmediği için eğitim binlerce ekran kartına bölünebilir.
+            </p>
           </div>
         </div>
 
-        <h3 class="center reveal">Bu hesabı hangi çip yapar? <span class="text-soft">(CPU · GPU · NPU)</span></h3>
-        <p class="slide-lead reveal lead-c center mb">Transformer’ın “düşünmesi” milyarlarca matris çarpımıdır. Paralel yapısı, GPU donanımıyla birebir örtüşür.</p>
+        <!-- BİR CÜMLE MODELDEN NASIL GEÇER -->
+        <h3 class="center reveal">Bir cümle modelin içinden nasıl geçer?</h3>
+        <div class="grid cols-4 reveal mb">
+          <div class="card card-top">
+            <div class="big-emoji">✂️</div>
+            <h3>1 · Parçalara ayır</h3>
+            <p class="text-soft m-0">Metin önce token denen küçük parçalara bölünür (“Sürdür-üle-bilir”).</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🔢</div>
+            <h3>2 · Sayıya çevir</h3>
+            <p class="text-soft m-0">Her parça bir sayı listesine dönüşür. Yakın anlamlı kelimeler yakın sayılar alır.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🔗</div>
+            <h3>3 · İlişkileri kur</h3>
+            <p class="text-soft m-0">Dikkat katmanları, hangi kelimenin hangisine bağlı olduğunu bulur. Bu, onlarca katman boyunca tekrarlanır.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🎯</div>
+            <h3>4 · Sonrakini tahmin et</h3>
+            <p class="text-soft m-0">Model tek bir şey yapar: sıradaki kelimeyi tahmin eder. Cevabı kelime kelime böyle yazar.</p>
+          </div>
+        </div>
+
+        <!-- NEDEN ÖNEMLİ -->
         <div class="grid cols-3 reveal">
-          <div class="card card-top">
-            <div class="big-emoji">🧮</div>
-            <h3>CPU — genel beyin</h3>
-            <p class="text-soft m-0">Az sayıda güçlü çekirdek; sıralı, çok yönlü işler. Her işi yapar ama dev paralel matris çarpımında yavaş kalır.</p>
-            <p class="src mt mb-0">Geçmiş: bilişimin temeli.</p>
+          <div class="card">
+            <h3 class="mt-0">🧠 Dikkat: “neye bakmalıyım?”</h3>
+            <p class="text-soft m-0">
+              Transformer’ın kalbi. Model her kelime için “bu cümlede beni en çok hangi kelimeler
+              ilgilendiriyor?” sorusunu sorar ve önemli olanlara ağırlık verir. Dil bilgisi kuralları
+              elle yazılmaz; model bunu milyarlarca örnekten kendisi çıkarır.
+            </p>
           </div>
-          <div class="card card-top">
-            <div class="big-emoji">🎮</div>
-            <h3>GPU — paralel motor</h3>
-            <p class="text-soft m-0">Binlerce küçük çekirdek; aynı anda binlerce çarpım. Transformer’ın paralel yapısı tam buna uyar — oyun grafikleri için doğdu, 2012’den beri derin öğrenmenin motoru oldu.</p>
-            <p class="src mt mb-0">Bugün: eğitim ve çıkarımın kalbi (NVIDIA).</p>
+          <div class="card">
+            <h3 class="mt-0">⏩ Aynı anda okumak</h3>
+            <p class="text-soft m-0">
+              Kelimeler birbirini beklemediği için hesap bölünebilir. Asıl devrim budur: bu sayede
+              devasa veriyi makul sürede eğitmek mümkün oldu. <b>Ama aynı paralellik, aynı anda
+              çalışan binlerce çip demektir</b> — enerji faturasının kaynağı da burası.
+            </p>
           </div>
-          <div class="card card-top">
-            <div class="big-emoji">📱</div>
-            <h3>NPU — sinir ağı çipi</h3>
-            <p class="text-soft m-0">Yapay sinir ağı işlemlerine özel; telefonda/dizüstünde düşük güçle, cihaz-üstü (on-device) YZ çalıştırır.</p>
-            <p class="src mt mb-0">Gelecek: verimli, cihazda çalışan YZ.</p>
+          <div class="card">
+            <h3 class="mt-0">📈 Büyüdükçe iyileşmek</h3>
+            <p class="text-soft m-0">
+              Daha çok katman ve daha çok veri, düzenli olarak daha iyi sonuç verdi. Bu beklenmedik
+              düzenlilik, herkesi modelleri büyütmeye itti — ve maliyeti de birlikte büyüttü.
+              Bugün tartışılan enerji sorununun kökeni bu yarıştır.
+            </p>
           </div>
         </div>
-        <p class="src reveal center mt">Yön: CPU çağı → GPU çağı (bugün) → NPU ile enerji-verimli, cihaz-üstü YZ.</p>
+        <p class="src reveal center mt">Kaynak: Vaswani vd. (2017), “Attention Is All You Need”.</p>
       </div>
     </section>
 
@@ -104,7 +140,7 @@
           <!-- MODEL: örnek (pseudo) Python kodu -->
           <div class="card card-top col-card">
             <div class="chip mb">🧩 Model</div>
-            <p class="text-soft m-0 mb">Model, Transformer’ı çalıştıran <b>kod</b> + eğitimle ayarlanan milyarlarca <b>ağırlıktır</b>. Kod herkeste aynı olabilir; değerli olan ağırlıklardır. Sözde (pseudo) Python ile iskeleti:</p>
+            <p class="text-soft m-0 mb">Model, Transformer’ı çalıştıran <b>kod</b> + eğitimle ayarlanan milyarlarca <b>ağırlıktır</b>. Kod herkeste aynı olabilir; değerli olan ağırlıklardır. Basitleştirilmiş Python’la iskeleti:</p>
             <pre class="code-box"><code>import torch
 import torch.nn as nn
 
@@ -113,7 +149,7 @@ class KucukTransformer(nn.Module):
         super().__init__()
         self.gomme  = nn.Embedding(kelime_sayisi, boyut)   # kelime → sayı vektörü
         self.bloklar = nn.ModuleList(
-            TransformerBlok(boyut) for _ in range(katman)  # dikkat + ileri besleme
+            TransformerBlok(boyut) for _ in range(katman)  # dikkat katmanları
         )
         self.cikis  = nn.Linear(boyut, kelime_sayisi)      # → sonraki kelime tahmini
 
@@ -136,7 +172,7 @@ model = KucukTransformer(kelime_sayisi=50000)
 "Su, 100 derecede"            → "kaynar"
 "Yapay zeka veriden"          → "öğrenir"
 "Güneş doğudan"               → "doğar"</code></pre>
-            <p class="src mt mb-0">Milyarlarca böyle örnek; her biri ağırlıkları azıcık düzeltir. “Her veri” değil, temizlenip <b>düzenlenmiş</b> veri.</p>
+            <p class="src mt mb-0">Milyarlarca böyle örnek; her biri ağırlıkları azıcık düzeltir. “Her veri” değil, temizlenip <b>seçilmiş</b> veri.</p>
           </div>
         </div>
 
@@ -170,18 +206,24 @@ model = KucukTransformer(kelime_sayisi=50000)
         <div class="grid cols-2 items-center">
           <div class="reveal">
             <span class="eyebrow">📦 Hangi veriyle?</span>
-            <h2 class="slide-title">Her veri değil — <span class="text-green">düzenlenmiş</span> veri</h2>
+            <h2 class="slide-title">Her veri değil — <span class="text-green">seçilmiş</span> veri</h2>
             <p class="slide-lead">
-              Modeller internetteki “her şeyi” gelişigüzel yutmaz. Veri temizlenir, filtrelenir ve
-              <strong>kalitesine göre farklı sıklıkta</strong> gösterilir. GPT-3’ün gerçek karışımına bak:
-              devasa Common Crawl bir kezden <em>az</em>, küçük ama kaliteli Wikipedia <em>3+ kez</em> görülmüş.
+              Modeller internetteki her şeyi gelişigüzel yutmaz. Veri temizlenir, elenir ve
+              <strong>kalitesine göre farklı sayıda okunur</strong>. Yandaki liste, açık kaynaklı
+              <b>The Pile</b> veri kümesinin gerçek içeriğidir: hangi kaynaktan ne kadar alındığı
+              ve her birinin eğitim boyunca kaç kez okunduğu tek tek yayımlanmıştır.
             </p>
-            <p class="src" id="gpt3Caption"></p>
-            <p class="src">Kaynak: Brown vd. (2020), “Language Models are Few-Shot Learners”.</p>
+            <p class="slide-lead">
+              Dikkat et: en büyük kaynak olan web taraması <em>bir kez</em> okunuyor; listenin
+              en küçüklerinden Wikipedia ise <em>üç kez</em>. Boyut değil, <strong>güvenilirlik</strong>
+              belirliyor.
+            </p>
+            <p class="src" id="dataRest"></p>
+            <p class="src" id="dataCaption"></p>
           </div>
           <div class="reveal">
-            <div class="card card-top">
-              <table class="table" id="gpt3Table"></table>
+            <div class="card card-top tool-scroll">
+              <table class="table" id="dataTable"></table>
             </div>
           </div>
         </div>
@@ -192,9 +234,9 @@ model = KucukTransformer(kelime_sayisi=50000)
     <section class="fp-section tone-a" id="veri-projeleri" data-title="Veriyi kim düzenliyor?">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">🗂️ Gerçek tasnifler</span>
+          <span class="eyebrow reveal">🗂️ Gerçek veri kümeleri</span>
           <h2 class="slide-title reveal">Veriyi kim derliyor, kim etiketliyor?</h2>
-          <p class="slide-lead reveal lead-c">Kitaplar, resimler, görseller… İnsanların derleyip sınıflandırdığı meşhur, gerçek projeler.</p>
+          <p class="slide-lead reveal lead-c">Kitaplar, fotoğraflar, kodlar… İnsanların tek tek toplayıp düzenlediği, adı bilinen gerçek projeler.</p>
         </div>
         <div id="dataProjects" class="grid cols-3 reveal"></div>
       </div>
@@ -210,7 +252,7 @@ model = KucukTransformer(kelime_sayisi=50000)
         </div>
         <div id="trainingCards" class="grid cols-3 reveal"></div>
         <p class="src reveal center mt">
-          Kaynaklar: Patterson vd. (2021) · Meta model kartları · DeepSeek-V3 teknik raporu (2024). “Tahmin” işaretli rakamlar resmî değildir, sınıf-içi büyüklük tahminidir.
+          Kaynaklar: Patterson vd. (2021) · Meta model kartları · DeepSeek-V3 teknik raporu (2024). “Tahmin” işaretli rakamlar resmî değildir; benzer büyüklükteki modellerden hesaplanmıştır.
         </p>
       </div>
     </section>
@@ -257,7 +299,7 @@ model = KucukTransformer(kelime_sayisi=50000)
           <span class="eyebrow reveal">🏢 Ölçek</span>
           <h2 class="slide-title reveal">Neden herkes model yapamıyor?</h2>
           <p class="slide-lead reveal lead-c">
-            Bir frontier model eğitmek on/yüz milyonlarca dolar + dev enerji ister. Bu yüzden dünyada
+            En büyük modellerden birini sıfırdan eğitmek yüz milyonlarca dolar ve devasa enerji ister. Bu yüzden dünyada
             bunu yapabilen yalnızca birkaç aile var. İşte başlıcaları ve menşeleri:
           </p>
         </div>
@@ -326,8 +368,10 @@ model = KucukTransformer(kelime_sayisi=50000)
   <script src="assets/js/config/training.config.js"></script>
   <script src="assets/js/config/families.config.js"></script>
   <script src="assets/js/config/valuations.config.js"></script>
+  <script src="assets/js/config/site.config.js"></script>
   <script src="assets/js/core/units.js"></script>
   <script src="assets/js/pages/modeller.js"></script>
+  <script src="assets/js/core/footer.js"></script>
   <script src="assets/js/core/fullpage.js"></script>
   <script src="assets/js/core/nav.js"></script>
 </body>

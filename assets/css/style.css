@@ -19,8 +19,11 @@
      11) TAM EKRAN SLAYT MOTORU
      12) SLAYT KONTROLÜ (dikey, sağ-alt) + nokta göstergesi
      13) YARDIMCI DÜZEN SINIFLARI (eski inline stillerin yerine)
-     14) BİLEŞENLER (hero, zaman tüneli, difüzyon, shot kartları, galeri, künye…)
+     14) BİLEŞENLER (soru kartları, zaman tüneli, difüzyon, shot kartları…)
      15) EK BİLEŞENLER (kod kutusu, epoch animasyonu, YZ çağı grafiği)
+     16) SERGİ SALONU (galeri ızgarası, künye şeridi, lightbox, yüzen düğme)
+     17) HESAPLAYICI (dayanak rozetleri, damga önizlemesi, araç tablosu)
+     18) FOOTER (künye + site haritası + telif — sergi hariç her sayfada)
    ================================================================= */
 
 
@@ -300,7 +303,6 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 
 /* ===== 13) YARDIMCI DÜZEN SINIFLARI (eski inline yerine) ======== */
 .center      { text-align: center; }
-.center-x    { margin-left: auto; margin-right: auto; }
 .stack       { display: flex; flex-direction: column; }
 .row         { display: flex; align-items: center; }
 .row-wrap    { display: flex; flex-wrap: wrap; align-items: center; }
@@ -337,28 +339,20 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 
 /* ===== 14) BİLEŞENLER =========================================== */
 
-/* --- 14.1 HERO (giriş başlık) --- */
-.hero-title { margin-top: 1rem; font-size: clamp(2rem, 5vw, 3.4rem); }
-.hero-lead  { margin: 0 auto 1.6rem; }
-
-/* --- 14.2 ETİK SORU KARTLARI (giriş) --- */
+/* --- 14.1 AÇILIŞ SORU KARTLARI (giriş) --- */
 .q-card { display: flex; gap: .9rem; align-items: flex-start; }
 .q-card .q-num { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
   font-weight: 800; color: #fff; background: linear-gradient(135deg, var(--green-500), var(--green-700)); }
 .q-card .q-txt { align-self: center; }
 
-/* --- 14.3 KÜNYE (etkinlik kimlik kartı) --- */
-.kunye { background: var(--mint-50); border: 1px solid var(--line); border-left: 5px solid var(--green-600);
-  border-radius: var(--radius-sm); padding: 1.2rem 1.4rem; }
-.kunye dl { display: grid; grid-template-columns: auto 1fr; gap: .35rem 1rem; margin: 0; }
-.kunye dt { color: var(--green-700); font-weight: 700; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
-.kunye dd { margin: 0; color: var(--ink); }
-
-/* --- 14.4 MATERYAL / KAYNAK HAVUZU --- */
+/* --- 14.2 MATERYAL / KAYNAK HAVUZU --- */
 .pool { display: flex; flex-wrap: wrap; gap: .55rem; }
 .pool .chip { font-size: .88rem; }
 
-/* --- 14.5 ZAMAN TÜNELİ (modeller) --- */
+/* --- 14.3 ZAMAN TÜNELİ (modeller) ---
+   Tek sütun, dikey akış. İki sütuna sıkıştırmak denendi ve geri alındı:
+   kronoloji soldan sağa zıplayınca okunmuyor, kartlar da eziliyordu.
+   Slayt uzunsa kaydırılır — .fp-section zaten kendi içinde kayar. */
 .timeline { display: flex; flex-direction: column; gap: .9rem; }
 .tl-item { display: grid; grid-template-columns: 96px 1fr; gap: 1rem; align-items: start; }
 .tl-year { font-family: var(--font-head); font-weight: 800; color: var(--green-700); text-align: right;
@@ -369,24 +363,24 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 .tl-title { font-weight: 700; margin: 0 0 .15rem; }
 @media (max-width: 640px) { .tl-item { grid-template-columns: 64px 1fr; } }
 
-/* --- 14.6 MODEL AİLELERİ ---
+/* --- 14.4 MODEL AİLELERİ ---
    Kartlar artık standart .grid.cols-3 + .card.card-top ile çizilir
    ("Güvenlik & etik" slaytındaki kartlarla aynı sade görünüm);
    özel .family-* kuralı gerekmez. */
 
-/* --- 14.7 DİFÜZYON SİMÜLASYONU --- */
+/* --- 14.5 DİFÜZYON SİMÜLASYONU --- */
 .diff-canvas { width: 260px; max-width: 100%; aspect-ratio: 1 / 1; image-rendering: pixelated;
   border-radius: 14px; border: 1px solid var(--line); }
 .big-num { font-family: var(--font-head); font-weight: 800; font-size: 2.4rem; color: var(--green-700); }
 .huge-num { font-family: var(--font-head); font-weight: 800; font-size: 1.9rem; color: var(--green-800); line-height: 1.15; margin: .2rem 0; }
 
-/* --- 14.8 HESAPLAYICI sayaç vurguları --- */
+/* --- 14.6 HESAPLAYICI sayaç vurguları --- */
 .count-xl { font-family: var(--font-head); font-weight: 800; font-size: 2rem; color: var(--green-700); }
 .count-lg { font-weight: 700; font-size: 1.2rem; }
 .engine-badge { margin-left: auto; }
 .breakdown-row { display: flex; justify-content: space-between; }
 
-/* --- 14.9 SHOT / PROMPT MÜHENDİSLİĞİ kartları --- */
+/* --- 14.7 SHOT / PROMPT MÜHENDİSLİĞİ kartları --- */
 .shot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 @media (max-width: 900px) { .shot-grid { grid-template-columns: 1fr; } }
 .prompt-box { font-family: ui-monospace, 'SF Mono', monospace; font-size: .86rem; background: var(--mint-50);
@@ -398,7 +392,7 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
   font-weight: 800; color: #fff; background: linear-gradient(135deg, var(--green-500), var(--green-700)); }
 .rule-card .rule-txt { align-self: center; }
 
-/* --- 14.10 ESER YER TUTUCU RENKLERİ ---
+/* --- 14.8 ESER YER TUTUCU RENKLERİ ---
    Gerçek resim gelene kadar gösterilen degradeler. Hem sergi
    ızgarasında (.gal-ph) hem lightbox'ta (.box-ph) kullanılır;
    düzenleri 16. bölümdedir. */
@@ -407,7 +401,7 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 .ph-c { background: linear-gradient(135deg, #fdeccf, #d9f2e4); }
 .ph-d { background: linear-gradient(135deg, #cfe9fb, #fde2ec); }
 
-/* --- 14.11 KAYNAKÇA (APA listesi) --- */
+/* --- 14.9 KAYNAKÇA (APA listesi) --- */
 .refs { list-style: none; padding: 0; margin: 0; counter-reset: ref; }
 .refs li { position: relative; padding: .5rem 0 .5rem 2rem; border-bottom: 1px solid var(--line);
   font-size: .86rem; color: var(--ink-soft); line-height: 1.6; }
@@ -528,6 +522,10 @@ circle.era-trrez { fill: var(--amber); }
 .gal-item:focus { outline: none; }
 .gal-item:focus-visible { outline: 3px solid var(--green-300); outline-offset: 3px; }
 
+/* Resim çerçevesi: yakınlaşma yalnızca burada kırpılır,
+   alttaki künye şeridi hareketten etkilenmez. */
+.gal-frame { display: block; overflow: hidden; }
+
 .gal-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block;
   transition: transform .7s cubic-bezier(.2,.7,.3,1); }
 .gal-item:hover .gal-img { transform: scale(1.05); }
@@ -537,16 +535,18 @@ circle.era-trrez { fill: var(--amber); }
   transition: transform .7s cubic-bezier(.2,.7,.3,1); }
 .gal-item:hover .gal-ph { transform: scale(1.05); }
 
-/* Eser adı: normalde gizli, üzerine gelince alttan yükselen ince bir perde */
-.gal-veil { position: absolute; inset: auto 0 0 0; display: flex; align-items: flex-end;
-  justify-content: space-between; gap: .8rem; padding: 2.4rem .9rem .75rem;
-  background: linear-gradient(to top, rgba(6,26,15,.88), rgba(6,26,15,.4) 55%, transparent);
-  opacity: 0; transform: translateY(8px); transition: opacity .28s ease, transform .28s ease; }
-.gal-item:hover .gal-veil, .gal-item:focus-visible .gal-veil { opacity: 1; transform: none; }
-.gal-name { font-family: var(--font-head); font-weight: 700; font-size: 1rem; line-height: 1.25;
-  color: #fff; text-align: left; }
-.gal-wh { flex: none; font-size: .7rem; font-weight: 700; letter-spacing: .06em;
-  color: var(--green-300); padding-bottom: .15rem; white-space: nowrap; }
+/* Künye şeridi: müze etiketi gibi resmin ALTINDA, her zaman görünür.
+   Üstte eser adı; altta solda üreten + model, sağda enerji damgası.
+   (Dokunmatik cihazda hover olmadığı için bu bilgi gizlenemez.) */
+.gal-cap { display: flex; flex-direction: column; gap: .3rem; text-align: left;
+  padding: .7rem .85rem .8rem; background: #fff; border-top: 1px solid var(--line); }
+.gal-name { font-family: var(--font-head); font-weight: 700; font-size: .98rem;
+  line-height: 1.25; color: var(--ink); }
+.gal-line { display: flex; align-items: baseline; justify-content: space-between; gap: .7rem; }
+.gal-meta { display: flex; flex-wrap: wrap; gap: .1rem .7rem; min-width: 0;
+  font-size: .74rem; line-height: 1.4; color: var(--ink-mute); }
+.gal-wh { flex: none; font-size: .72rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--green-700); white-space: nowrap; }
 
 .gal-empty { grid-column: 1 / -1; color: var(--ink-mute); text-align: center;
   border: 2px dashed var(--line); border-radius: var(--radius); padding: 3.5rem 2rem; }
@@ -601,8 +601,8 @@ circle.era-trrez { fill: var(--amber); }
   .box-bar { padding-bottom: 3.2rem; }
 }
 
-/* --- 16.4 SAĞ ALT YÜZEN DÜĞMELER ---
-   Atölye kapısı + müzik. Üzerine gelince etiket soldan açılır. */
+/* --- 16.4 SAĞ ALT YÜZEN DÜĞME ---
+   Atölye kapısı. Üzerine gelince etiket soldan açılır. */
 .fab-dock { position: fixed; right: 20px; bottom: 20px; z-index: 900;
   display: flex; align-items: center; gap: 10px; }
 
@@ -618,22 +618,6 @@ circle.era-trrez { fill: var(--amber); }
   box-shadow: 0 14px 30px -10px rgba(22,163,74,.75); }
 .fab-primary:hover { color: #fff; box-shadow: 0 20px 40px -12px rgba(22,163,74,.9); }
 .fab-primary svg { width: 25px; height: 25px; }
-
-.fab-ghost { background: rgba(255,255,255,.92); color: var(--ink-mute);
-  border-color: var(--line); box-shadow: var(--shadow); backdrop-filter: blur(8px); }
-.fab-ghost:hover { color: var(--green-700); border-color: var(--green-300); }
-.fab-ghost.on { color: var(--green-700); border-color: var(--green-400);
-  background: var(--mint-100); }
-
-/* Ses ikonu: kapalıyken çarpı, açıkken dalgalar */
-.ico-wave, .ico-mute { transition: opacity .2s ease; }
-.fab-ghost .ico-wave { opacity: 0; }
-.fab-ghost .ico-mute { opacity: 1; }
-.fab-ghost.on .ico-wave { opacity: 1; }
-.fab-ghost.on .ico-mute { opacity: 0; }
-.fab-ghost.on .ico-wave { animation: fabPulse 2.4s ease-in-out infinite; }
-.fab-ghost.on .ico-wave:last-of-type { animation-delay: .3s; }
-@keyframes fabPulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
 
 /* Etiket: düğmenin solunda, üzerine gelince açılır */
 .fab-label { position: absolute; right: calc(100% + 10px); white-space: nowrap;
@@ -685,6 +669,64 @@ circle.era-trrez { fill: var(--amber); }
 .tool-scroll thead th { position: sticky; top: 0; background: #fff; z-index: 1;
   box-shadow: inset 0 -1px 0 var(--line); }
 
+/* Araç adı = aracın kendi sayfasına giden bağlantı */
+.table a { color: var(--green-700); text-decoration: none; border-bottom: 1px solid transparent; }
+.table a:hover { border-bottom-color: var(--green-400); }
+.table .ext { font-size: .72em; color: var(--ink-mute); }
+
+
+/* ===== 18) FOOTER ===============================================
+   Künye · site haritası · telif. Sergi (index.html) hariç her
+   sayfanın SON SLAYTIDIR — bkz. core/footer.js'teki açıklama:
+   .fp-root sabit konumlu olduğu için gövde sonuna konan bir
+   <footer> hiçbir zaman görünmez.
+
+   Koyu bağlamın tonları — lightbox'ta (16.3) olduğu gibi —
+   yalnızca bu bloğa kapalı tanımlıdır; 1. bölümdeki hiçbir
+   değişken ezilmez. */
+.fp-footer {
+  background: linear-gradient(180deg, var(--green-900), #063a1e);
+  color: var(--foot-ink);
+  --foot-ink:  #dbeee2;
+  --foot-mute: #8fb7a1;
+  --foot-line: rgba(255,255,255,.14);
+}
+
+/* --- 18.1 SÜTUNLAR --- */
+.foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1.4fr; gap: 2.6rem;
+  padding-bottom: 1.7rem; border-bottom: 1px solid var(--foot-line); }
+@media (max-width: 900px) { .foot-grid { grid-template-columns: 1fr; gap: 1.7rem; } }
+
+.foot-mark { display: inline-block; font-family: var(--font-head); font-weight: 800;
+  font-size: 1.15rem; color: #fff; text-decoration: none; margin-bottom: .8rem; }
+.foot-mark span { color: var(--green-300); }
+
+.foot-about { margin: 0 0 .9rem; font-size: .9rem; line-height: 1.65; color: var(--foot-ink); }
+.foot-note  { margin: .9rem 0 0; font-size: .77rem; line-height: 1.55; color: var(--foot-mute); }
+.foot-about + .foot-note { margin-top: 0; }
+
+.foot-h { font-family: var(--font-head); font-size: .74rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--green-300);
+  margin: 0 0 .85rem; }
+
+/* --- 18.2 SİTE HARİTASI --- */
+.foot-links { list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: .5rem; }
+.foot-links a { display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .9rem; color: var(--foot-ink); text-decoration: none; transition: color .15s; }
+.foot-links a::before { content: "→"; color: var(--green-400); font-size: .8rem; }
+.foot-links a:hover { color: #fff; }
+
+/* --- 18.3 KÜNYE LİSTESİ --- */
+.foot-dl { margin: 0; display: grid; grid-template-columns: auto 1fr;
+  gap: .34rem 1rem; font-size: .82rem; }
+.foot-dl dt { color: var(--foot-mute); font-weight: 600; white-space: nowrap; }
+.foot-dl dd { margin: 0; color: var(--foot-ink); }
+
+/* --- 18.4 ALT ŞERİT (telif) — tek satır, ortalı --- */
+.foot-bar { padding-top: 1.1rem; text-align: center;
+  font-size: .78rem; color: var(--foot-mute); }
+
 
 /* ===== HAREKET AZALTMA TERCİHİ ==================================
    Kural: sitedeki TÜM animasyon ve hareketli geçişler burada kapanır.
@@ -716,11 +758,9 @@ circle.era-trrez { fill: var(--amber); }
   .gal-item { transition: none; }
   .gal-img, .gal-ph { transition: none; }
   .gal-item:hover .gal-img, .gal-item:hover .gal-ph { transform: none; }
-  .gal-veil { transition: none; }           /* üzerine gelince anında görünür, kaymaz */
   .fab { transition: background .2s, border-color .2s, color .2s; }
   .fab:hover { transform: none; }
   .fab-label { transition: opacity .2s ease; transform: none; }
-  .fab-ghost.on .ico-wave { animation: none; opacity: 1; }
 }
 
 
@@ -736,8 +776,8 @@ circle.era-trrez { fill: var(--amber); }
   .fab-dock, .lightbox { display: none !important; }
   .gal-page { background: #fff; }
   .gal-item { break-inside: avoid; box-shadow: none; }
-  .gal-veil { opacity: 1; transform: none; background: none; position: static;
-    padding: .4rem .2rem 0; }
+  .gal-cap { border-top: 0; padding: .4rem .2rem 0; }
   .gal-name { color: #000; }
+  .gal-meta { color: #333; }
   .gal-wh { color: var(--green-800); }
 }

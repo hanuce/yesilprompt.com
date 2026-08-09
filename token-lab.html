@@ -20,7 +20,7 @@
       <a href="modeller.html">Modeller &amp; Tarih</a>
       <a href="token-lab.html" class="active">Token Lab</a>
       <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>
-      <a href="hesaplayici.html">Hesaplayıcı</a>
+      <a href="hesaplayici.html">Ne Kadar?</a>
     </div>
   </div></nav>
 
@@ -39,8 +39,8 @@
               eğitimde model veriyi token token okur, kullanımda cevabı token token üretir.
             </p>
             <ul class="list-soft">
-              <li><strong>Girdi token’ı ucuz</strong> — toplu işlenir (“prefill”).</li>
-              <li><strong>Çıktı token’ı pahalı</strong> — tek tek üretilir (“decode”). Cevap uzadıkça maliyet artar.</li>
+              <li><strong>Girdi token’ı ucuz</strong> — model promptun tamamını tek seferde okur.</li>
+              <li><strong>Çıktı token’ı pahalı</strong> — cevabı kelime kelime üretir; her kelime için baştan hesap yapar. Cevap uzadıkça maliyet artar.</li>
               <li>Kaba dönüşüm: ~1000 token ≈ 750 kelime (İngilizce).</li>
             </ul>
           </div>
@@ -70,9 +70,9 @@
             <h2 class="slide-title">Bütün dilleri İngilizceye mi çeviriyor?</h2>
             <p class="slide-lead"><strong>Hayır.</strong> Ayrı bir çeviri adımı <em>yoktur</em>.</p>
             <ul class="list-soft">
-              <li>Tokenizer metni <strong>kendi dilinde</strong> doğrudan alt-parçalara böler.</li>
+              <li>Model, metni <strong>kendi dilinde</strong> doğrudan küçük parçalara böler.</li>
               <li>Aynı model onlarca dili aynı anda işleyebilir (multilingual), çünkü eğitim verisinde o diller de vardı.</li>
-              <li>Modern tokenizer’lar (o200k, Gemini) kısa/yaygın kelimelerde TR–EN farkını büyük ölçüde kapattı.</li>
+              <li>Yeni nesil parçalayıcılar (o200k, Gemini) kısa ve yaygın kelimelerde Türkçe–İngilizce farkını büyük ölçüde kapattı.</li>
               <li>Fark, <strong>uzun, ekli, nadir</strong> kelimelerde belirginleşir. Sağdaki tabloda canlı gör.</li>
             </ul>
             <p class="src">Kaynak: Kamali (2024), Hugging Face — Tokenization &amp; multilingual.</p>
@@ -140,7 +140,7 @@
               <p class="src">Her saniye = onlarca kare ≈ o kadar görsel. Süre uzadıkça katlanır.</p>
             </div>
 
-            <label class="label label-row mt"><span>Deneme sayısı (re-roll)</span><span class="text-soft">×<b id="attemptsLbl">1</b></span></label>
+            <label class="label label-row mt"><span>Deneme sayısı (kaç kez yeniden ürettin?)</span><span class="text-soft">×<b id="attemptsLbl">1</b></span></label>
             <input id="attempts" type="range" min="1" max="10" step="1" value="1">
             <p class="src">En büyük kaldıraç genelde budur — özellikle görsel ve videoda.</p>
           </div>
@@ -219,9 +219,11 @@
   <script src="assets/js/core/tokenize.js"></script>
   <script src="assets/js/config/units.config.js"></script>
   <script src="assets/js/config/models.config.js"></script>
+  <script src="assets/js/config/site.config.js"></script>
   <script src="assets/js/core/units.js"></script>
   <script type="module" src="assets/js/core/tokenizer.module.js"></script>
   <script src="assets/js/pages/token-lab.js"></script>
+  <script src="assets/js/core/footer.js"></script>
   <script src="assets/js/core/fullpage.js"></script>
   <script src="assets/js/core/nav.js"></script>
 </body>

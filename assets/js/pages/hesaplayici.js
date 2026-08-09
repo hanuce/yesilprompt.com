@@ -22,6 +22,21 @@
       });
   }
 
+  /* Tarih: config'e ISO (2026-03-14) yazılır, ekranda 14.03.2026 görünür —
+     galerideki gösterimin aynısı (bkz. pages/anasayfa.js → fmtDate). */
+  function fmtDate(v) {
+    var s = String(v == null ? '' : v).trim();
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+    return m ? m[3] + '.' + m[2] + '.' + m[1] : s;
+  }
+
+  /* Bugünün tarihi — yerel saate göre (toISOString UTC'ye kaydırır) */
+  function todayISO() {
+    var d = new Date();
+    var p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  }
+
   var TOOLS = window.IMAGE_TOOLS || [];
   var SIZES = window.IMAGE_SIZES || [];
   var BASE_PX = 1024 * 1024;          // temel alınan görüntü alanı
@@ -135,6 +150,7 @@
     }).join('');
 
     /* Sergideki damganın birebir önizlemesi */
+    var dateVal = ($('dateIn') && $('dateIn').value) || '';
     var chips = [
       ['🧩', state.tool.label],
       ['🔁', '×' + state.attempts],
@@ -144,6 +160,8 @@
       ['📱', U_.phoneText(r.total)]
     ];
     if (state.variants > 1) chips.splice(2, 0, ['🖼️', state.variants + ' görsel']);
+    /* Tarih en başa — sergideki çip sırasıyla aynı */
+    if (dateVal) chips.unshift(['📅', fmtDate(dateVal)]);
     $('stampPreview').innerHTML = chips.map(function (c) {
       return '<span class="stamp-chip"><b>' + c[0] + '</b>' + esc(c[1]) + '</span>';
     }).join('');
@@ -171,6 +189,7 @@
     var host = $('stampCode'); if (!host) return;
     var title = ($('titleIn') && $('titleIn').value.trim()) || 'Eser adı';
     var by = ($('byIn') && $('byIn').value.trim()) || '';
+    var date = ($('dateIn') && $('dateIn').value) || '';
     var prompt = ($('promptIn') && $('promptIn').value.trim()) || '';
 
     /* Tek tırnak içinde duracağı için tek tırnakları kaçır */
@@ -180,7 +199,7 @@
        wh × variants × attempts olarak kendisi hesaplar. */
     var perImage = +(r.perImage).toFixed(2);
     var line =
-      "{ title: '" + q(title) + "', by: '" + q(by) + "',\n" +
+      "{ title: '" + q(title) + "', by: '" + q(by) + "', date: '" + q(date) + "',\n" +
       "  img: 'assets/img/galeri/DOSYA_ADI.png', ph: 'ph-a', emoji: '🌿',\n" +
       "  prompt: '" + q(prompt) + "',\n" +
       "  model: '" + q(state.tool.label) + "', attempts: " + state.attempts +
@@ -213,8 +232,14 @@
         var e = U_ ? U_.equivalents(t.wh) : null;
         var tags = (t.free ? '<span class="tag tag-free">ücretsiz</span>' : '') +
                    (t.open ? '<span class="tag tag-open">açık</span>' : '');
+        /* Araç adı doğrudan kendi sayfasına gider — öğrenci hangi
+           modelden söz edildiğini tek tıkla görebilsin. */
+        var name = t.url
+          ? '<a href="' + esc(t.url) + '" target="_blank" rel="noopener">' +
+              esc(t.label) + ' <span class="ext">↗</span></a>'
+          : esc(t.label);
         return '<tr>' +
-          '<td><b>' + esc(t.label) + '</b><div class="src">' + esc(t.org) + ' ' + tags + '</div></td>' +
+          '<td><b>' + name + '</b><div class="src">' + esc(t.org) + ' ' + tags + '</div></td>' +
           '<td class="src">' + esc(t.group) + '</td>' +
           '<td class="num text-green"><b>' + (U_ ? U_.fmt(t.wh, 2) : t.wh) + '</b></td>' +
           '<td class="num">' + (e ? U_.fmt(e.phones, 2) : '—') + '</td>' +
@@ -276,6 +301,10 @@
     $('promptIn').addEventListener('input', function () { renderPromptNote(); render(); });
     $('titleIn').addEventListener('input', render);
     $('byIn').addEventListener('input', render);
+    if ($('dateIn')) {
+      $('dateIn').value = todayISO();          // varsayılan: bugün
+      $('dateIn').addEventListener('change', render);
+    }
 
     wireCopy();
   }

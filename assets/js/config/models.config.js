@@ -12,8 +12,8 @@
    ========================================================= */
 
 /* --- METİN MODELLERİ ---
-   inWh1k   = 1000 GİRDİ token'ı işlemenin enerjisi (ucuz, "prefill")
-   outWh1k  = 1000 ÇIKTI token'ı üretmenin enerjisi (pahalı, "decode")
+   inWh1k   = 1000 GİRDİ token'ı işlemenin enerjisi (ucuz, "promptun tamamı tek seferde okunur")
+   outWh1k  = 1000 ÇIKTI token'ı üretmenin enerjisi (pahalı, "cevap kelime kelime üretilir")
    maxOut   = bu modelin tek cevapta üretebildiği EN FAZLA çıktı token'ı.
               (Bunu kullanıcı belirlemez; MODEL belirler. Hesaplayıcıdaki
               "çıktı uzunluğu" kaydırıcısının üst sınırı budur.) */

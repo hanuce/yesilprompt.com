@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hesaplayıcı · Yeşil Prompt Atölyesi</title>
+  <title>Ne Kadar? · Yeşil Prompt Atölyesi</title>
   <meta name="description" content="Ürettiğin görselin tahmini enerji, su ve karbon maliyetini hesapla; sergi etiketini oluştur." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,14 +21,14 @@
       <a href="modeller.html">Modeller &amp; Tarih</a>
       <a href="token-lab.html">Token Lab</a>
       <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>
-      <a href="hesaplayici.html" class="active">Hesaplayıcı</a>
+      <a href="hesaplayici.html" class="active">Ne Kadar?</a>
     </div>
   </div></nav>
 
   <div class="fp-root"><div class="fp-track">
 
     <!-- 1 · HESAPLAYICI -->
-    <section class="fp-section tone-hero" id="hesapla" data-title="Hesaplayıcı">
+    <section class="fp-section tone-hero" id="hesapla" data-title="Ne Kadar?">
       <div class="fp-inner">
         <div class="section-head">
           <span class="eyebrow reveal">🧮 Kendi eserini ölç</span>
@@ -72,14 +72,17 @@
             <textarea id="promptIn" class="field" rows="3">2050, yenilenebilir enerjiyle çalışan İstanbul; güneş panelli çatılar, yeşil teraslar, izometrik illüstrasyon</textarea>
             <p class="src" id="promptNote"></p>
 
+            <label class="label mt" for="titleIn">Eser adı</label>
+            <input id="titleIn" class="field" type="text" value="Yenilenebilir İstanbul, 2050">
+
             <div class="grid cols-2 grid-tight mt">
-              <div>
-                <label class="label" for="titleIn">Eser adı</label>
-                <input id="titleIn" class="field" type="text" value="Yenilenebilir İstanbul, 2050">
-              </div>
               <div>
                 <label class="label" for="byIn">Üreten (isteğe bağlı)</label>
                 <input id="byIn" class="field" type="text" placeholder="Öğrenci adı">
+              </div>
+              <div>
+                <label class="label" for="dateIn">Oluşturulma tarihi</label>
+                <input id="dateIn" class="field" type="date">
               </div>
             </div>
           </div>
@@ -165,22 +168,23 @@ CO₂    = Wh × 0,125 g</code></pre>
           </div>
           <div class="card card-top">
             <div class="big-emoji">🎯</div>
-            <h3>Ölçüm çapaları</h3>
-            <p class="text-soft m-0">Literatürün iki ucu arasına yerleştiriyoruz:</p>
+            <h3>Elimizdeki gerçek ölçümler</h3>
+            <p class="text-soft m-0">Bağımsız araştırmacıların gerçekten ölçtüğü üç nokta:</p>
             <ul class="list-soft">
-              <li><b>~0,3 Wh</b> — damıtılmış, 1-8 adımlı yeni modeller</li>
+              <li><b>~0,3 Wh</b> — az adımda üretecek şekilde hızlandırılmış yeni modeller</li>
               <li><b>~1,5 Wh</b> — SDXL, ~30 adım <span class="ref-tag">(Luccioni vd., 2024)</span></li>
-              <li><b>~2,9 Wh</b> — büyük difüzyon üst sınırı</li>
+              <li><b>~2,9 Wh</b> — ölçülmüş en pahalı model</li>
             </ul>
-            <p class="src mb-0">Ölçümü olan modeller bu çapalara doğrudan oturur.</p>
+            <p class="src mb-0">Ölçümü olmayan araçları, mimarisi ve adım sayısı en çok benzeyen
+              bu üç noktadan birine göre ölçekliyoruz.</p>
           </div>
           <div class="card card-top">
             <div class="big-emoji">⚠️</div>
             <h3>Neyi bilmiyoruz</h3>
             <p class="text-soft m-0">
               Midjourney, Seedream, GPT Image, Grok gibi <b>kapalı modeller hiçbir enerji verisi
-              yayımlamaz.</b> Onların sayısı, benzer boyut ve adım sayısındaki ölçülmüş modellerden
-              türetilmiş <b>sınıf tahminidir</b> — mertebe doğrudur, kesin değer değildir.
+              yayımlamaz.</b> Onların sayısı, benzer büyüklükteki ölçülmüş modellerden
+              <b>hesaplanmış bir tahmindir</b> — büyüklük sırası doğrudur, kesin değer değildir.
             </p>
             <p class="src mt mb-0">Bu yüzden tabloda “tahmin” rozeti vardır.</p>
           </div>
@@ -190,8 +194,8 @@ CO₂    = Wh × 0,125 g</code></pre>
           <h3 class="mt-0">Prompt uzunluğu enerjiyi ne kadar etkiler?</h3>
           <p class="text-soft m-0">
             Görselde <strong>neredeyse hiç</strong>. Metin modelinde her token bir maliyet yaratır;
-            görselde ise ağır iş, promptu okuyan küçük metin kodlayıcıda değil,
-            <strong>görüntüyü onlarca adımda arıtan difüzyon modelindedir</strong>. Bu yüzden burada
+            görselde ise ağır iş promptu okuyan küçük parçada değil,
+            <strong>görüntüyü onlarca adımda adım adım netleştiren asıl modeldedir</strong>. Bu yüzden burada
             prompt uzunluğu hesaba katılmaz — ama <em>promptun netliği</em> deneme sayısını düşürerek
             toplam maliyeti en çok etkileyen şeydir.
           </p>
@@ -231,9 +235,11 @@ CO₂    = Wh × 0,125 g</code></pre>
   <script src="assets/js/core/tokenize.js"></script>
   <script src="assets/js/config/units.config.js"></script>
   <script src="assets/js/config/imagetools.config.js"></script>
+  <script src="assets/js/config/site.config.js"></script>
   <script src="assets/js/core/units.js"></script>
   <script type="module" src="assets/js/core/tokenizer.module.js"></script>
   <script src="assets/js/pages/hesaplayici.js"></script>
+  <script src="assets/js/core/footer.js"></script>
   <script src="assets/js/core/fullpage.js"></script>
   <script src="assets/js/core/nav.js"></script>
 </body>
