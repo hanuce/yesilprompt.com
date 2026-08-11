@@ -8,6 +8,7 @@
    Kullanım:
      Units.equivalents(0.5)   → { phones, videoMin, ledMin, dam, waterMl, co2g }
      Units.phoneText(0.5)     → "telefon şarjının %4 kadarı"  (HEP telefon şarjı)
+     Units.waterText(1250)    → "2,5 şişe su (0,5 L)"          (HEP su şişesi)
      Units.fmt(1234.5)        → "1.234,5"
 
    NOT: Eskiden bir de human() vardı; değere göre birim seçerdi
@@ -64,6 +65,21 @@
     return 'telefon şarjının %' + fmt(pct, pct < 1 ? 2 : 0) + ' kadarı';
   }
 
+  /* HER ZAMAN su şişesi cinsinden — suyun TEK eşdeğer birimi.
+     phoneText()'in su karşılığıdır ve aynı mantığı izler: bir şişeden
+     küçük değerler oran olarak verilir, çünkü "0,05 şişe su" kimseye
+     bir şey anlatmaz. Bardak / duş / havuz gibi ikinci bir birim
+     EKLENMEZ — iki sonuç ancak aynı birimden okunursa kıyaslanabilir. */
+  function waterText(ml) {
+    const b = ml / (C.waterBottleMl || 500);
+    if (b >= 1) return fmt(b, 1) + ' şişe su (0,5 L)';
+    if (b >= 0.5) return 'yarım şişe sudan biraz fazla';
+    if (b >= 0.24) return 'bir şişenin dörtte biri kadar su';
+    const pct = b * 100;
+    if (pct < 0.1) return 'bir şişenin binde biri kadarından az su';
+    return 'bir şişe suyun %' + fmt(pct, pct < 1 ? 2 : 0) + ' kadarı';
+  }
+
   /* Baraj cümlesi: büyük (eğitim) enerjiler için */
   function damSentence(wh) {
     const e = equivalents(wh);
@@ -74,5 +90,5 @@
     return d.name + '’nın ' + fmt(d.hours * 60, 0) + ' dakikalık üretimi';
   }
 
-  window.Units = { fmt, equivalents, phoneText, dur, damSentence };
+  window.Units = { fmt, equivalents, phoneText, waterText, dur, damSentence };
 })();

@@ -1,107 +1,131 @@
 /* =========================================================
-   PROMPT MÜHENDİSLİĞİ sayfası
-   İçerik tamamen bu dosyadaki dizilerden gelir — kod bilmeden
-   metinleri değiştirebilirsin.
+   FAZ 4 · YEŞİL PROMPT  (prompt-muhendisligi.html)
+   ---------------------------------------------------------
+   İki slayt:
+     1) Yeşil Prompt Kuralları — sekiz kural, her biri bir
+        maliyet kalemine bağlı
+     2) Sergi için resim üretimi — reçete + taslak kutusu +
+        gerçek araç bağlantıları + Ölç fazına yönlendirme
+
+   ❌ Taslak kutusu KAYDEDİLMEZ (SITE_RULES 2c).
+
+   İçerik: config/yesil-prompt.config.js
+   Araç listesi: config/imagetools.config.js (TEK kaynak —
+   buraya ayrı bir liste yazılmaz, yoksa iki farklı gerçek olur)
    ========================================================= */
 (function () {
-  const $ = (id) => document.getElementById(id);
+  'use strict';
 
-  /* --- Shot tipleri (örnekle öğretme · resim çizdirme üzerinden) ---
-     Bu atölyede resim çizdireceğimiz için örnekler görsel promptu odaklı. */
-  const SHOTS = [
-    { tag: 'Zero-shot', title: 'Örneksiz', emoji: '0️⃣',
-      body: 'Hiç örnek/stil vermeden doğrudan ne çizilmesini istediğini yazarsın. Model stili kendi seçer.',
-      ex: 'Bir bardak suyun içinde yüzen küçük bir yeşil yaprak çiz.' },
-    { tag: 'One-shot', title: 'Tek örnek', emoji: '1️⃣',
-      body: 'Tek bir stil örneği vererek istediğin görünümü gösterir, sonra yeni nesneyi istersin.',
-      ex: 'Örnek stil: “düz vektör, pastel renkler, kalın dış çizgi.”\nAynı stilde: bir bisiklet çiz.' },
-    { tag: 'Few-shot', title: 'Birkaç örnek', emoji: '🔢',
-      body: 'Birkaç örnekle stili netçe öğretirsin; üretilen görsellerde tutarlılık artar.',
-      ex: 'elma → düz vektör, pastel, kalın çizgi\nev → düz vektör, pastel, kalın çizgi\nkedi → düz vektör, pastel, kalın çizgi\nağaç →' }
-  ];
+  var $ = function (id) { return document.getElementById(id); };
+  var U = function () { return window.Units; };
 
-  /* --- İyi promptun parçaları --- */
-  const TECHNIQUES = [
-    { icon: '🎭', t: 'Rol ver', d: '“Sen bir 9. sınıf biyoloji öğretmenisin.” Modelin tonunu ve uzmanlığını ayarlar.' },
-    { icon: '🎯', t: 'Görevi net yaz', d: 'Ne istediğini açıkça söyle: “özetle”, “karşılaştır”, “üç fikir üret”.' },
-    { icon: '🧩', t: 'Bağlam ekle', d: 'Hedef kitle, amaç, kısıtlar: “lise öğrencisine”, “sınav için”.' },
-    { icon: '📐', t: 'Format belirt', d: '“Madde madde”, “tablo”, “tek cümle”, “JSON”. İstediğin biçimi söyle.' },
-    { icon: '🖼️', t: 'Örnek ver', d: 'İstediğin çıktının bir örneğini koy (few-shot). Belirsizliği azaltır.' },
-    { icon: '🚧', t: 'Kısıt koy', d: 'Uzunluk, dil, ton: “en fazla 100 kelime”, “resmî dil”, “Türkçe”.' },
-    { icon: '🪜', t: 'Adım adım iste', d: 'Zor problemde “adım adım düşün” (chain-of-thought) doğruluğu artırır.' },
-    { icon: '🔁', t: 'İyileştir', d: 'Çıktı eksikse promptu düzelt; baştan tam tarif, sonra tek üretim.' }
-  ];
-
-  /* --- Önce / sonra örnekleri --- */
-  const BEFORE_AFTER = [
-    { kind: '💬 Metin',
-      bad: 'Bana yapay zeka ve çevre hakkında bir şeyler yaz.',
-      good: 'Yapay zekânın su tüketimini 9. sınıf öğrencisine 3 maddede, her madde tek cümle anlat.' },
-    { kind: '🖼️ Görsel',
-      bad: 'Güzel bir gelecek şehri.',
-      good: '2050, yenilenebilir enerjiyle çalışan İstanbul; gündüz, güneş panelli çatılar, yeşil teraslar, izometrik illüstrasyon.' }
-  ];
-
-  /* --- Yeşil prompt kuralları (Token Lab'dan taşındı) --- */
-  const RULES = [
-    'Net ol, ilk seferde doğru iste',
-    'Kısa çıktı iste',
-    'Görsel şart değilse metinle yetin',
-    'Basit işte efforu kıs',
-    'Bağlamı şişirme',
-    'Baştan tam tarif et, iteratif düzeltme yapma',
-    'Önce metinde prova, sonra tek görsel',
-    'İyi prompt’u sakla, yeniden kullan'
-  ];
-
-  function renderShots() {
-    const host = $('shots'); if (!host) return;
-    host.innerHTML = SHOTS.map(s =>
-      '<div class="card card-top">' +
-        '<div class="big-emoji">' + s.emoji + '</div>' +
-        '<div class="chip mb">' + s.tag + '</div>' +
-        '<h3 class="m-0">' + s.title + '</h3>' +
-        '<p class="text-soft">' + s.body + '</p>' +
-        '<div class="prompt-box prompt-good">' + s.ex + '</div>' +
-      '</div>'
-    ).join('');
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
   }
 
-  function renderTechniques() {
-    const host = $('techniques'); if (!host) return;
-    host.innerHTML = TECHNIQUES.map(t =>
-      '<div class="card">' +
-        '<div class="big-emoji">' + t.icon + '</div>' +
-        '<h3 class="m-0">' + t.t + '</h3>' +
-        '<p class="text-soft m-0">' + t.d + '</p>' +
-      '</div>'
-    ).join('');
+  /* ---------- 1) YEŞİL PROMPT KURALLARI ---------- */
+  function kurallar() {
+    var host = $('kurallarKartlari'); if (!host) return;
+    host.innerHTML = (window.KURALLAR || []).map(function (k) {
+      return '<div class="card card-top kural-kart">' +
+        '<div class="between">' +
+          '<span class="rule-num">' + k.no + '</span>' +
+          '<span class="big-emoji">' + k.ikon + '</span>' +
+        '</div>' +
+        '<h3 class="mt-0">' + esc(k.ad) + '</h3>' +
+        '<span class="tag tag-meas">azaltır: ' + esc(k.azaltir) + '</span>' +
+        '<p class="text-soft mt mb-0">' + esc(k.ornek) + '</p>' +
+      '</div>';
+    }).join('');
+
+    if ($('kurallarOzet')) $('kurallarOzet').innerHTML = window.KURALLAR_OZET || '';
   }
 
-  function renderBeforeAfter() {
-    const host = $('beforeAfter'); if (!host) return;
-    host.innerHTML = BEFORE_AFTER.map(b =>
-      '<div class="card">' +
-        '<div class="chip mb">' + b.kind + '</div>' +
-        '<div class="label">❌ Kötü</div>' +
-        '<div class="prompt-box prompt-bad mb">' + b.bad + '</div>' +
-        '<div class="label">✅ İyi</div>' +
-        '<div class="prompt-box prompt-good">' + b.good + '</div>' +
-      '</div>'
-    ).join('');
+  /* ---------- 2) ÜRETİM ADIMLARI ---------- */
+  function adimlar() {
+    var host = $('uretimAdimlari'); if (!host) return;
+    host.innerHTML = (window.URETIM_ADIMLARI || []).map(function (a) {
+      return '<div class="card card-top">' +
+        '<span class="rule-num">' + a.no + '</span>' +
+        '<div class="big-emoji mt">' + a.ikon + '</div>' +
+        '<h3 class="m-0">' + esc(a.b) + '</h3>' +
+        '<p class="text-soft m-0">' + a.m + '</p>' +
+      '</div>';
+    }).join('');
+    if ($('uretimUyari')) $('uretimUyari').innerHTML = window.URETIM_UYARI || '';
   }
 
-  function renderRules() {
-    const host = $('rules'); if (!host) return;
-    host.innerHTML = RULES.map((r, i) =>
-      '<div class="card rule-card">' +
-        '<span class="rule-num">' + (i + 1) + '</span>' +
-        '<span class="text-soft rule-txt">' + r + '</span>' +
-      '</div>'
-    ).join('');
+  /* ---------- 3) REÇETE + TASLAK ----------
+     Reçete satırları promptun parçalarını hatırlatır.
+     Taslak kutusu yalnızca token sayar; kaydedilmez. */
+  function recete() {
+    var host = $('receteTablo'); if (!host) return;
+    host.innerHTML =
+      '<thead><tr><th>Parça</th><th>Ne yazacaksın?</th><th>Örnek</th></tr></thead><tbody>' +
+      (window.RECETE || []).map(function (r) {
+        return '<tr>' +
+          '<td><b>' + esc(r.p) + '</b></td>' +
+          '<td class="src">' + esc(r.o) + '</td>' +
+          '<td class="text-soft">' + esc(r.ornek) + '</td>' +
+        '</tr>';
+      }).join('') + '</tbody>';
   }
 
-  function init() { renderShots(); renderTechniques(); renderBeforeAfter(); renderRules(); }
+  function taslakCiz() {
+    var el = $('taslak'); if (!el) return;
+    var metin = el.value.trim();
+    $('taslakTok').textContent = metin ? window.tokenize(metin).count : 0;
+
+    /* Kaç parça yazılmış? Virgül/noktalı virgülle ayrılmış öbekler sayılır.
+       Kesin bir ölçüm değil — yalnızca "reçeteyi hatırla" dürtüsü. */
+    var parca = metin
+      ? metin.split(/[,;·\n]+/).filter(function (s) { return s.trim().length > 2; }).length
+      : 0;
+    var toplam = (window.RECETE || []).length;
+    $('taslakRecete').textContent = Math.min(parca, toplam) + ' / ' + toplam;
+  }
+
+  function taslakKur() {
+    var el = $('taslak'); if (!el) return;
+    el.addEventListener('input', taslakCiz);
+    taslakCiz();
+  }
+
+  /* ---------- 4) ARAÇ BAĞLANTILARI ---------- */
+  function araclar() {
+    var host = $('uretimAraclari'); if (!host) return;
+    var T = (window.IMAGE_TOOLS || []).slice();
+    var U_ = U();
+
+    /* Önce gerçekten ücretsiz olanlar, sonra en çok kullanılanlar,
+       sonra enerjisi düşük olanlar — öğrenci en erişilebiliri görsün. */
+    T.sort(function (a, b) {
+      if (!!b.free !== !!a.free) return b.free ? 1 : -1;
+      if (!!b.top5 !== !!a.top5) return b.top5 ? 1 : -1;
+      return a.wh - b.wh;
+    });
+
+    host.innerHTML = T.map(function (t) {
+      var rozet = (t.free ? '<span class="tag tag-free">ücretsiz</span>' : '') +
+        (t.basis === 'olcum'
+          ? '<span class="tag tag-meas">ölçüm</span>'
+          : '<span class="tag tag-est">tahmin</span>');
+      return '<a class="arac-satir" href="' + esc(t.url) + '" target="_blank" rel="noopener">' +
+        '<span class="arac-ad">' + esc(t.label) + ' <span class="ext">↗</span>' +
+          '<span class="src"> · ' + esc(t.org) + '</span></span>' +
+        '<span class="arac-rozet">' + rozet + '</span>' +
+        '<span class="arac-wh">' + (U_ ? U_.fmt(t.wh, 2) : t.wh) + ' Wh</span>' +
+      '</a>';
+    }).join('');
+  }
+
+  function init() {
+    kurallar(); adimlar(); recete(); taslakKur(); araclar();
+    window.addEventListener('tokenizer-ready', taslakCiz);
+  }
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();

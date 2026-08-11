@@ -24,6 +24,8 @@
      16) SERGİ SALONU (galeri ızgarası, künye şeridi, lightbox, yüzen düğme)
      17) HESAPLAYICI (dayanak rozetleri, damga önizlemesi, araç tablosu)
      18) FOOTER (künye + site haritası + telif — sergi hariç her sayfada)
+     19) ATÖLYE FAZLARI (faz rayı, eğitmen şeridi, tahmin/görev kartı,
+         iki sütunlu karşılaştırma, kural kartları, araç bağlantıları)
    ================================================================= */
 
 
@@ -172,8 +174,10 @@ a.chip:hover { border-color: var(--green-400); }
 .cols-2 { grid-template-columns: repeat(2, 1fr); }
 .cols-3 { grid-template-columns: repeat(3, 1fr); }
 .cols-4 { grid-template-columns: repeat(4, 1fr); }
+.cols-5 { grid-template-columns: repeat(5, 1fr); }
 .grid-tight { gap: .7rem; }
-@media (max-width: 900px) { .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) { .cols-5 { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 900px) { .cols-2, .cols-3, .cols-4, .cols-5 { grid-template-columns: 1fr; } }
 
 .divider { height: 1px; background: var(--line); border: 0; margin: 1rem 0; }
 .src { font-size: .8rem; color: var(--ink-mute); }
@@ -381,8 +385,6 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 .breakdown-row { display: flex; justify-content: space-between; }
 
 /* --- 14.7 SHOT / PROMPT MÜHENDİSLİĞİ kartları --- */
-.shot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-@media (max-width: 900px) { .shot-grid { grid-template-columns: 1fr; } }
 .prompt-box { font-family: ui-monospace, 'SF Mono', monospace; font-size: .86rem; background: var(--mint-50);
   border: 1px solid var(--line); border-radius: 10px; padding: .7rem .8rem; white-space: pre-wrap; color: var(--ink); }
 .prompt-bad { border-left: 4px solid var(--red); }
@@ -728,6 +730,273 @@ circle.era-trrez { fill: var(--amber); }
   font-size: .78rem; color: var(--foot-mute); }
 
 
+/* ===== 19) ATÖLYE FAZLARI =======================================
+   80 dakikalık akışın görünen parçaları: faz rayı, eğitmen şeridi,
+   tahmin kartı, görev kartı, prompt düellosu, teknik oyunu, skor
+   kartı.
+
+   Buradaki her şey EKLEMEDİR; 1-18. bölümlerdeki hiçbir kural
+   değiştirilmemiştir. Mevcut değişkenler (--green-*, --radius…)
+   ve mevcut bileşenler (.card .chip .field .tag) yeniden kullanılır. */
+
+/* --- 19.1 FAZ RAYI (nav'ın yerine, atölye sayfalarında) ---
+   Düz bir menü 80 dakikalık yapıyı göstermez; bu ray gösterir.
+   Her adımda süre bütçesi yazar; biten fazlar yeşil dolar. */
+.faz-rail { list-style: none; margin: 0 0 0 auto; padding: 0; gap: 2px; }
+.faz-rail li { display: flex; align-items: center; }
+
+.faz-step { display: inline-flex; align-items: center; gap: .42rem;
+  text-decoration: none; color: var(--ink-soft); font-weight: 600; font-size: .84rem;
+  padding: .38rem .6rem; border-radius: 10px; white-space: nowrap; transition: .15s; }
+.faz-step:hover { color: var(--green-700); background: var(--mint-100); }
+
+.faz-num { flex: none; width: 20px; height: 20px; border-radius: 50%;
+  display: grid; place-items: center; font-size: .72rem; font-weight: 800;
+  background: var(--mint-100); color: var(--green-700);
+  border: 1px solid var(--line); }
+.faz-sure { font-size: .7rem; font-weight: 700; color: var(--ink-mute);
+  font-variant-numeric: tabular-nums; }
+
+.faz-step.done .faz-num { background: var(--green-600); color: #fff; border-color: var(--green-600); }
+.faz-step.done .faz-num::after { content: "✓"; }
+.faz-step.done .faz-num { font-size: 0; }        /* rakam yerine onay işareti */
+.faz-step.done .faz-num::after { font-size: .72rem; }
+
+.faz-step.active { color: var(--green-800); background: var(--mint-200); }
+.faz-step.active .faz-num { background: linear-gradient(135deg, var(--green-500), var(--green-700));
+  color: #fff; border-color: transparent; }
+.faz-step.active .faz-sure { color: var(--green-700); }
+
+.faz-ayrac { width: 1px; height: 22px; background: var(--line); margin: 0 .5rem; }
+.faz-ek-link { text-decoration: none; color: var(--ink-mute); font-size: .78rem; font-weight: 600;
+  padding: .36rem .5rem; border-radius: 9px; white-space: nowrap; }
+.faz-ek-link:hover { color: var(--green-700); background: var(--mint-50); }
+
+@media (max-width: 1180px) { .faz-ad { display: none; } }
+@media (max-width: 1040px) {
+  .faz-rail { flex-direction: column; align-items: stretch; }
+  .faz-rail li { width: 100%; }
+  .faz-ad { display: inline; }
+  .faz-step, .faz-ek-link { width: 100%; }
+  .faz-ayrac { width: 100%; height: 1px; margin: .4rem 0; }
+}
+
+/* --- 19.2 EĞİTMEN ŞERİDİ (?egitmen=1) ---
+   Öğrenci ekranında YOKTUR. Süre, ne söyleneceği ve tartışma
+   soruları burada; ayrı bir belge taşımaya gerek kalmasın. */
+.egitmen-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 950;
+  display: flex; align-items: center; gap: 1.1rem; padding: .55rem 1rem;
+  background: var(--green-900); color: #dbeee2;
+  border-top: 3px solid var(--green-400); box-shadow: 0 -10px 30px -18px #000; }
+body.eg-on .fp-arrows { bottom: 92px; }
+body.eg-on .fab-dock  { bottom: 92px; }
+
+.eg-sol { display: flex; align-items: center; gap: .6rem; flex: none; }
+.eg-rozet { font-size: .6rem; font-weight: 800; letter-spacing: .12em;
+  background: var(--green-400); color: #06301a; padding: .2rem .45rem; border-radius: 5px; }
+.eg-sure { font-size: .74rem; color: #8fb7a1; }
+.eg-orta { flex: 1; min-width: 0; overflow-y: auto; max-height: 72px; }
+.eg-soyle { margin: 0; font-size: .82rem; line-height: 1.45; }
+.eg-sorular { margin: .2rem 0 0; padding-left: 1.1rem; font-size: .76rem; color: #8fb7a1; }
+.eg-sag { display: flex; align-items: center; gap: .5rem; flex: none; }
+.eg-saat { font-family: var(--font-head); font-weight: 800; font-size: 1.15rem;
+  font-variant-numeric: tabular-nums; color: #fff; }
+.eg-saat.eg-bitti { color: #ff9b90; }
+.egitmen-bar .btn-ghost { background: rgba(255,255,255,.1); color: #dbeee2; border-color: transparent; }
+.egitmen-bar .btn-ghost:hover { background: rgba(255,255,255,.2); }
+
+@media (max-width: 860px) { .eg-orta { display: none; } }
+
+/* --- 19.3 TAHMİN KARTI (tahmin-önce-cevap) ---
+   Sitenin öğrenme motoru. Gerçek, kilitlenmeden görünmez. */
+.tahmin-kart { display: flex; flex-direction: column; gap: .7rem; }
+.tahmin-soru { font-family: var(--font-head); font-weight: 700;
+  font-size: clamp(1rem, 1.7vw, 1.22rem); line-height: 1.35; }
+.tahmin-giris { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+.tahmin-in { width: 150px; flex: none; font-family: var(--font-head); font-weight: 700;
+  font-size: 1.15rem; text-align: right; }
+.tahmin-in:disabled { background: var(--mint-50); color: var(--green-800); }
+.tahmin-birim { color: var(--ink-soft); font-size: .9rem; margin-right: auto; }
+.tahmin-ipucu { margin: 0; }
+
+.tahmin-reveal { border-top: 1px dashed var(--line); padding-top: .8rem; }
+.tahmin-reveal[hidden] { display: none; }
+.tahmin-fark { font-size: .92rem; line-height: 1.5; color: var(--ink-soft); margin-bottom: .7rem; }
+
+.tahmin-gercek { display: flex; flex-direction: column; gap: .45rem; }
+.tahmin-satir { display: grid; grid-template-columns: 1fr auto; gap: .2rem .8rem;
+  align-items: baseline; background: var(--mint-50); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: .55rem .8rem; }
+.tahmin-etiket { font-size: .84rem; color: var(--ink-soft); font-weight: 600; }
+.tahmin-deger { font-family: var(--font-head); font-weight: 800; font-size: 1.15rem;
+  color: var(--green-800); text-align: right; }
+.tahmin-not { grid-column: 1 / -1; font-size: .74rem; color: var(--ink-mute); }
+.tahmin-ders { margin: .8rem 0 .3rem; font-size: .9rem; line-height: 1.6; color: var(--ink); }
+
+/* --- 19.4 GÖREV KARTI (Faz 2 · CODAP) ---
+   Üç adımlı iskelet: tahmin → kur → gözlem. Fazı öğrenci yönetir. */
+.gorev { display: flex; flex-direction: column; gap: .9rem; }
+.gorev-head { display: flex; align-items: flex-start; gap: .8rem; }
+.gorev-num { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+  font-weight: 800; color: #fff; background: linear-gradient(135deg, var(--green-500), var(--green-700)); }
+.gorev-baslik { font-family: var(--font-head); font-weight: 700; font-size: 1.08rem; margin: .2rem 0 0; }
+
+.gorev-adim { display: grid; grid-template-columns: auto 1fr; gap: .5rem .7rem; align-items: start; }
+.gorev-etiket { font-size: .66rem; font-weight: 800; letter-spacing: .08em; color: var(--green-700);
+  background: var(--mint-100); border: 1px solid var(--line); border-radius: 6px;
+  padding: .18rem .4rem; white-space: nowrap; margin-top: .15rem; }
+
+.not-kutu { min-height: 62px; font-size: .9rem; }
+.gorev-kesif { margin: 0; font-size: .86rem; line-height: 1.6; color: var(--green-800);
+  background: var(--mint-100); border-left: 4px solid var(--green-500);
+  border-radius: 0 10px 10px 0; padding: .6rem .8rem; }
+
+/* --- 19.5 İKİ SÜTUNLU KARŞILAŞTIRMA (Token Lab · Önce/Sonra) ---
+   Solda verilen/bozuk hâl, sağda öğrencinin hâli. */
+.duello-col { display: flex; flex-direction: column; gap: .6rem; }
+.duello-col.kotu { border-top-color: var(--red); }
+
+/* --- 19.6 YEŞİL PROMPT (Faz 4) --- */
+.kural-kart { display: flex; flex-direction: column; }
+.kural-kart h3 { font-size: 1rem; line-height: 1.3; margin-bottom: .5rem; }
+.kural-kart .tag { align-self: flex-start; }
+
+/* Araç bağlantı satırı: ad · rozet · enerji */
+.arac-satir { display: grid; grid-template-columns: 1fr auto auto; gap: .5rem .8rem;
+  align-items: center; text-decoration: none; color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: .55rem .8rem; transition: border-color .15s, background .15s; }
+.arac-satir:hover { border-color: var(--green-400); background: var(--mint-50); }
+.arac-ad { font-weight: 600; font-size: .9rem; min-width: 0; }
+.arac-rozet { display: flex; gap: .2rem; flex: none; }
+.arac-wh { font-family: var(--font-head); font-weight: 800; font-size: .88rem;
+  color: var(--green-800); white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) {
+  .arac-satir { grid-template-columns: 1fr auto; }
+  .arac-rozet { grid-column: 1 / -1; }
+}
+
+/* --- 19.7 TOKEN LAB BİLEŞENLERİ (Faz 3) --- */
+
+/* Akış adımları: LLM'in cevabı nasıl ürettiği. 6. adım DÖNGÜdür
+   ve bilerek vurgulanır — maliyetin tamamı orada. */
+.akis { list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(4, 1fr); gap: .6rem; }
+@media (max-width: 1000px) { .akis { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px)  { .akis { grid-template-columns: 1fr; } }
+.akis-adim { position: relative; display: grid; grid-template-columns: auto 1fr; gap: .5rem .6rem;
+  align-items: start; background: #fff; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: .7rem .8rem; font-size: .84rem; line-height: 1.5; }
+.akis-no { grid-row: span 2; width: 24px; height: 24px; border-radius: 50%; display: grid;
+  place-items: center; font-size: .72rem; font-weight: 800; color: #fff;
+  background: linear-gradient(135deg, var(--green-500), var(--green-700)); }
+.akis-ikon { font-size: 1.1rem; }
+.akis-govde { grid-column: 2; }
+.akis-adim.akis-donus { border-color: var(--amber); background: #fdf9f0; }
+.akis-adim.akis-donus .akis-no { background: var(--amber); }
+
+/* Üç üretim türünün mini akışı */
+.akis-mini { list-style: none; margin: .6rem 0; padding: 0; display: flex; flex-wrap: wrap;
+  gap: .25rem; font-size: .76rem; color: var(--ink-soft); }
+.akis-mini li { background: var(--mint-50); border: 1px solid var(--line);
+  border-radius: 7px; padding: .18rem .45rem; }
+.akis-mini li + li::before { content: "→ "; color: var(--green-400); }
+
+/* Modelin belirlediği, kullanıcının değiştiremediği değer */
+.sabit-kutu { display: grid; grid-template-columns: 1fr auto; gap: .15rem .8rem;
+  background: var(--mint-50); border: 1px dashed var(--line);
+  border-radius: var(--radius-sm); padding: .6rem .8rem; }
+.sabit-etiket { font-size: .82rem; font-weight: 600; color: var(--ink-soft); }
+.sabit-deger { font-family: var(--font-head); font-weight: 800; color: var(--green-800); }
+.sabit-not { grid-column: 1 / -1; font-size: .74rem; color: var(--ink-mute); }
+
+/* Senin elinde olan / olmayan */
+.elinde-satir { display: grid; grid-template-columns: auto 1fr; gap: .6rem;
+  align-items: start; font-size: .88rem; line-height: 1.5;
+  padding: .5rem .1rem; border-bottom: 1px solid var(--line); }
+.elinde-satir:last-child { border-bottom: 0; }
+.elinde-ikon { font-size: 1.15rem; line-height: 1.3; }
+.elinde-satir.pasif { color: var(--ink-mute); }
+.elinde-satir.pasif .elinde-ikon { filter: grayscale(1); opacity: .6; }
+.chip-red { background: #fce9e7; color: var(--red); border-color: #f3b6b0; }
+
+/* Token avı ölçüm şeridi */
+.av-olcum { display: grid; grid-template-columns: auto 1fr; gap: .15rem .6rem;
+  font-size: .82rem; color: var(--ink-soft); }
+.av-olcum b { color: var(--green-800); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Önce / Sonra: iki sütun, satır satır */
+.os-satir { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;
+  align-items: start; }   /* sol kart boşuna uzamasın */
+@media (max-width: 900px) { .os-satir { grid-template-columns: 1fr; } }
+.os-bar { height: 8px; border-radius: 999px; background: var(--mint-100);
+  border: 1px solid var(--line); overflow: hidden; margin-top: .6rem; }
+.os-dolu { height: 100%; width: 0;
+  background: linear-gradient(90deg, var(--green-400), var(--green-600)); transition: width .25s ease; }
+.os-dolu.artis { background: linear-gradient(90deg, #f0a79f, var(--red)); }
+.os-sonuc { font-size: .82rem; color: var(--ink-soft); margin-top: .45rem; line-height: 1.5; }
+
+/* --- 19.8 SKOR KARTI + TURNUVA KODU (Faz 4.3) --- */
+.skor-num { font-family: var(--font-head); font-weight: 800;
+  font-size: clamp(2.4rem, 7vw, 3.6rem); color: var(--green-800); line-height: 1; }
+.skor-alt { font-size: .86rem; color: var(--ink-soft); }
+.skor-dokum { display: flex; flex-direction: column; gap: .3rem; margin-top: .9rem; text-align: left; }
+.skor-satir { display: flex; justify-content: space-between; font-size: .86rem; color: var(--ink-soft); }
+.skor-satir b { color: var(--green-800); }
+/* --- 19.10 ŞEFFAFLIK ROZETLERİ ---
+   17.1'deki dayanak rozetlerinin veri kümesi karşılığı: bir sayının
+   ÜRETİCİDEN mi, bir ÖLÇÜMDEN mi, yoksa bir TAHMİNDEN mi geldiğini
+   söyler (bkz. SITE_RULES 1.4). .tag temel sınıfı yeniden kullanılır. */
+.tag-resmi  { color: var(--green-800); background: var(--mint-100); border-color: var(--green-300); }
+.tag-beyan  { color: var(--amber);     background: #fdf3e2;         border-color: #f3d49a; }
+.tag-olculdu{ color: var(--water);     background: var(--water-50);  border-color: #b6dff5; }
+.tag-tahmini{ color: var(--violet);    background: #f0e9fb;          border-color: #d5c6f5; }
+
+/* --- 19.10b BÜYÜME GRAFİĞİ (Faz 2, çift eksenli) ---
+   15.3'teki .era-* bileşenini yeniden kullanır; burada yalnızca
+   iki serinin rengi ve son-nokta etiketi tanımlıdır. */
+.era-kullanici { stroke: var(--green-600); }
+.era-token     { stroke: var(--amber); }
+circle.era-kullanici { fill: var(--green-600); }
+circle.era-token     { fill: var(--amber); }
+text.era-kullanici { fill: var(--green-700); stroke: none; }
+text.era-token     { fill: var(--amber); stroke: none; }
+.era-key.era-kullanici { color: var(--green-700); }
+.era-key.era-token     { color: var(--amber); }
+.buyume-son { font-family: var(--font-head); font-weight: 800; font-size: 13px; }
+
+/* Kat şeridi: çift eksenin yarattığı "ikisi de aynı büyümüş" yanılsamasını
+   düzelten sayısal karşılık. Grafiğin hemen altında durur. */
+.kat-serit { display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: .5rem .9rem; margin-top: .6rem; padding-top: .7rem; border-top: 1px dashed var(--line); }
+.kat-aralik { font-size: .78rem; color: var(--ink-mute); }
+.kat-rozet { display: inline-flex; align-items: baseline; gap: .35rem;
+  font-size: .86rem; font-weight: 600; color: currentColor;
+  background: var(--mint-50); border: 1px solid var(--line);
+  border-radius: 999px; padding: .3rem .8rem; }
+.kat-rozet b { font-family: var(--font-head); font-size: 1.15rem; font-weight: 800; }
+.kat-rozet.era-kullanici { color: var(--green-700); }
+.kat-rozet.era-token { color: var(--amber); }
+
+/* --- 19.11 ADIM ŞERİDİ (CODAP yönergesi gibi sıralı yönergeler) --- */
+.adimlar { list-style: none; counter-reset: adim; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: .55rem; }
+.adimlar li { position: relative; padding-left: 2.3rem; font-size: .92rem;
+  line-height: 1.6; color: var(--ink-soft); }
+.adimlar li::before { counter-increment: adim; content: counter(adim);
+  position: absolute; left: 0; top: 0; width: 26px; height: 26px; border-radius: 8px;
+  background: var(--mint-100); color: var(--green-700); border: 1px solid var(--line);
+  font-weight: 800; font-size: .78rem; display: grid; place-items: center; }
+
+/* --- 19.12 VURGU SAYI ŞERİDİ (Faz 1 kancaları) --- */
+.vurgu { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
+  gap: .5rem 1rem; background: var(--mint-50); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 1rem 1.2rem; }
+.vurgu-num { font-family: var(--font-head); font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--green-800); line-height: 1; }
+.vurgu-txt { font-size: .95rem; color: var(--ink-soft); }
+
+
 /* ===== HAREKET AZALTMA TERCİHİ ==================================
    Kural: sitedeki TÜM animasyon ve hareketli geçişler burada kapanır.
    Görünürlük korunur (içerik kaybolmaz), yalnızca HAREKET kalkar:
@@ -761,6 +1030,11 @@ circle.era-trrez { fill: var(--amber); }
   .fab { transition: background .2s, border-color .2s, color .2s; }
   .fab:hover { transform: none; }
   .fab-label { transition: opacity .2s ease; transform: none; }
+
+  /* Atölye fazları (19. bölüm) — renk geçişleri kalır, hareket kalkar */
+  .faz-step { transition: none; }
+  .arac-satir { transition: border-color .15s, background .15s; }
+  .os-dolu { transition: none; }   /* çubuk anında dolar, kaymaz */
 }
 
 
@@ -771,6 +1045,13 @@ circle.era-trrez { fill: var(--amber); }
   .fp-track { transform: none !important; }
   .fp-section { height: auto; page-break-inside: avoid; }
   .fp-dots, .fp-arrows, .nav, .scroll-hint { display: none !important; }
+
+  /* Yazdırırken eğitmen şeridi ve etkileşim düğmeleri çıkmaz;
+     kâğıtta yalnızca içerik ve açılmış cevaplar kalsın. */
+  .egitmen-bar, .tahmin-ac { display: none !important; }
+  .tahmin-reveal[hidden] { display: block !important; }   /* yazdırırken cevaplar açık bassın */
+  .not-kutu { border: 1px solid #999; min-height: auto; }
+  .gorev, .tahmin-kart { break-inside: avoid; }
 
   /* Galeri: katalog gibi bassın — ekran kontrolleri çıkmasın */
   .fab-dock, .lightbox { display: none !important; }

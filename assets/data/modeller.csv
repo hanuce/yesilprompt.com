@@ -1,0 +1,13 @@
+Model,Kurum,Yil,Parametre_Milyar,Egitim_Enerjisi_kWh,Karbon_kgCO2e,GPU,GPU_Sayisi,Bolge,Karbon_Yogunlugu_gCO2_kWh,Su_Litre,Seffaflik,Kaynak
+GPT-3 (175B),OpenAI,2020,175,1287000,552000,NVIDIA V100,10000,ABD,429,4749030,resmi,"Patterson vd. (2021), arXiv:2104.10350 - OpenAI+Google ortak makalesi"
+PaLM (540B),Google,2022,540,3436000,271400,Google TPUv4,6144,ABD (Iowa),79,12678840,resmi,"Patterson vd. / Google - karbon degeri Google tarafindan yayimlandi"
+BLOOM (176B),BigScience,2022,176,433196,24700,NVIDIA A100,384,Fransa,57,1598493,resmi,"Luccioni vd. (2022), JMLR - Fransa sebekesi dusuk karbonlu"
+Llama 3.1 405B,Meta,2024,405,21588000,8930000,NVIDIA H100,16000,ABD,359,79659720,resmi,"Meta model karti: 30,84M GPU-saat x 700W. Karbon yer bazli; piyasa bazli 0 tCO2e"
+Llama 3.1 ailesi (8B+70B+405B),Meta,2024,483,27510000,11390000,NVIDIA H100,16000,ABD,359,101511900,resmi,"Meta model karti: 39,3M GPU-saat toplam"
+DeepSeek-V3 (671B),DeepSeek,2024,671,975800,546448,NVIDIA H800,2048,Cin,560,3600702,resmi,"DeepSeek-V3 teknik raporu (arXiv:2412.19437): 2,788M H800-saat. Enerji 350W TDP ile turetildi"
+Mistral Large 2,Mistral AI,2024,123,,20400000,,,Fransa,57,281000000,resmi,"Mistral + Carbone 4 / ADEME yasam dongusu analizi. Su OLCULMUS degerdir (281.000 m3), turetilmedi"
+GPT-4,OpenAI,2023,,45473159,14642357,NVIDIA H100,25000,ABD,322,167795957,tahmini,"Epoch AI (egitim gucu x suresi). OpenAI hicbir sayi yayimlamadi; karbon 322 gCO2/kWh ile turetildi"
+Gemini 1.0 Ultra,Google DeepMind,2023,550,92217360,39653465,Google TPUv4,80000,ABD (Iowa),430,340282058,tahmini,"Epoch AI (egitim gucu x suresi). Google bu model icin egitim enerjisi yayimlamadi"
+Grok 3,xAI,2025,,237489097,76471489,NVIDIA H100,200000,ABD (Memphis),322,876334768,tahmini,"Epoch AI (egitim gucu x suresi). xAI yalnizca veri merkezi guc kapasitesini acikladi"
+Claude 3.7 Sonnet,Anthropic,2025,,,,,,ABD,322,,veri yok,"Anthropic hicbir enerji/su/karbon verisi yayimlamiyor. Epoch yalnizca hesaplama (FLOP) tahmini veriyor"
+Qwen3-Max,Alibaba,2025,,,,,,Cin,560,,veri yok,"Alibaba Stanford seffaflik raporunda enerji/karbon/su icin 'bilgi yok' dedi"

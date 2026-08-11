@@ -36,6 +36,11 @@ window.UNITS_CONFIG = {
      ("How Hungry is AI?" 2025 → 3.69 L/kWh) */
   waterLitrePerKwh: 3.69,
 
+  /* 💧 SU ŞİŞESİ — enerji için telefon şarjı ne yapıyorsa, su için bu yapar.
+     Sitedeki her "bu kadar su" cümlesi TEK birimden okunur (bkz. SITE_RULES 7).
+     Standart pet şişe = 500 mL. */
+  waterBottleMl: 500,
+
   /* 🏭 KARBON — 1 Wh başına kaç gram CO₂? (temiz şebeke tahmini) */
   co2GramPerWh: 0.125
 };

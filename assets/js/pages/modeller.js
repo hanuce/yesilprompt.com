@@ -153,9 +153,49 @@
     if (ch) ch.innerHTML = eraChartSVG(E);
   }
 
+
+  /* ---------- DİLLER VE TOKEN (Token Lab'dan buraya taşındı) ----------
+     "Model önce İngilizceye mi çeviriyor?" mitini öğrenci KENDİ
+     kelimesiyle ölçerek yıkar. Eklenenler oturum içidir; kaydedilmez. */
+  const PAIRS = [
+    { tr: 'Su', en: 'Water' },
+    { tr: 'Merhaba', en: 'Hello' },
+    { tr: 'Sürdürülebilirlik', en: 'Sustainability' },
+    { tr: 'evlerimizdekilerden', en: 'from those in our houses' }
+  ];
+  let EK_CIFTLER = [];
+
+  function esc2(s) { return String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
+
+  function renderPairs() {
+    const el = $('pairTable'); if (!el || !window.tokenize) return;
+    el.innerHTML =
+      '<thead><tr><th>Türkçe</th><th class="num">tok</th><th>İngilizce</th><th class="num">tok</th></tr></thead><tbody>' +
+      PAIRS.concat(EK_CIFTLER).map(p => {
+        const a = window.tokenize(p.tr).count, b = window.tokenize(p.en).count;
+        return '<tr><td class="text-soft">' + esc2(p.tr) + '</td>' +
+          '<td class="num text-green"><b>' + a + '</b></td>' +
+          '<td class="text-soft">' + esc2(p.en) + '</td>' +
+          '<td class="num text-water"><b>' + b + '</b></td></tr>';
+      }).join('') + '</tbody>';
+  }
+
+  function wirePairs() {
+    const btn = $('pairAdd'); if (!btn) return;
+    btn.addEventListener('click', () => {
+      const tr = $('pairTr').value.trim(), en = $('pairEn').value.trim();
+      if (!tr || !en) return;
+      EK_CIFTLER.push({ tr, en });
+      $('pairTr').value = ''; $('pairEn').value = '';
+      renderPairs();
+    });
+    renderPairs();
+    window.addEventListener('tokenizer-ready', renderPairs);
+  }
+
   function init() {
     renderTimeline(); renderDataMix(); renderDataProjects();
-    renderCosts(); renderFamilies(); renderEra();
+    renderCosts(); renderFamilies(); renderEra(); wirePairs();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

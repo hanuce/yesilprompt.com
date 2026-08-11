@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Token Lab · Yeşil Prompt Atölyesi</title>
+  <title>3 · Token Lab · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Yapay zekâ bir cevabı nasıl üretir, görsel neden pahalı, hangi parametre neyi değiştirir — ve senin elinde ne var?" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -11,146 +12,150 @@
 </head>
 <body>
 
-  <nav class="nav"><div class="wrap">
-    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
-    <button class="nav-toggle" aria-label="Menü">☰</button>
-    <div class="nav-links">
-      <a href="index.html">Sergi</a>
-      <a href="atolye.html">Atölye Girişi</a>
-      <a href="modeller.html">Modeller &amp; Tarih</a>
-      <a href="token-lab.html" class="active">Token Lab</a>
-      <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>
-      <a href="hesaplayici.html">Ne Kadar?</a>
-    </div>
-  </div></nav>
+  <nav class="nav faz-nav"><div class="wrap"></div></nav>
 
   <div class="fp-root"><div class="fp-track">
 
-    <!-- 1 · TOKEN NEDİR + CANLI SAYAÇ -->
-    <section class="fp-section tone-hero" id="token-nedir" data-title="Token nedir?">
-      <div class="fp-inner">
-        <div class="grid cols-2 items-center">
-          <div class="reveal">
-            <span class="eyebrow">🔤 Token nedir?</span>
-            <h2 class="slide-title">Token: yapay zekânın “hece”si</h2>
-            <p class="slide-lead">
-              Yapay zekâ kelimeleri bizim gibi okumaz; metni <strong>token</strong> denen küçük parçalara böler
-              (“Sürdür-üle-bilir” gibi). Token, hem <strong>öğrenmenin</strong> hem <strong>üretmenin</strong> birimidir:
-              eğitimde model veriyi token token okur, kullanımda cevabı token token üretir.
-            </p>
-            <ul class="list-soft">
-              <li><strong>Girdi token’ı ucuz</strong> — model promptun tamamını tek seferde okur.</li>
-              <li><strong>Çıktı token’ı pahalı</strong> — cevabı kelime kelime üretir; her kelime için baştan hesap yapar. Cevap uzadıkça maliyet artar.</li>
-              <li>Kaba dönüşüm: ~1000 token ≈ 750 kelime (İngilizce).</li>
-            </ul>
-          </div>
-          <div class="reveal">
-            <div class="card card-top">
-              <label class="label" for="tokInput">Metnini yaz, canlı parçalansın</label>
-              <textarea id="tokInput" class="field" rows="3">Sürdürülebilir yapay zeka için verimli promptlar yazalım!</textarea>
-              <div class="row-wrap gap-lg mt mb">
-                <div><span id="tokCount" class="count-xl">0</span> <span class="text-mute">token</span></div>
-                <div><span id="tokChars" class="count-lg">0</span> <span class="text-mute">karakter</span></div>
-                <span id="tokEngine" class="chip engine-badge">…</span>
-              </div>
-              <div id="tokChips" class="tok-box"></div>
-              <p class="src mt">Kesin sayım için gerçek tokenizer (o200k_base) internetten yüklenir; yüklenene kadar ~4 karakter/token hızlı tahmini kullanılır.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2 · TOKEN & ÇOK DİLLİLİK -->
-    <section class="fp-section tone-a" id="diller" data-title="Token & çok dillilik">
-      <div class="fp-inner">
-        <div class="grid cols-2 items-center">
-          <div class="reveal">
-            <span class="eyebrow">🌍 Multilingual</span>
-            <h2 class="slide-title">Bütün dilleri İngilizceye mi çeviriyor?</h2>
-            <p class="slide-lead"><strong>Hayır.</strong> Ayrı bir çeviri adımı <em>yoktur</em>.</p>
-            <ul class="list-soft">
-              <li>Model, metni <strong>kendi dilinde</strong> doğrudan küçük parçalara böler.</li>
-              <li>Aynı model onlarca dili aynı anda işleyebilir (multilingual), çünkü eğitim verisinde o diller de vardı.</li>
-              <li>Yeni nesil parçalayıcılar (o200k, Gemini) kısa ve yaygın kelimelerde Türkçe–İngilizce farkını büyük ölçüde kapattı.</li>
-              <li>Fark, <strong>uzun, ekli, nadir</strong> kelimelerde belirginleşir. Sağdaki tabloda canlı gör.</li>
-            </ul>
-            <p class="src">Kaynak: Kamali (2024), Hugging Face — Tokenization &amp; multilingual.</p>
-          </div>
-          <div class="reveal">
-            <div class="card card-top">
-              <div class="label">Türkçe vs İngilizce — token sayısı</div>
-              <table class="table" id="pairTable"></table>
-              <p class="src">“Su” ve “Water” benzer; ama “Sürdürülebilirlik” İngilizcesinden daha çok parçaya bölünebilir.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3 · ENERJİ & SU HESAPLAYICI -->
-    <section class="fp-section tone-b" id="hesaplayici" data-title="Enerji & su hesaplayıcı">
+    <!-- 1 · NASIL ÇALIŞIYOR -->
+    <section class="fp-section tone-hero" id="nasil" data-title="Nasıl çalışıyor?">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">🔋 Hesapla</span>
-          <h2 class="slide-title reveal">Enerji &amp; Su Hesaplayıcı</h2>
-          <p class="slide-lead reveal lead-c">Amaç “en kısa prompt” değil, <strong>en az toplam maliyet</strong>: Girdi + Çıktı + (Deneme × üretim) + Efor.</p>
+          <span class="eyebrow reveal">⚙️ Arka planda ne oluyor?</span>
+          <h2 class="slide-title reveal">Yapay zekâ bir cevabı <span class="text-grad">nasıl üretiyor?</span></h2>
+          <p class="slide-lead reveal lead-c">
+            Yedi adım. Ama asıl önemlisi aradaki <strong>döngü</strong> — maliyetin tamamı orada saklı.
+          </p>
+        </div>
+
+        <div id="akisAdimlari" class="reveal mb"></div>
+
+        <div class="card card-top reveal mb-lg">
+          <p class="m-0" id="akisVurgu"></p>
+        </div>
+
+        <h3 class="center reveal">Peki görsel ve video?</h3>
+        <div id="akisTurleri" class="grid cols-3 reveal"></div>
+
+        <p class="src reveal center mt">
+          Burada yüzeyde kalıyoruz. Dikkat mekanizması, ağırlıklar, eğitim döngüsü ve
+          Transformer’ın kendisi için → <a href="modeller.html">Meraklısına</a>.
+        </p>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Kaydır ya da sağ-alttaki okları kullan
+      </div>
+    </section>
+
+    <!-- 2 · GÖRSEL NEDEN PAHALI (3 sütun) -->
+    <section class="fp-section tone-a" id="difuzyon" data-title="Görsel neden pahalı?">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🖼️ Faz 2’de sormuştuk</span>
+          <h2 class="slide-title reveal">Görsel üretimi neden metinden pahalı?</h2>
+          <p class="slide-lead reveal lead-c">
+            Üçü de aynı birimden okunuyor: telefon şarjı. Ortadaki tuvale
+            “+1 adım” diyerek difüzyonu kendin çalıştır.
+          </p>
+        </div>
+
+        <div class="grid cols-3 reveal items-stretch">
+
+          <div class="card card-top col-card center">
+            <div class="big-emoji">💬</div>
+            <h3>Metin</h3>
+            <div class="huge-num" id="cmpText">—</div>
+            <div class="src" id="cmpTextNote"></div>
+            <hr class="divider">
+            <p class="text-soft m-0">
+              Tek boyutlu bir <b>dizi</b>. Her token için modelden <b>hafif</b> bir geçiş yapılır.
+            </p>
+          </div>
+
+          <div class="card card-top col-card center">
+            <div class="big-emoji">🖼️</div>
+            <h3>Görsel</h3>
+            <canvas id="diffCanvas" class="diff-canvas"></canvas>
+            <div class="mt">
+              <span id="diffStep" class="big-num">0</span>
+              <span class="text-mute"> / <span id="diffMax">40</span> ağır geçiş</span>
+            </div>
+            <div class="huge-num" id="cmpImage">—</div>
+            <div class="cluster-c mt">
+              <button id="diffPlay" class="btn btn-primary btn-sm">▶ Üret</button>
+              <button id="diffStepBtn" class="btn btn-ghost btn-sm">+1 adım</button>
+              <button id="diffReset" class="btn btn-ghost btn-sm">↺</button>
+            </div>
+            <hr class="divider">
+            <p class="text-soft m-0">
+              <b>İki boyutlu</b> bir ızgara, gürültüden başlayıp ~30 adımda arıtılır.
+              Her adım <b>tam</b> bir geçiş.
+            </p>
+          </div>
+
+          <div class="card card-top col-card center">
+            <div class="big-emoji">🎬</div>
+            <h3>Video</h3>
+            <div class="huge-num" id="cmpVideo">—</div>
+            <div class="src" id="cmpVideoNote"></div>
+            <hr class="divider">
+            <p class="text-soft m-0">
+              Görselin üstüne bir de <b>zaman</b>: kareler birbirini tutmak zorunda,
+              hepsi birlikte üretilir. 5 saniye = 80 kare.
+            </p>
+            <p class="src mt mb-0">Ölçüm: 3,4 milyon joule (MIT Technology Review, 2025).</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · HANGİ PARAMETRE -->
+    <section class="fp-section tone-b" id="parametreler" data-title="Hangi parametre?">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🎛️ Keşif görevi</span>
+          <h2 class="slide-title reveal">Hangi parametre en çok değiştiriyor?</h2>
+          <p class="slide-lead reveal lead-c">
+            Üç şeyi değiştirebilirsin: <strong>araç</strong>, <strong>düşünme modu</strong> ve
+            <strong>kaç promptta hedefe ulaştığın</strong>. Oynat ve gör.
+          </p>
         </div>
 
         <div class="grid cols-2 reveal items-stretch">
-          <!-- KONTROLLER -->
+
           <div class="card card-top">
-            <div class="segment full mb">
-              <button id="modeText" class="active">💬 Metin</button>
-              <button id="modeImage">🖼️ Görsel</button>
-              <button id="modeVideo">🎬 Video</button>
+            <label class="label" for="textModel">Hangi aracı kullanıyorsun?</label>
+            <select id="textModel" class="field"></select>
+            <p class="src" id="textModelNote"></p>
+
+            <label class="label mt" for="calcPrompt">Promptun (girdi: <b id="inTokens" class="text-green">0</b> token)</label>
+            <textarea id="calcPrompt" class="field" rows="2">Yapay zekanın su tüketimini 9. sınıf öğrencisine 3 maddede anlat.</textarea>
+
+            <div class="sabit-kutu mt">
+              <span class="sabit-etiket">Cevabın uzunluğu</span>
+              <span class="sabit-deger"><b id="ciktiLbl">—</b> token</span>
+              <span class="sabit-not">Bunu sen değil, <b>model</b> belirler — seçtiğin araca göre değişir.</span>
             </div>
 
-            <!-- METİN kontrolleri -->
-            <div id="textControls">
-              <label class="label" for="textModel">Model</label>
-              <select id="textModel" class="field mb"></select>
+            <label class="label mt">Düşünme modu</label>
+            <div class="segment full" id="effortSeg"></div>
+            <p class="src" id="effortNote"></p>
 
-              <div id="promptRow">
-                <label class="label" for="calcPrompt">Prompt (girdi token: <b id="inTokens" class="text-green">0</b>)</label>
-                <textarea id="calcPrompt" class="field" rows="2">Yapay zekanın su tüketimini 9. sınıf öğrencisine 3 maddede anlat.</textarea>
-              </div>
-
-              <label class="label label-row mt"><span>Beklenen çıktı uzunluğu</span><span class="text-soft"><b id="outTokensLbl">250</b> token</span></label>
-              <input id="outTokens" type="range" min="20" max="8192" step="20" value="250">
-              <p class="src" id="maxOutNote"></p>
-
-              <label class="label mt">Efor (reasoning) — gizli düşünme token’ı</label>
-              <div class="segment full" id="effortSeg"></div>
-            </div>
-
-            <!-- GÖRSEL kontrolleri -->
-            <div id="imageControls" hidden>
-              <label class="label" for="imageModel">Görsel modeli</label>
-              <select id="imageModel" class="field mb"></select>
-              <p class="src">Görselde maliyet prompt uzunluğuna değil, difüzyon adımı sayısına bağlıdır.</p>
-            </div>
-
-            <!-- VIDEO kontrolleri -->
-            <div id="videoControls" hidden>
-              <label class="label" for="videoModel">Video modeli</label>
-              <select id="videoModel" class="field mb"></select>
-              <label class="label label-row"><span>Video süresi</span><span class="text-soft"><b id="durLbl">5</b> sn</span></label>
-              <input id="duration" type="range" min="1" max="30" step="1" value="5">
-              <p class="src">Her saniye = onlarca kare ≈ o kadar görsel. Süre uzadıkça katlanır.</p>
-            </div>
-
-            <label class="label label-row mt"><span>Deneme sayısı (kaç kez yeniden ürettin?)</span><span class="text-soft">×<b id="attemptsLbl">1</b></span></label>
+            <label class="label label-row mt">
+              <span>Kaç promptta hedefine ulaştın?</span>
+              <span class="text-soft"><b id="attemptsLbl">1</b> prompt</span>
+            </label>
             <input id="attempts" type="range" min="1" max="10" step="1" value="1">
-            <p class="src">En büyük kaldıraç genelde budur — özellikle görsel ve videoda.</p>
+            <p class="src">İstediğini alana kadar kaç kez yazdın? Her deneme <b>tam bedel</b> öder.</p>
           </div>
 
-          <!-- SONUÇ -->
           <div class="card card-top col-card">
             <div class="center">
               <span id="status" class="status green">🌱 Verimli</span>
               <div class="text-mute mt">Bu kadar enerji şuna eşdeğer:</div>
               <div id="energyHuman" class="huge-num">—</div>
+              <div id="energyWater" class="text-water">—</div>
               <div id="energyTech" class="src">—</div>
             </div>
             <div id="metrics" class="grid cols-3 grid-tight mt"></div>
@@ -158,73 +163,93 @@
             <div id="breakdown"></div>
           </div>
         </div>
+
+        <div class="card reveal mt">
+          <div class="chip mb">🔍 Dene ve gör</div>
+          <p class="text-soft m-0">
+            Sırayla dene: önce <b>düşünme modunu</b> değiştir, sonra <b>prompt sayısını</b>,
+            sonra <b>aracı</b>. Hangisi rakamı en çok oynatıyor?
+          </p>
+        </div>
       </div>
     </section>
 
-    <!-- 4 · ÇIKTI MALİYETİ + DİFÜZYON -->
-    <section class="fp-section tone-c" id="cikti-maliyeti" data-title="Çıktı maliyeti">
+    <!-- 4 · SENİN ELİNDE NE VAR -->
+    <section class="fp-section tone-c" id="elinde" data-title="Senin elinde ne var?">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">📊 Çıktı maliyeti</span>
-          <h2 class="slide-title reveal">Neden metin &lt; görsel &lt; video?</h2>
-          <p class="slide-lead reveal lead-c">Metin 1 boyutludur (dizi). Görsel 2 boyutlu ızgara × onlarca difüzyon adımıdır. Video buna bir de <strong>zaman</strong> ekler.</p>
+          <span class="eyebrow reveal">🤲 Prompt mühendisliği</span>
+          <h2 class="slide-title reveal">Peki senin elinde <span class="text-grad">ne var?</span></h2>
+          <p class="slide-lead reveal lead-c">
+            Bu tablonun solu değişmez. Sağı ise tamamen sana ait.
+          </p>
         </div>
-        <div class="grid cols-2 reveal items-center">
-          <div class="card card-top center">
-            <canvas id="diffCanvas" class="diff-canvas"></canvas>
-            <div class="mt">
-              <span id="diffStep" class="big-num">0</span>
-              <span class="text-mute"> / <span id="diffMax">40</span> ağır geçiş</span>
-            </div>
-            <p class="text-soft">Her difüzyon adımı = büyük modelden tam bir geçiş. Görselin metinden pahalı olmasının sebebi tam burada.</p>
-            <div class="cluster-c">
-              <button id="diffPlay" class="btn btn-primary btn-sm">▶ Üret</button>
-              <button id="diffStepBtn" class="btn btn-ghost btn-sm">+1 adım</button>
-              <button id="diffReset" class="btn btn-ghost btn-sm">↺ Sıfırla</button>
-            </div>
+
+        <div class="grid cols-2 reveal items-start">
+          <div class="card">
+            <div class="chip chip-red mb">🚫 Senin elinde DEĞİL</div>
+            <div id="elindeDegil" class="stack gap-sm"></div>
           </div>
-          <div id="compareCards" class="stack gap"></div>
+          <div class="card card-top">
+            <div class="chip mb">✅ Senin elinde</div>
+            <div id="elindeVar" class="stack gap-sm"></div>
+          </div>
         </div>
-        <p class="src reveal center mt">Değerler config/models.config.js → COMPARE_BASELINE’dan gelir; eğitim amaçlı tahminlerdir.</p>
+
+        <div class="card reveal mt-lg">
+          <p class="m-0" id="elindeDers"></p>
+        </div>
       </div>
     </section>
 
-    <!-- 5 · KAYNAKÇA -->
-    <section class="fp-section tone-a" id="kaynakca" data-title="Kaynakça (APA)">
+    <!-- 5 · TOKEN AVI -->
+    <section class="fp-section tone-a" id="token-avi" data-title="Token avı">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">📚 Kaynakça</span>
-          <h2 class="slide-title reveal">Kaynakça (APA)</h2>
+          <span class="eyebrow reveal">🎯 Token avı</span>
+          <h2 class="slide-title reveal">Üç prompt yaz, üçünün de bedelini gör</h2>
+          <p class="slide-lead reveal lead-c">
+            Aynı fikri metin, görsel ve video olarak iste. Aracını seç, promptunu yaz —
+            token sayısı ve tahmini bedel anında çıksın.
+          </p>
         </div>
-        <div class="card reveal">
-          <ol class="refs">
-            <li>Brown, T. B., vd. (2020). Language models are few-shot learners. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener">https://arxiv.org/abs/2005.14165</a></li>
-            <li>Kamali, O. (2024). <em>Tokenization &amp; multilingual</em>. Hugging Face Blog. <a href="https://huggingface.co/blog/omarkamali/tokenization" target="_blank" rel="noopener">https://huggingface.co/blog/omarkamali/tokenization</a></li>
-            <li>Google. (2025). <em>Measuring the environmental impact of AI inference</em> (Gemini medyan metin promptu ≈ 0,24 Wh, ≈ 0,26 mL su). <a href="https://blog.google/" target="_blank" rel="noopener">https://blog.google/</a></li>
-            <li>Epoch AI. (2025). <em>How much energy does ChatGPT use?</em> <a href="https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use" target="_blank" rel="noopener">https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use</a></li>
-            <li>Luccioni, S., vd. (2023). AI image generation energy (Hugging Face–CMU). MIT Technology Review. <a href="https://www.technologyreview.com/2023/12/01/1084189/" target="_blank" rel="noopener">https://www.technologyreview.com/2023/12/01/1084189/</a></li>
-            <li>How hungry is AI? (2025). Enerji + su + karbon (PUE/WUE; 3,69 L/kWh). <a href="https://arxiv.org/html/2505.09598v1" target="_blank" rel="noopener">https://arxiv.org/html/2505.09598v1</a></li>
-            <li>Hugging Face. (2024). <em>AI Energy Score Leaderboard</em>. <a href="https://huggingface.co/spaces/AIEnergyScore/Leaderboard" target="_blank" rel="noopener">https://huggingface.co/spaces/AIEnergyScore/Leaderboard</a></li>
-          </ol>
+        <div id="avciKutulari" class="grid cols-3 reveal"></div>
+        <p class="src reveal center mt" id="avciMotor">…</p>
+      </div>
+    </section>
+
+    <!-- 6 · ÖNCE / SONRA -->
+    <section class="fp-section tone-b" id="once-sonra" data-title="Önce / Sonra">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">✍️ Sıra sende</span>
+          <h2 class="slide-title reveal">Bu üç promptu verimli hâle getir</h2>
+          <p class="slide-lead reveal lead-c">
+            Solda bozuk prompt. Sağdaki kutuya senin hâlini yaz — farkı anında ölçelim.
+          </p>
         </div>
-        <div class="reveal center mt">
-          <a class="btn btn-primary" href="prompt-muhendisligi.html">Sırada: Prompt Mühendisliği →</a>
+        <div id="onceSonra" class="reveal"></div>
+
+        <div class="reveal center mt-lg">
+          <a class="btn btn-primary" href="prompt-muhendisligi.html">Sırada: Yeşil Prompt Turnuvası →</a>
+          <a class="btn btn-ghost" href="kaynaklar.html">Bu fazın kaynakları →</a>
         </div>
       </div>
     </section>
 
   </div></div>
 
-  <!-- Scriptler: önce çekirdek + config, sonra sayfa, en son fullpage -->
   <script src="assets/js/core/tokenize.js"></script>
   <script src="assets/js/config/units.config.js"></script>
   <script src="assets/js/config/models.config.js"></script>
+  <script src="assets/js/config/mekanizma.config.js"></script>
   <script src="assets/js/config/site.config.js"></script>
   <script src="assets/js/core/units.js"></script>
   <script type="module" src="assets/js/core/tokenizer.module.js"></script>
   <script src="assets/js/pages/token-lab.js"></script>
   <script src="assets/js/core/footer.js"></script>
   <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/faz.js"></script>
   <script src="assets/js/core/nav.js"></script>
 </body>
 </html>

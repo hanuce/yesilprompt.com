@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2 · Veri · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Yapay zekâ kullanımının büyümesi, CODAP'ta enerji-su-karbon grafikleri, şeffaflık tablosu ve eğitim ile kullanımın karşılaştırması." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav faz-nav"><div class="wrap"></div></nav>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- 1 · VERİLERLE YAPAY ZEKA KULLANIMI -->
+    <section class="fp-section tone-hero" id="buyume" data-title="Verilerle Yapay Zeka Kullanımı">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📈 Verilerle Yapay Zeka Kullanımı</span>
+          <h2 class="slide-title reveal">Kaç kişi kullanıyor — ve <span class="text-grad">ne kadar</span> kullanıyor?</h2>
+          <p class="slide-lead reveal lead-c">
+            İki çizgi, aynı dört yıl. Biri kaç kişinin kullandığını, diğeri ne kadar
+            kullanıldığını gösteriyor. İkisi aynı hızda büyümüyor.
+          </p>
+        </div>
+
+        <div class="card card-top reveal">
+          <div id="buyumeChart"></div>
+        </div>
+
+        <div class="grid cols-2 reveal mt">
+          <div class="card">
+            <p class="m-0" id="buyumeDers"></p>
+          </div>
+          <div class="card">
+            <div class="chip mb">🎯 Bu atölyenin konusu</div>
+            <p class="text-soft m-0">
+              Bir modelin nasıl eğitildiğine sen karar veremezsin. Ama <b>günde kaç kez</b>,
+              <b>hangi araçla</b> ve <b>ne kadar uzun bir cevap</b> istediğine karar verebilirsin.
+              Yukarıdaki turuncu çizgi, tam olarak senin elindeki taraf.
+            </p>
+          </div>
+        </div>
+        <p class="src reveal center mt" id="buyumeKaynak"></p>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Şimdi veriye kendin bak
+      </div>
+    </section>
+
+    <!-- 2 · CODAP: İKİ ÖRNEK GRAFİK -->
+    <section class="fp-section tone-a" id="ornekler" data-title="İki örnek grafik">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🧭 Birlikte kuralım</span>
+          <h2 class="slide-title reveal">CODAP’ta ilk iki grafik</h2>
+          <p class="slide-lead reveal lead-c">
+            Önce dosyaları indir ve CODAP’a yükle. Sonra aşağıdaki iki grafiği
+            <strong>adım adım</strong> kur — gerisini kendin kuracaksın.
+          </p>
+        </div>
+
+        <div class="card card-top reveal mb">
+          <div class="grid cols-2">
+            <div>
+              <div class="chip mb">⬇️ 1. Dosyaları indir</div>
+              <div id="veriDosyalari"></div>
+            </div>
+            <div>
+              <div class="chip mb">🧭 2. CODAP’a yükle</div>
+              <ol class="adimlar">
+                <li><a href="https://codap.concord.org/app/" target="_blank" rel="noopener">codap.concord.org</a> adresini yeni sekmede aç.</li>
+                <li>İndirdiğin CSV dosyasını <strong>sürükleyip CODAP ekranına bırak</strong>.</li>
+                <li>Tablo açılınca “<strong>Graph</strong>” düğmesine bas — boş bir grafik gelir.</li>
+                <li>Sütun adlarını <strong>eksenlere sürükleyerek</strong> grafiği kurarsın.</li>
+              </ol>
+              <p class="src mt mb-0">CODAP açılmıyorsa eğitmene haber ver — çevrimdışı yedek hazır.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="ornekGrafikler" class="grid cols-2 reveal"></div>
+      </div>
+    </section>
+
+    <!-- 3 · ŞİMDİ SEN KUR -->
+    <section class="fp-section tone-b" id="sen-kur" data-title="Şimdi sen kur">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🛠️ Sıra sende</span>
+          <h2 class="slide-title reveal">Şimdi sen kur</h2>
+          <p class="slide-lead reveal lead-c">
+            Bu sefer adım vermiyoruz. Soruyu oku, <strong>hangi sütunları hangi eksene
+            koyacağına kendin karar ver</strong>, grafiği kur ve cevabı sınıfla paylaş.
+          </p>
+        </div>
+        <div id="ogrenciSorulari" class="grid cols-3 reveal"></div>
+      </div>
+    </section>
+
+    <!-- 4 · VERİ OKURYAZARLIĞI -->
+    <section class="fp-section tone-c" id="seffaflik" data-title="Veri okuryazarlığı">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🔍 Veri okuryazarlığı</span>
+          <h2 class="slide-title reveal" id="seffaflikBaslik"></h2>
+          <p class="slide-lead reveal lead-c" id="seffaflikAciklama"></p>
+        </div>
+        <div class="card reveal tool-scroll">
+          <table class="table" id="seffaflikTablo"></table>
+        </div>
+        <div class="card reveal mt">
+          <p class="m-0" id="seffaflikDers"></p>
+          <p class="src mt mb-0" id="seffaflikKaynak"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · EĞİTİM vs KULLANIM -->
+    <section class="fp-section tone-a" id="egitim-kullanim" data-title="Eğitim vs Kullanım">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">⚖️ Karşılaştırma</span>
+          <h2 class="slide-title reveal" id="ekBaslik"></h2>
+          <p class="slide-lead reveal lead-c" id="ekGiris"></p>
+        </div>
+
+        <div id="ekKartlar" class="grid cols-2 reveal mb"></div>
+
+        <div class="grid cols-2 reveal items-start mb">
+          <div class="card card-top">
+            <div class="label">Bu sayı nasıl çıkıyor?</div>
+            <pre class="code-box"><code id="ekHesap"></code></pre>
+          </div>
+          <div class="card card-top">
+            <div class="chip mb">📐 Sonuç</div>
+            <p class="text-soft" id="ekSonuc"></p>
+            <hr class="divider">
+            <div class="chip mb">🌿 Bu yüzden buradayız</div>
+            <p class="m-0" id="ekDers"></p>
+          </div>
+        </div>
+
+        <h3 class="center reveal">Kullanım neden büyüyor?</h3>
+        <div id="ekNeden" class="grid cols-4 reveal"></div>
+        <p class="src reveal center mt" id="ekKaynak"></p>
+      </div>
+    </section>
+
+    <!-- 6 · TARTIŞMA -->
+    <section class="fp-section tone-b" id="tartisma" data-title="Tartışma">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🗣️ Tartışma</span>
+          <h2 class="slide-title reveal">Tartışma</h2>
+          <p class="slide-lead reveal lead-c">
+            Kurduğunuz grafiklerden ne gördünüz? Aşağıdaki dört soruyu sınıfça konuşun.
+            İlk ikisinin cevabını <strong>burada vermiyoruz</strong> — Faz 3 tam olarak
+            onları kapatmak için var.
+          </p>
+        </div>
+        <div id="tartismaSorular" class="grid cols-2 reveal"></div>
+        <div class="reveal center mt-lg">
+          <a class="btn btn-primary" href="token-lab.html">Sırada: Token Lab →</a>
+          <a class="btn btn-ghost" href="kaynaklar.html">Bu fazın kaynakları →</a>
+        </div>
+      </div>
+    </section>
+
+  </div></div>
+
+  <script src="assets/js/config/units.config.js"></script>
+  <script src="assets/js/config/veri-labi.config.js"></script>
+  <script src="assets/js/config/site.config.js"></script>
+  <script src="assets/js/core/units.js"></script>
+  <script src="assets/js/pages/veri-labi.js"></script>
+  <script src="assets/js/core/footer.js"></script>
+  <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/faz.js"></script>
+  <script src="assets/js/core/nav.js"></script>
+</body>
+</html>

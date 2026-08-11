@@ -1,212 +1,95 @@
 /* =========================================================
-   TOKEN LAB sayfası
-   1) Tokenizasyon laboratuvarı (canlı token sayacı)
-   2) Token & çok dillilik (TR/EN karşılaştırma)
-   3) Enerji & Su Hesaplayıcı (metin / görsel / VIDEO)
-   4) Çıktı maliyeti + difüzyon simülasyonu
-   Değerler config/ dosyalarından gelir.
+   FAZ 3 · TOKEN LAB  (token-lab.html)
+   ---------------------------------------------------------
+   Altı parça:
+     1) Nasıl çalışıyor — akış adımları + üç üretim türü
+     2) Görsel neden pahalı — 3 sütun, ortada difüzyon tuvali
+     3) Hangi parametre en çok değiştiriyor — canlı hesaplayıcı
+     4) Senin elinde ne var — prompt mühendisliğinin çerçevesi
+     5) Token avı — metin / görsel / video için üç kutu
+     6) Önce / Sonra — üç bozuk promptu öğrenci düzeltir
+
+   ⚠️ Cevabın uzunluğunu KULLANICI belirlemez; seçilen modelin
+      `tipikCikti` değeri kullanılır (bkz. models.config.js).
+   ❌ Yazılan hiçbir şey kaydedilmez (SITE_RULES 2c).
+
+   İçerik: config/mekanizma.config.js · Enerji: config/models.config.js
    ========================================================= */
 (function () {
+  'use strict';
+
   const $ = (id) => document.getElementById(id);
   const U = () => window.Units;
-  function escapeHtml(s) { return s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-  /* ---------- 1) TOKENIZASYON LABORATUVARI ---------- */
-  const PAIRS = [
-    { tr: 'Merhaba', en: 'Hello' },
-    { tr: 'Su', en: 'Water' },
-    { tr: 'Sürdürülebilirlik', en: 'Sustainability' },
-    { tr: 'evlerimizdekilerden', en: 'from those in our houses' }
-  ];
+  /* Sayının nereden geldiğini söyleyen rozet (SITE_RULES 1.4) */
+  const ROZET = {
+    resmi:   ['tag-resmi', 'resmî'],
+    beyan:   ['tag-beyan', 'şirket beyanı'],
+    olculdu: ['tag-olculdu', 'bağımsız ölçüm'],
+    tahmini: ['tag-tahmini', 'bağımsız tahmin']
+  };
 
-  function renderLab() {
-    const input = $('tokInput'); if (!input) return;
-    const r = window.tokenize(input.value);
-    if ($('tokCount')) $('tokCount').textContent = r.count;
-    if ($('tokChars')) $('tokChars').textContent = input.value.length;
-    if ($('tokChips')) $('tokChips').innerHTML = r.pieces.map((p, i) =>
-      '<span class="tok tok-c' + ((i % 6) + 1) + '">' +
-      '<span class="' + (p.ws ? 'ws' : '') + '">' + (p.ws ? '␣' : escapeHtml(p.text)) + '</span></span>'
-    ).join('');
-
-    if ($('pairTable')) $('pairTable').innerHTML =
-      '<thead><tr><th>Türkçe</th><th class="num">tok</th><th>İngilizce</th><th class="num">tok</th></tr></thead><tbody>' +
-      PAIRS.map(p =>
-        '<tr><td class="text-soft">' + p.tr + '</td><td class="num text-green"><b>' + window.tokenize(p.tr).count + '</b></td>' +
-        '<td class="text-soft">' + p.en + '</td><td class="num text-water"><b>' + window.tokenize(p.en).count + '</b></td></tr>'
-      ).join('') + '</tbody>';
-  }
-
-  function markEngine() {
-    const b = $('tokEngine'); if (!b) return;
-    if (window.__tokenizerReal) {
-      b.textContent = '✓ gerçek tokenizer (o200k_base)';
-    } else {
-      b.textContent = '≈ hızlı tahmin (kesin sayaç yükleniyor…)';
-    }
-  }
-
-  /* ---------- 2) ENERJİ & SU HESAPLAYICI ---------- */
-  const calc = { mode: 'text', textModel: '', imageModel: '', videoModel: '',
-                 outTokens: 250, effort: 'off', attempts: 1, duration: 5 };
-
-  function fillSelects() {
-    const tm = $('textModel'), im = $('imageModel'), vm = $('videoModel');
-    if (tm) tm.innerHTML = Object.keys(window.TEXT_MODELS).map(k =>
-      '<option value="' + k + '">' + window.TEXT_MODELS[k].label + '</option>').join('');
-    if (im) im.innerHTML = Object.keys(window.IMAGE_MODELS).map(k =>
-      '<option value="' + k + '">' + window.IMAGE_MODELS[k].label + '</option>').join('');
-    if (vm) vm.innerHTML = Object.keys(window.VIDEO_MODELS).map(k =>
-      '<option value="' + k + '">' + window.VIDEO_MODELS[k].label + '</option>').join('');
-    calc.textModel = tm ? tm.value : '';
-    calc.imageModel = im ? im.value : '';
-    calc.videoModel = vm ? vm.value : '';
-
-    // Efor segmenti
-    if ($('effortSeg')) $('effortSeg').innerHTML = Object.keys(window.EFFORT_LEVELS).map(k =>
-      '<button data-effort="' + k + '" class="' + (k === 'off' ? 'active' : '') + '">' +
-      window.EFFORT_LEVELS[k].label + '</button>').join('');
-
-    applyMaxOut();
-  }
-
-  /* Çıktı kaydırıcısının üst sınırı = MODELİN kendi max output'u */
-  function applyMaxOut() {
-    const m = window.TEXT_MODELS[calc.textModel]; if (!m || !$('outTokens')) return;
-    const slider = $('outTokens');
-    slider.max = m.maxOut;
-    if (calc.outTokens > m.maxOut) { calc.outTokens = m.maxOut; slider.value = m.maxOut; }
-    if ($('outTokensLbl')) $('outTokensLbl').textContent = calc.outTokens;
-    if ($('maxOutNote')) $('maxOutNote').textContent =
-      'Bu modelin tek cevapta üst sınırı: ' + m.maxOut.toLocaleString('tr-TR') + ' token (modeli sen değil, model belirler).';
-  }
-
-  function computeEnergy() {
-    let perRun = 0, breakdown = {};
-    if (calc.mode === 'text') {
-      const inTok = window.tokenize($('calcPrompt').value).count;
-      if ($('inTokens')) $('inTokens').textContent = inTok;
-      const m = window.TEXT_MODELS[calc.textModel];
-      const inWh = inTok / 1000 * m.inWh1k;
-      const outWh = calc.outTokens / 1000 * m.outWh1k;
-      const effortWh = window.EFFORT_LEVELS[calc.effort].hidden / 1000 * m.outWh1k;
-      perRun = inWh + outWh + effortWh;
-      breakdown = { 'Girdi: promptu okumak': inWh, 'Çıktı: cevabı yazmak': outWh, 'Cevaptan önceki düşünme': effortWh };
-    } else if (calc.mode === 'image') {
-      const m = window.IMAGE_MODELS[calc.imageModel];
-      perRun = m.whPer;
-      breakdown = { ['Difüzyon (' + m.label + ', ~' + m.steps + ' adım)']: m.whPer };
-    } else {
-      const m = window.VIDEO_MODELS[calc.videoModel];
-      perRun = m.whPerSecond * calc.duration;
-      const frames = m.fps * calc.duration;
-      breakdown = { [calc.duration + ' sn × ' + m.whPerSecond + ' Wh/sn (≈' + frames + ' kare)']: perRun };
-    }
-    const total = perRun * calc.attempts;
-    return { perRun, total, breakdown };
-  }
-
-  function render() {
-    if (!$('status')) return;
-    const { perRun, total, breakdown } = computeEnergy();
-    const U_ = U(), e = U_.equivalents(total);
-
-    let cls = 'green', txt = '🌱 Verimli';
-    if (total > 5) { cls = 'red'; txt = '🔴 Yüksek maliyet'; }
-    else if (total > 1) { cls = 'amber'; txt = '⚠️ Orta maliyet'; }
-    $('status').className = 'status ' + cls; $('status').textContent = txt;
-
-    /* Eşdeğer HER ZAMAN telefon şarjı cinsinden (bkz. SITE_RULES 7).
-       human() değere göre birim değiştirirdi (şarj / video / LED); o zaman
-       kaydırıcıyı oynatınca birim de değişir ve öğrenci iki sonucu
-       birbiriyle karşılaştıramazdı. */
-    $('energyHuman').textContent = U_.phoneText(total);
-    $('energyTech').textContent = 'teknik: ' + U_.fmt(total, 2) + ' Wh  ·  tek üretim ' + U_.fmt(perRun, 2) + ' Wh × ' + calc.attempts + ' deneme';
-
-    const tiles = [
-      { icon: '📱', v: U_.fmt(e.phones, 2), l: 'telefon şarjı' },
-      { icon: '📺', v: U_.dur(e.videoMin), l: 'video izleme' },
-      { icon: '💡', v: U_.dur(e.ledMin), l: 'LED ampul' },
-      { icon: '💧', v: U_.fmt(e.waterMl, 2), l: 'mL su' },
-      { icon: '🏭', v: U_.fmt(e.co2g, 3), l: 'g CO₂' },
-      { icon: '⚡', v: U_.fmt(total, 2), l: 'Wh (teknik)' }
-    ];
-    $('metrics').innerHTML = tiles.map(t =>
-      '<div class="metric"><div class="icon">' + t.icon + '</div><div class="v">' + t.v + '</div><div class="l">' + t.l + '</div></div>'
-    ).join('');
-
-    $('breakdown').innerHTML = '<div class="text-mute mb">Maliyet dökümü</div>' +
-      Object.keys(breakdown).map(k =>
-        '<div class="breakdown-row"><span class="text-soft">' + k + '</span>' +
-        '<span class="text-green">' + U_.fmt(breakdown[k], 3) + ' Wh</span></div>').join('');
-  }
-
-  function setMode(mode) {
-    calc.mode = mode;
-    ['Text', 'Image', 'Video'].forEach(M => {
-      const btn = $('mode' + M); if (btn) btn.classList.toggle('active', mode === M.toLowerCase());
+  /* Top 5 her zaman en üstte, ayrı grupta (bkz. models.config.js) */
+  function secenekler(M, secili) {
+    const top = [], diger = [];
+    Object.keys(M || {}).forEach(k => {
+      const o = '<option value="' + k + '"' + (k === secili ? ' selected' : '') + '>' +
+        esc(M[k].label) + '</option>';
+      (M[k].top5 ? top : diger).push(o);
     });
-    // İlgili kontrol bloklarını göster/gizle (görünürlük JS ile, stil CSS'te)
-    toggle('textControls', mode === 'text');
-    toggle('imageControls', mode === 'image');
-    toggle('videoControls', mode === 'video');
-    toggle('promptRow', mode === 'text');
-    render();
-  }
-  function toggle(id, on) { const el = $(id); if (el) el.hidden = !on; }
-
-  function wireCalc() {
-    if (!$('modeText')) return;
-    fillSelects();
-    $('modeText').addEventListener('click', () => setMode('text'));
-    $('modeImage').addEventListener('click', () => setMode('image'));
-    $('modeVideo').addEventListener('click', () => setMode('video'));
-    $('textModel').addEventListener('change', e => { calc.textModel = e.target.value; applyMaxOut(); render(); });
-    $('imageModel').addEventListener('change', e => { calc.imageModel = e.target.value; render(); });
-    $('videoModel').addEventListener('change', e => { calc.videoModel = e.target.value; render(); });
-    $('calcPrompt').addEventListener('input', render);
-    $('outTokens').addEventListener('input', e => { calc.outTokens = +e.target.value; $('outTokensLbl').textContent = e.target.value; render(); });
-    $('attempts').addEventListener('input', e => { calc.attempts = +e.target.value; $('attemptsLbl').textContent = e.target.value; render(); });
-    $('duration').addEventListener('input', e => { calc.duration = +e.target.value; $('durLbl').textContent = e.target.value; render(); });
-    $('effortSeg').addEventListener('click', e => {
-      const b = e.target.closest('[data-effort]'); if (!b) return;
-      calc.effort = b.dataset.effort;
-      $('effortSeg').querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
-      render();
-    });
-    setMode('text');
+    return (top.length ? '<optgroup label="⭐ En çok kullanılan 5">' + top.join('') + '</optgroup>' : '') +
+           (diger.length ? '<optgroup label="Diğer araçlar">' + diger.join('') + '</optgroup>' : '');
   }
 
-  /* ---------- 3) ÇIKTI MALİYETİ: karşılaştırma kartları ----------
-     Üç kart YAN YANA durur ve tek amaçları metin < görsel < video
-     farkını göstermektir. Bu yüzden üçü de TEK birimden — telefon
-     şarjından — okunur. human() kullanılsaydı ikisi LED/video,
-     biri şarj çıkar ve karşılaştırma anlamını yitirirdi. */
-  function renderCompare() {
-    const host = $('compareCards'); if (!host || !window.COMPARE_BASELINE) return;
-    const U_ = U();
-    const order = ['text', 'image', 'video'];
-    const icons = { text: '💬', image: '🖼️', video: '🎬' };
-    host.innerHTML = order.map(k => {
-      const c = window.COMPARE_BASELINE[k];
-      return (
-        '<div class="card card-top center">' +
-          '<div class="big-emoji">' + icons[k] + '</div>' +
-          '<h3>' + c.label + '</h3>' +
-          '<div class="huge-num">' + U_.phoneText(c.wh) + '</div>' +
-          '<div class="src">' + c.note + ' · ~' + U_.fmt(c.wh, 2) + ' Wh</div>' +
+  /* ---------- 1) NASIL ÇALIŞIYOR ---------- */
+  function akis() {
+    const host = $('akisAdimlari');
+    if (host) {
+      host.innerHTML = '<ol class="akis">' + (window.AKIS_ADIMLARI || []).map(a =>
+        '<li class="akis-adim' + (a.no === 6 ? ' akis-donus' : '') + '">' +
+          '<span class="akis-no">' + a.no + '</span>' +
+          '<span class="akis-ikon">' + a.ikon + '</span>' +
+          '<span class="akis-govde"><b>' + esc(a.ad) + '</b><br>' +
+            '<span class="text-soft">' + a.m + '</span></span>' +
+        '</li>'
+      ).join('') + '</ol>';
+    }
+    if ($('akisVurgu')) $('akisVurgu').innerHTML = window.AKIS_VURGU || '';
+
+    const t = $('akisTurleri');
+    if (t) {
+      t.innerHTML = (window.AKIS_TURLERI || []).map(x =>
+        '<div class="card card-top col-card">' +
+          '<div class="big-emoji">' + x.ikon + '</div>' +
+          '<h3 class="m-0">' + esc(x.ad) + '</h3>' +
+          '<ol class="akis-mini">' + x.akis.map(s => '<li>' + esc(s) + '</li>').join('') + '</ol>' +
+          '<p class="text-soft m-0">' + x.yuk + '</p>' +
+          '<div class="chip mt">' + esc(x.maliyet) + '</div>' +
         '</div>'
-      );
-    }).join('');
+      ).join('');
+    }
   }
 
-  /* ---------- 4) DİFÜZYON SİMÜLASYONU ---------- */
+  /* ---------- 2) METİN < GÖRSEL < VIDEO ----------
+     Üçü de TEK birimden — telefon şarjından — okunur; başka türlü
+     yan yana duran üç sonuç karşılaştırılamaz (SITE_RULES 7). */
+  function karsilastir() {
+    const C = window.COMPARE_BASELINE, U_ = U();
+    if (!C || !U_ || !$('cmpText')) return;
+    $('cmpText').textContent  = U_.phoneText(C.text.wh);
+    $('cmpImage').textContent = U_.phoneText(C.image.wh);
+    $('cmpVideo').textContent = U_.phoneText(C.video.wh);
+    $('cmpTextNote').textContent  = C.text.note  + ' · ~' + U_.fmt(C.text.wh, 2) + ' Wh';
+    $('cmpVideoNote').textContent = C.video.note + ' · ~' + U_.fmt(C.video.wh, 0) + ' Wh';
+  }
+
   function diffusionSim() {
     const cv = $('diffCanvas'); if (!cv) return;
     const N = 48, MAX = 40;
     cv.width = N; cv.height = N;
     const ctx = cv.getContext('2d');
-    // Hedef: yumuşak yeşil-mavi degrade "görsel"
     const target = new Uint8ClampedArray(N * N * 4);
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const i = (y * N + x) * 4;
@@ -215,23 +98,21 @@
       target[i + 2] = 110 + ((N - x) / N) * 120;
       target[i + 3] = 255;
     }
-    let step = 0;
+    let step = 0, timer = null;
     function draw() {
       const img = ctx.createImageData(N, N);
       const noiseAmt = 1 - step / MAX;
       for (let p = 0; p < N * N; p++) {
         const i = p * 4;
         for (let c = 0; c < 3; c++) {
-          const rnd = Math.random() * 255;
-          img.data[i + c] = target[i + c] * (1 - noiseAmt) + rnd * noiseAmt;
+          img.data[i + c] = target[i + c] * (1 - noiseAmt) + Math.random() * 255 * noiseAmt;
         }
         img.data[i + 3] = 255;
       }
       ctx.putImageData(img, 0, 0);
       if ($('diffStep')) $('diffStep').textContent = step;
     }
-    function reset() { step = 0; draw(); }
-    let timer = null;
+    const reset = () => { step = 0; draw(); };
     function play() {
       if (timer) return;
       timer = setInterval(() => {
@@ -246,15 +127,265 @@
     reset();
   }
 
+  /* ---------- 3) HANGİ PARAMETRE EN ÇOK DEĞİŞTİRİYOR ---------- */
+  const calc = { model: 'chatgpt', effort: 'standart', attempts: 1 };
+
+  function modelNotu() {
+    const m = (window.TEXT_MODELS || {})[calc.model];
+    if (!m || !$('textModelNote')) return;
+    const r = ROZET[m.seffaflik] || ROZET.tahmini;
+    $('textModelNote').innerHTML = '<span class="tag ' + r[0] + '">' + r[1] + '</span> ' + esc(m.src || '');
+    /* Cevabın uzunluğu MODELİN özelliğidir; kullanıcı ayarlamaz. */
+    if ($('ciktiLbl')) $('ciktiLbl').textContent = (m.tipikCikti || 300).toLocaleString('tr-TR');
+  }
+
+  function efforNotu() {
+    const e = (window.EFFORT_LEVELS || {})[calc.effort];
+    if (e && $('effortNote')) {
+      $('effortNote').textContent = e.not + ' (+' + e.gizliToken.toLocaleString('tr-TR') + ' gizli token)';
+    }
+  }
+
+  function hesapla() {
+    const m = (window.TEXT_MODELS || {})[calc.model];
+    const e = (window.EFFORT_LEVELS || {})[calc.effort];
+    if (!m || !e) return null;
+    const inTok = window.tokenize($('calcPrompt').value).count;
+    const cikti = m.tipikCikti || 300;
+    const inWh = inTok / 1000 * m.inWh1k;
+    const outWh = cikti / 1000 * m.outWh1k;
+    const gizliWh = e.gizliToken / 1000 * m.outWh1k;
+    const perRun = inWh + outWh + gizliWh;
+    return { inTok, cikti, inWh, outWh, gizliWh, perRun, total: perRun * calc.attempts };
+  }
+
+  function ciz() {
+    const r = hesapla(); if (!r || !$('status')) return;
+    const U_ = U(), eq = U_.equivalents(r.total);
+
+    if ($('inTokens')) $('inTokens').textContent = r.inTok;
+
+    let cls = 'green', txt = '🌱 Verimli';
+    if (r.total > 20) { cls = 'red'; txt = '🔴 Yüksek maliyet'; }
+    else if (r.total > 4) { cls = 'amber'; txt = '⚠️ Orta maliyet'; }
+    $('status').className = 'status ' + cls;
+    $('status').textContent = txt;
+
+    $('energyHuman').textContent = U_.phoneText(r.total);
+    $('energyWater').textContent = '💧 ' + U_.waterText(eq.waterMl);
+    $('energyTech').textContent = 'teknik: ' + U_.fmt(r.total, 2) + ' Wh  ·  tek prompt ' +
+      U_.fmt(r.perRun, 2) + ' Wh × ' + calc.attempts;
+
+    $('metrics').innerHTML = [
+      { i: '⚡', v: U_.fmt(r.total, 2), l: 'Wh' },
+      { i: '💧', v: U_.fmt(eq.waterMl, 1), l: 'mL su' },
+      { i: '🏭', v: U_.fmt(eq.co2g, 2), l: 'g CO₂' }
+    ].map(t => '<div class="metric"><div class="icon">' + t.i + '</div>' +
+      '<div class="v">' + t.v + '</div><div class="l">' + t.l + '</div></div>').join('');
+
+    $('breakdown').innerHTML = '<div class="text-mute mb">Tek promptun dökümü</div>' +
+      [['Girdi: promptu okumak (' + r.inTok + ' token)', r.inWh],
+       ['Çıktı: cevabı yazmak (' + r.cikti + ' token)', r.outWh],
+       ['Cevaptan önceki gizli düşünme', r.gizliWh]
+      ].map(b => '<div class="breakdown-row"><span class="text-soft">' + b[0] + '</span>' +
+        '<span class="text-green">' + U_.fmt(b[1], 3) + ' Wh</span></div>').join('');
+  }
+
+  function parametreKur() {
+    if (!$('textModel')) return;
+    $('textModel').innerHTML = secenekler(window.TEXT_MODELS, calc.model);
+    calc.model = $('textModel').value;
+
+    $('effortSeg').innerHTML = Object.keys(window.EFFORT_LEVELS).map(k =>
+      '<button data-effort="' + k + '" class="' + (k === calc.effort ? 'active' : '') + '">' +
+      esc(window.EFFORT_LEVELS[k].label) + '</button>').join('');
+
+    $('textModel').addEventListener('change', function () {
+      calc.model = this.value; modelNotu(); ciz();
+    });
+    $('calcPrompt').addEventListener('input', ciz);
+    $('attempts').addEventListener('input', function () {
+      calc.attempts = +this.value; $('attemptsLbl').textContent = this.value; ciz();
+    });
+    $('effortSeg').addEventListener('click', function (ev) {
+      const b = ev.target.closest('[data-effort]'); if (!b) return;
+      calc.effort = b.dataset.effort;
+      this.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+      efforNotu(); ciz();
+    });
+
+    modelNotu(); efforNotu(); ciz();
+  }
+
+  /* ---------- 4) SENİN ELİNDE NE VAR ---------- */
+  function elinde() {
+    const a = $('elindeDegil'), b = $('elindeVar');
+    if (a) a.innerHTML = (window.ELINDE_DEGIL || []).map(x =>
+      '<div class="elinde-satir pasif"><span class="elinde-ikon">' + x.ikon + '</span>' +
+      '<span>' + esc(x.b) + '</span></div>').join('');
+    if (b) b.innerHTML = (window.ELINDE || []).map(x =>
+      '<div class="elinde-satir"><span class="elinde-ikon">' + x.ikon + '</span>' +
+      '<span><b>' + esc(x.b) + '</b><br><span class="text-soft">' + x.m + '</span></span></div>').join('');
+    if ($('elindeDers')) $('elindeDers').innerHTML = window.ELINDE_DERS || '';
+  }
+
+  /* ---------- 5) TOKEN AVI · üç tür ----------
+     Her kutu kendi türünün model listesini kullanır. Görsel ve
+     videoda prompt uzunluğu enerjiye KATILMAZ (bkz. SITE_RULES 4c);
+     token sayısı yine de gösterilir, çünkü öğrencinin göreceği şey
+     "prompt uzun ama fark etmiyor" gerçeğidir. */
+  const AV_MODEL = {};
+
+  function avEnerji(tur, key, inTok) {
+    if (tur === 'metin') {
+      const m = window.TEXT_MODELS[key];
+      return inTok / 1000 * m.inWh1k + (m.tipikCikti || 300) / 1000 * m.outWh1k;
+    }
+    if (tur === 'gorsel') return window.IMAGE_MODELS[key].whPer;
+    return window.VIDEO_MODELS[key].whPerSecond * 5;   // 5 saniyelik video
+  }
+
+  function avListe(tur) {
+    return tur === 'metin' ? window.TEXT_MODELS
+         : tur === 'gorsel' ? window.IMAGE_MODELS : window.VIDEO_MODELS;
+  }
+
+  function avCiz(tur) {
+    const inp = $('av-' + tur), U_ = U();
+    if (!inp) return;
+    const r = window.tokenize(inp.value);
+    const n = inp.value.trim() ? r.count : 0;
+    const wh = avEnerji(tur, AV_MODEL[tur], n);
+    const eq = U_.equivalents(wh);
+
+    $('avTok-' + tur).textContent = n;
+    $('avWh-' + tur).textContent = U_.fmt(wh, 2);
+    $('avSarj-' + tur).textContent = U_.phoneText(wh);
+    $('avSu-' + tur).textContent = U_.fmt(eq.waterMl, 1) + ' mL';
+    $('avChips-' + tur).innerHTML = r.pieces.slice(0, 60).map((p, i) =>
+      '<span class="tok tok-c' + ((i % 6) + 1) + '">' +
+      '<span class="' + (p.ws ? 'ws' : '') + '">' + (p.ws ? '␣' : esc(p.text)) + '</span></span>'
+    ).join('');
+  }
+
+  function avciKur() {
+    const host = $('avciKutulari'); if (!host) return;
+    const K = window.AVCI_KUTULARI || [];
+
+    host.innerHTML = K.map(k => {
+      const M = avListe(k.tur);
+      const ilk = Object.keys(M)[0];
+      AV_MODEL[k.tur] = ilk;
+      return '<div class="card card-top col-card">' +
+        '<div class="big-emoji">' + k.ikon + '</div>' +
+        '<h3 class="m-0">' + esc(k.ad) + '</h3>' +
+        '<label class="label mt" for="avm-' + k.tur + '">Araç</label>' +
+        '<select class="field" id="avm-' + k.tur + '">' + secenekler(M, ilk) + '</select>' +
+        '<label class="label mt" for="av-' + k.tur + '">' + esc(k.baslik) + '</label>' +
+        '<textarea class="field" id="av-' + k.tur + '" rows="3">' + esc(k.ornek) + '</textarea>' +
+        '<div class="tok-box mt" id="avChips-' + k.tur + '"></div>' +
+        '<div class="av-olcum mt">' +
+          '<span>token</span><b id="avTok-' + k.tur + '">0</b>' +
+          '<span>enerji</span><b><span id="avWh-' + k.tur + '">0</span> Wh</b>' +
+          '<span>su</span><b id="avSu-' + k.tur + '">0 mL</b>' +
+        '</div>' +
+        '<div class="huge-num center mt" id="avSarj-' + k.tur + '">—</div>' +
+        '<p class="src mb-0">' + esc(k.not) + '</p>' +
+      '</div>';
+    }).join('');
+
+    K.forEach(k => {
+      $('av-' + k.tur).addEventListener('input', () => avCiz(k.tur));
+      $('avm-' + k.tur).addEventListener('change', function () {
+        AV_MODEL[k.tur] = this.value; avCiz(k.tur);
+      });
+      avCiz(k.tur);
+    });
+  }
+
+  /* ---------- 6) ÖNCE / SONRA ----------
+     Bozuk prompt solda sabit, öğrencinin hâli sağda. Fark, girdi
+     token'ı üzerinden ölçülür — görsel ve videoda enerji farkı
+     promptla değil, DENEME SAYISIYLA gelir; kart bunu söyler. */
+  function onceSonraKur() {
+    const host = $('onceSonra'); if (!host) return;
+    const L = window.ONCE_SONRA || [];
+
+    host.innerHTML = L.map((o, i) =>
+      '<div class="os-satir">' +
+        '<div class="card duello-col kotu">' +
+          '<div class="chip mb">' + o.ikon + ' ' + esc(o.ad) + ' · ❌ verilen</div>' +
+          '<div class="prompt-box prompt-bad">' + esc(o.kotu) + '</div>' +
+          '<div class="av-olcum mt"><span>token</span><b id="osA-' + i + '">0</b></div>' +
+        '</div>' +
+        '<div class="card card-top duello-col">' +
+          '<div class="chip mb">✅ senin hâlin</div>' +
+          '<textarea class="field" id="osB-' + i + '" rows="3" placeholder="Daha verimli hâlini yaz…"></textarea>' +
+          '<p class="src mt mb-0"><b>İpucu:</b> ' + esc(o.ipucu) + '</p>' +
+          '<div class="av-olcum mt"><span>token</span><b id="osBTok-' + i + '">0</b></div>' +
+          '<div class="os-bar"><div class="os-dolu" id="osBar-' + i + '"></div></div>' +
+          '<div class="os-sonuc" id="osSonuc-' + i + '">Sağdaki kutuya yazmaya başla.</div>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+
+    L.forEach((o, i) => {
+      const aTok = window.tokenize(o.kotu).count;
+      $('osA-' + i).textContent = aTok;
+      const inp = $('osB-' + i);
+      inp.addEventListener('input', () => osCiz(i, o, aTok));
+      osCiz(i, o, aTok);
+    });
+  }
+
+  function osCiz(i, o, aTok) {
+    const inp = $('osB-' + i);
+    const bTok = inp.value.trim() ? window.tokenize(inp.value).count : 0;
+    $('osBTok-' + i).textContent = bTok;
+
+    const bar = $('osBar-' + i), sonuc = $('osSonuc-' + i);
+    if (!bTok) {
+      bar.style.width = '0%';
+      bar.className = 'os-dolu';
+      sonuc.textContent = 'Sağdaki kutuya yazmaya başla.';
+      return;
+    }
+
+    const fark = (aTok - bTok) / aTok * 100;
+    bar.style.width = Math.min(100, Math.abs(fark)) + '%';
+    bar.className = 'os-dolu' + (fark < 0 ? ' artis' : '');
+
+    /* Metinde kısalık doğrudan kazanç; görsel ve videoda asıl kazanç
+       NETLİKTEN gelir — kart bunu açıkça söyler ki öğrenci
+       "kısa = iyi" diye yanlış bir kural çıkarmasın. */
+    if (o.tur === 'metin') {
+      sonuc.innerHTML = fark > 0
+        ? 'Girdi <b>%' + Math.round(fark) + '</b> kısaldı. Asıl kazanç ise <b>net</b> olduğu için modelin kısa cevap vermesi.'
+        : 'Girdi <b>%' + Math.round(-fark) + '</b> uzadı — sorun değil, <b>netse</b> toplamda kazandırır.';
+    } else {
+      sonuc.innerHTML = 'Burada kısalık önemli değil: bedel üretimde. ' +
+        'Net prompt <b>tek seferde</b> tutturur, deneme sayısını düşürür.';
+    }
+  }
+
+  /* ---------- Motor rozeti ---------- */
+  function motor() {
+    const b = $('avciMotor'); if (!b) return;
+    b.textContent = window.__tokenizerReal
+      ? '✓ Gerçek tokenizer (o200k_base) yüklendi — sayımlar kesin.'
+      : '≈ Hızlı tahmin kullanılıyor; kesin sayaç internetten yükleniyor…';
+  }
+
   /* ---------- Başlat ---------- */
   function init() {
-    renderLab();
-    if ($('tokInput')) $('tokInput').addEventListener('input', renderLab);
-    markEngine();
-    wireCalc();
-    renderCompare();
-    diffusionSim();
-    window.addEventListener('tokenizer-ready', () => { markEngine(); renderLab(); render(); });
+    akis(); karsilastir(); diffusionSim();
+    parametreKur(); elinde(); avciKur(); onceSonraKur(); motor();
+
+    window.addEventListener('tokenizer-ready', () => {
+      motor(); ciz();
+      (window.AVCI_KUTULARI || []).forEach(k => avCiz(k.tur));
+      onceSonraKur();
+    });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

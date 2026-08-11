@@ -62,8 +62,11 @@
                  (t.basis === 'tahmin' ? ' (tahmin)' : '') + '</option>';
         }).join('') + '</optgroup>';
       }).join('');
-      // Varsayılan: ölçümü olan, verimli bir açık model
-      sel.value = toolByKey('flux-schnell') ? 'flux-schnell' : (TOOLS[0] && TOOLS[0].key);
+      /* Varsayılan: hem ÜCRETSİZ hem ÖLÇÜMÜ olan araç.
+         Öğrenci listeyi açmadan da doğru bir başlangıç görsün. */
+      var vars_ = TOOLS.filter(function (x) { return x.free && x.basis === 'olcum'; })[0]
+               || TOOLS.filter(function (x) { return x.free; })[0] || TOOLS[0];
+      sel.value = vars_ && vars_.key;
       state.tool = toolByKey(sel.value);
     }
 
@@ -111,10 +114,10 @@
       ? ' · <a href="' + esc(t.url) + '" target="_blank" rel="noopener">aracı aç ↗</a>'
       : '';
 
-    host.innerHTML = tags + '<br>' + esc(t.org) +
-      (t.steps ? ' · ~' + t.steps + ' difüzyon adımı' : '') +
-      '<br>' + esc(t.note) +
-      '<br><em>Dayanak: ' + esc(t.src) + '</em>' + link;
+    /* Kısa tutulur: rozet + dayanak + bağlantı. Aracın tanıtım metni
+       burada gereksiz — öğrenci onu zaten Faz 4'te seçmişti. Ama
+       DAYANAK kalır: sayının nereden geldiği gizlenmez (SITE_RULES 1.4). */
+    host.innerHTML = tags + ' ' + esc(t.src) + link;
   }
 
   /* ---------- Sonuçları çiz ---------- */
@@ -130,8 +133,10 @@
     $('status').className = 'status ' + cls;
     $('status').textContent = txt;
 
-    /* Eşdeğer hep telefon şarjı cinsinden — sergideki damgayla aynı dil */
+    /* Eşdeğerler hep TEK birimden: enerji → telefon şarjı, su → şişe.
+       Sergideki damgayla aynı dil (SITE_RULES 7). */
     $('human').textContent = U_.phoneText(r.total);
+    if ($('humanWater')) $('humanWater').textContent = '💧 ' + U_.waterText(e.waterMl);
     $('tech').textContent = 'teknik: ' + U_.fmt(r.total, 2) + ' Wh  ·  tek görsel ' +
       U_.fmt(r.perImage, 2) + ' Wh × ' + state.variants + ' görsel × ' +
       state.attempts + ' deneme';
@@ -165,19 +170,6 @@
     $('stampPreview').innerHTML = chips.map(function (c) {
       return '<span class="stamp-chip"><b>' + c[0] + '</b>' + esc(c[1]) + '</span>';
     }).join('');
-
-    /* Döküm */
-    $('breakdown').innerHTML =
-      '<div class="text-mute mb">Maliyet dökümü</div>' +
-      '<div class="breakdown-row"><span class="text-soft">Temel (1024×1024)</span>' +
-        '<span class="text-green">' + U_.fmt(state.tool.wh, 2) + ' Wh</span></div>' +
-      '<div class="breakdown-row"><span class="text-soft">Boyut çarpanı (' +
-        state.size.w + '×' + state.size.h + ')</span>' +
-        '<span class="text-green">×' + U_.fmt(r.scale, 2) + '</span></div>' +
-      '<div class="breakdown-row"><span class="text-soft">Denemedeki görsel sayısı</span>' +
-        '<span class="text-green">×' + state.variants + '</span></div>' +
-      '<div class="breakdown-row"><span class="text-soft">Deneme sayısı</span>' +
-        '<span class="text-green">×' + state.attempts + '</span></div>';
 
     $('pxNote').textContent = U_.fmt(state.size.w * state.size.h / 1e6, 2) + ' MP';
 
@@ -214,9 +206,7 @@
     var host = $('promptNote'); if (!host) return;
     var txt = ($('promptIn') && $('promptIn').value) || '';
     var n = window.tokenize ? window.tokenize(txt).count : 0;
-    host.innerHTML = 'Prompt: <b class="text-green">' + n + '</b> token · ' +
-      'Görselde prompt uzunluğunun enerjiye etkisi <b>ihmal edilebilir</b> — ' +
-      'asıl maliyet difüzyon adımlarındadır. Ama net prompt, deneme sayısını düşürür.';
+    host.innerHTML = '<b class="text-green">' + n + '</b> token';
   }
 
   /* ---------- Araç karşılaştırma tablosu ---------- */
@@ -300,6 +290,7 @@
     });
     $('promptIn').addEventListener('input', function () { renderPromptNote(); render(); });
     $('titleIn').addEventListener('input', render);
+
     $('byIn').addEventListener('input', render);
     if ($('dateIn')) {
       $('dateIn').value = todayISO();          // varsayılan: bugün
@@ -307,6 +298,26 @@
     }
 
     wireCopy();
+  }
+
+  /* ---------- FAZ 5.3 · ÖZ DEĞERLENDİRME ----------
+     Kartlar yalnızca OKUNUR. Cevaplar sözlüdür; site hiçbir
+     öğrenci cevabı toplamaz, kaydetmez, hiçbir yere göndermez. */
+  var OZ_SORULAR = [
+    'Metin ile görselin maliyet farkını bir cümleyle açıklayabiliyor muyum?',
+    'Eğitim ile kullanım arasındaki farkı bir örnekle anlatabilir miyim?',
+    'Bir sayının “ölçüm” mü “tahmin” mi olduğunu nereden anlarım?',
+    'Bir sonraki promptumda neyi değiştireceğim?'
+  ];
+
+  function ozDeger() {
+    var host = $('ozDeger'); if (!host) return;
+    host.innerHTML = OZ_SORULAR.map(function (q, i) {
+      return '<div class="card q-card mb">' +
+        '<span class="q-num">' + (i + 1) + '</span>' +
+        '<span class="q-txt text-soft">' + esc(q) + '</span>' +
+      '</div>';
+    }).join('');
   }
 
   function init() {
@@ -317,6 +328,7 @@
     renderPromptNote();
     renderTable();
     render();
+    ozDeger();
     // Gerçek tokenizer CDN'den gelince prompt token sayısını tazele
     window.addEventListener('tokenizer-ready', renderPromptNote);
   }

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaynaklar · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Atölye materyalleri, veri kümeleri ve APA biçiminde tam kaynakça." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav faz-nav"><div class="wrap"></div></nav>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- 1 · MATERYALLER -->
+    <section class="fp-section tone-hero" id="materyaller" data-title="Materyaller">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🧰 Atölye havuzu</span>
+          <h2 class="slide-title reveal">Materyaller &amp; araçlar</h2>
+          <p class="slide-lead reveal lead-c">
+            Atölyede kullandığımız dosyalar, araçlar ve okuma bağlantıları.
+            Dört ayrı sayfadaki kaynakça slaytları burada birleşti.
+          </p>
+        </div>
+        <div class="card reveal">
+          <div id="materialsPool" class="pool"></div>
+        </div>
+      </div>
+      <div class="scroll-hint"><div class="mouse"></div>Kaydır</div>
+    </section>
+
+    <!-- 2 · VERİ KÜMELERİ -->
+    <section class="fp-section tone-a" id="veri" data-title="Veri kümeleri">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📊 Sayılar nereden geliyor?</span>
+          <h2 class="slide-title reveal">Veri kümeleri ve şeffaflık</h2>
+          <p class="slide-lead reveal lead-c">
+            Sitedeki her sayının bir kaynağı vardır. Kaynağın <strong>türü</strong> de
+            sayının kendisi kadar önemlidir.
+          </p>
+        </div>
+
+        <div class="grid cols-4 reveal mb-lg">
+          <div class="card card-top">
+            <span class="tag tag-resmi">resmî</span>
+            <p class="text-soft mt m-0">Üretici, sayıyı <b>yöntemiyle birlikte</b> yayımladı.</p>
+            <p class="src mt mb-0">Google (Gemini) · Meta (Llama) · DeepSeek · Mistral · BigScience (BLOOM)</p>
+          </div>
+          <div class="card card-top">
+            <span class="tag tag-beyan">şirket beyanı</span>
+            <p class="text-soft mt m-0">Şirket bir sayı söyledi ama <b>yöntemini yayımlamadı</b>.</p>
+            <p class="src mt mb-0">OpenAI — ChatGPT için 0,34 Wh (Altman, 2025)</p>
+          </div>
+          <div class="card card-top">
+            <span class="tag tag-olculdu">bağımsız ölçüm</span>
+            <p class="text-soft mt m-0">Üretici değil, <b>araştırmacı ölçtü</b>.</p>
+            <p class="src mt mb-0">Hugging Face AI Energy Score · Luccioni vd. · Shumba vd.</p>
+          </div>
+          <div class="card card-top">
+            <span class="tag tag-tahmini">bağımsız tahmin</span>
+            <p class="text-soft mt m-0">Kimse ölçmedi; <b>yöntemi açık bir tahmin</b> var.</p>
+            <p class="src mt mb-0">Epoch AI · EcoLogits — Grok, Claude, Qwen böyledir</p>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <h3 class="mt-0">Atölyede kullanılan veri kümeleri</h3>
+          <table class="table">
+            <thead><tr><th>Dosya / kaynak</th><th>Ne içerir</th><th>Nerede kullanılır</th></tr></thead>
+            <tbody>
+              <tr><td><b><a href="assets/data/enerji_verileri.csv" download>enerji_verileri.csv</a></b></td>
+                  <td>25 satır: fiziksel etkinlikler, yapay zekâ sorguları, model eğitimleri</td>
+                  <td>Faz 2 · Görev 1-3</td></tr>
+              <tr><td><b><a href="assets/data/modeller.csv" download>modeller.csv</a></b></td>
+                  <td>12 model: eğitim enerjisi, karbon, bölge, <b>şeffaflık sütunu</b></td>
+                  <td>Faz 2 · Görev 4-5</td></tr>
+              <tr><td><b><a href="https://epoch.ai/data/notable-ai-models" target="_blank" rel="noopener">Epoch AI — Notable AI Models</a></b></td>
+                  <td>3.574 model; 773’ünde eğitim gücü, 554’ünde süre</td>
+                  <td>Ölçümü olmayan modellerin tahmini</td></tr>
+              <tr><td><b><a href="https://huggingface.co/spaces/AIEnergyScore/Leaderboard" target="_blank" rel="noopener">HF AI Energy Score v2</a></b></td>
+                  <td>166 modelde ölçülmüş kullanım enerjisi; düşünme açık/kapalı</td>
+                  <td>Faz 3 · düşünme bütçesi</td></tr>
+            </tbody>
+          </table>
+          <p class="src mt mb-0">
+            ⚠️ Sitedeki tabloda <b>GPT-4, Grok ve Gemini’nin eğitim sayıları tahmindir</b> —
+            çünkü OpenAI, xAI ve Google bu modeller için sayı yayımlamadı.
+            Claude ve Qwen’in hücreleri <b>boştur</b>; Anthropic ve Alibaba hiçbir şey yayımlamıyor.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · KAYNAKÇA -->
+    <section class="fp-section tone-b" id="kaynakca" data-title="Kaynakça (APA)">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📚 Kaynakça</span>
+          <h2 class="slide-title reveal">Kaynakça (APA)</h2>
+        </div>
+        <div class="card reveal tool-scroll">
+          <ol class="refs">
+            <li>Altman, S. (2025). <em>The gentle singularity</em> (ChatGPT sorgusu ≈ 0,34 Wh, 0,000085 galon su). <a href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">https://blog.samaltman.com/the-gentle-singularity</a></li>
+            <li>Bai, Y., vd. (2022). Constitutional AI: Harmlessness from AI feedback. <em>Anthropic</em>. <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">https://arxiv.org/abs/2212.08073</a></li>
+            <li>Brown, T. B., vd. (2020). Language models are few-shot learners. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener">https://arxiv.org/abs/2005.14165</a></li>
+            <li>DeepSeek-AI. (2024). <em>DeepSeek-V3 technical report</em> (2,788 M H800 GPU-saat). <a href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">https://arxiv.org/abs/2412.19437</a></li>
+            <li>Environmental and Energy Study Institute. (2025). <em>Data centers and water consumption</em>. <a href="https://www.eesi.org/articles/view/data-centers-and-water-consumption" target="_blank" rel="noopener">https://www.eesi.org/articles/view/data-centers-and-water-consumption</a></li>
+            <li>Epoch AI. (2026). <em>Notable AI models</em> [veri kümesi]. <a href="https://epoch.ai/data/notable-ai-models" target="_blank" rel="noopener">https://epoch.ai/data/notable-ai-models</a></li>
+            <li>Gao, L., vd. (2020). The Pile: An 800GB dataset of diverse text for language modeling. <a href="https://arxiv.org/abs/2101.00027" target="_blank" rel="noopener">https://arxiv.org/abs/2101.00027</a></li>
+            <li>Google. (2025). <em>Measuring the environmental impact of delivering AI at Google scale</em> (Gemini medyan promptu: 0,24 Wh · 0,03 gCO₂e · 0,26 mL). <a href="https://arxiv.org/abs/2508.15734" target="_blank" rel="noopener">https://arxiv.org/abs/2508.15734</a></li>
+            <li>Hugging Face. (2025). <em>AI Energy Score v2 leaderboard</em> (düşünme açık/kapalı ölçümleri). <a href="https://huggingface.co/spaces/AIEnergyScore/Leaderboard" target="_blank" rel="noopener">https://huggingface.co/spaces/AIEnergyScore/Leaderboard</a></li>
+            <li>Kamali, O. (2024). <em>Tokenization &amp; multilingual</em>. Hugging Face Blog. <a href="https://huggingface.co/blog/omarkamali/tokenization" target="_blank" rel="noopener">https://huggingface.co/blog/omarkamali/tokenization</a></li>
+            <li>Lincoln Institute of Land Policy. (2025). <em>The land and water impacts of the AI boom</em>. <a href="https://www.lincolninst.edu/publications/land-lines-magazine/articles/land-water-impacts-data-centers/" target="_blank" rel="noopener">https://www.lincolninst.edu/</a></li>
+            <li>Luccioni, S., Viguier, S., &amp; Ligozat, A.-L. (2022). Estimating the carbon footprint of BLOOM. <em>JMLR</em>. <a href="https://www.jmlr.org/papers/volume24/23-0069/23-0069.pdf" target="_blank" rel="noopener">https://www.jmlr.org/papers/volume24/23-0069/23-0069.pdf</a></li>
+            <li>Luccioni, S., Jernite, Y., &amp; Strubell, E. (2024). Power hungry processing: Watts driving the cost of AI deployment? <em>FAccT</em>. <a href="https://arxiv.org/abs/2311.16863" target="_blank" rel="noopener">https://arxiv.org/abs/2311.16863</a></li>
+            <li>Meta. (2024). <em>Llama 3.1 model card</em> (39,3 M GPU-saat; 11.390 tCO₂e yer bazlı, 0 piyasa bazlı). <a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md" target="_blank" rel="noopener">https://github.com/meta-llama/llama-models</a></li>
+            <li>Mistral AI, Carbone 4, &amp; ADEME. (2025). <em>Mistral Large 2 life-cycle analysis</em> (eğitim: 20.400 tCO₂e, 281.000 m³ su; 400 token: 1,14 g · 45 mL). <a href="https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai" target="_blank" rel="noopener">https://mistral.ai/</a></li>
+            <li>ML.ENERGY. (2025). <em>ML.ENERGY leaderboard</em>. <a href="https://ml.energy/leaderboard/" target="_blank" rel="noopener">https://ml.energy/leaderboard/</a></li>
+            <li>Patterson, D., vd. (2021). Carbon emissions and large neural network training. <a href="https://arxiv.org/abs/2104.10350" target="_blank" rel="noopener">https://arxiv.org/abs/2104.10350</a></li>
+            <li>Poore, J., &amp; Nemecek, T. (2018). Reducing food’s environmental impacts through producers and consumers. <em>Science, 360</em>(6392). Our World in Data. <a href="https://ourworldindata.org/environmental-impacts-of-food" target="_blank" rel="noopener">https://ourworldindata.org/environmental-impacts-of-food</a></li>
+            <li>Shumba, N., Tshekiso, O., Li, P., Fanti, G., &amp; Ren, S. (2025). A water efficiency dataset for African data centers. <em>COMPASS ’25</em>. <a href="https://doi.org/10.1145/3715335.3735483" target="_blank" rel="noopener">https://doi.org/10.1145/3715335.3735483</a></li>
+            <li>Stanford CRFM. (2025). <em>The 2025 Foundation Model Transparency Index</em>. <a href="https://crfm.stanford.edu/fmti/" target="_blank" rel="noopener">https://crfm.stanford.edu/fmti/</a></li>
+            <li>Turing, A. M. (1950). Computing machinery and intelligence. <em>Mind, 59</em>(236), 433–460. <a href="https://doi.org/10.1093/mind/LIX.236.433" target="_blank" rel="noopener">https://doi.org/10.1093/mind/LIX.236.433</a></li>
+            <li>Vaswani, A., vd. (2017). Attention is all you need. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">https://arxiv.org/abs/1706.03762</a></li>
+            <li>Wei, J., vd. (2022). Chain-of-thought prompting elicits reasoning in large language models. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">https://arxiv.org/abs/2201.11903</a></li>
+            <li>“How hungry is AI?” (2025). Enerji + su + karbon (PUE/WUE; 3,69 L/kWh). <a href="https://arxiv.org/html/2505.09598v1" target="_blank" rel="noopener">https://arxiv.org/html/2505.09598v1</a></li>
+          </ol>
+        </div>
+        <p class="src reveal center mt">
+          İlham: Jay Alammar — <em>The Illustrated Transformer</em>.
+          Sayılar eğitim amaçlı tahminlerdir; model, donanım, veri merkezi ve enerji kaynağına göre değişir.
+        </p>
+      </div>
+    </section>
+
+  </div></div>
+
+  <script src="assets/js/config/units.config.js"></script>
+  <script src="assets/js/config/site.config.js"></script>
+  <script src="assets/js/core/units.js"></script>
+  <script src="assets/js/pages/kaynaklar.js"></script>
+  <script src="assets/js/core/footer.js"></script>
+  <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/faz.js"></script>
+  <script src="assets/js/core/nav.js"></script>
+</body>
+</html>

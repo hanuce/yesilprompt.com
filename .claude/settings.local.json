@@ -12,7 +12,16 @@
       "PowerShell(\\(Invoke-WebRequest -Uri \"http://localhost:8099/sergi.html\" -UseBasicParsing\\).StatusCode)",
       "WebFetch(domain:artvee.com)",
       "WebFetch(domain:arxiv.org)",
-      "WebFetch(domain:ar5iv.labs.arxiv.org)"
+      "WebFetch(domain:ar5iv.labs.arxiv.org)",
+      "WebFetch(domain:watercost.live)",
+      "WebFetch(domain:codecarbon.io)",
+      "WebFetch(domain:www.eesi.org)",
+      "WebFetch(domain:www.lincolninst.edu)",
+      "WebFetch(domain:impakter.com)",
+      "WebFetch(domain:huggingface.co)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:crfm.stanford.edu)",
+      "mcp__plugin_playwright_playwright__browser_navigate"
     ]
   }
 }

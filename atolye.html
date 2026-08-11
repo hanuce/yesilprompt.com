@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atölye Girişi · Yeşil Prompt Atölyesi</title>
-  <meta name="description" content="Yapay zekânın enerji ve su maliyetini anlamak ve verimli prompt yazmak için interaktif eğitim atölyesi." />
+  <title>Giriş · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Gerçek hayat üretimlerinin enerji, su ve karbon izleri; tartışma soruları ve günlük yapay zekâ ayak izi ölçer." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -12,32 +12,22 @@
 </head>
 <body>
 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="nav"><div class="wrap">
-    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
-    <button class="nav-toggle" aria-label="Menü">☰</button>
-    <div class="nav-links">
-      <a href="index.html">Sergi</a>
-      <a href="atolye.html" class="active">Atölye Girişi</a>
-      <a href="modeller.html">Modeller &amp; Tarih</a>
-      <a href="token-lab.html">Token Lab</a>
-      <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>
-      <a href="hesaplayici.html">Ne Kadar?</a>
-    </div>
-  </div></nav>
+  <!-- Faz rayı: core/faz.js doldurur (içerik: site.config.js → FAZLAR) -->
+  <nav class="nav faz-nav"><div class="wrap"></div></nav>
 
-  <!-- ===== SLAYTLAR ===== -->
   <div class="fp-root"><div class="fp-track">
 
-    <!-- 1 · BAŞLAMADAN: BİRKAÇ SORU -->
-    <section class="fp-section tone-hero" id="sorular" data-title="Başlamadan: birkaç soru">
+    <!-- 1 · GÖRÜNMEYEN BUZDAĞI -->
+    <section class="fp-section tone-hero" id="buzdagi" data-title="Görünmeyen buzdağı">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">Düşün · Sorgula</span>
-          <h2 class="slide-title reveal">Başlamadan: birkaç soru</h2>
-          <p class="slide-lead reveal lead-c">Doğru cevap aramıyoruz; birlikte düşünüyoruz. Atölye boyunca bu sorulara döneceğiz.</p>
+          <span class="eyebrow reveal">🧊 Görünmeyen buzdağı</span>
+          <h2 class="slide-title reveal">Gerçek hayat üretimlerinin <span class="text-grad">enerji, su ve karbon izleri</span></h2>
         </div>
-        <div id="ethicsCards" class="grid cols-3 reveal"></div>
+        <div class="grid cols-2 items-start">
+          <div class="reveal tahmin" data-tahmin="cikolata"></div>
+          <div class="reveal tahmin" data-tahmin="buzdolabi"></div>
+        </div>
       </div>
       <div class="scroll-hint">
         <div class="mouse"></div>
@@ -45,19 +35,88 @@
       </div>
     </section>
 
-    <!-- 2 · MATERYAL & KAYNAK HAVUZU -->
-    <section class="fp-section tone-a" id="materyaller" data-title="Materyaller &amp; Kaynaklar">
+    <!-- 2 · TARTIŞMALAR -->
+    <section class="fp-section tone-a" id="tartismalar" data-title="Tartışmalar">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">Ek kaynaklar</span>
-          <h2 class="slide-title reveal">Materyaller &amp; Kaynaklar</h2>
-          <p class="slide-lead reveal lead-c">Atölyede kullanacağımız dosya, araç ve okuma bağlantılarının havuzu.</p>
+          <span class="eyebrow reveal">💬 Birlikte düşünelim</span>
+          <h2 class="slide-title reveal">Tartışmalar</h2>
+          <p class="slide-lead reveal lead-c">
+            Doğru cevap aramıyoruz. Bu soruların bazılarının cevabı atölyenin
+            ilerleyen fazlarında açılacak — şimdilik konuşalım.
+          </p>
         </div>
-        <div class="card reveal">
-          <div id="materialsPool" class="pool"></div>
+        <div id="tartismaKartlari" class="grid cols-3 reveal"></div>
+      </div>
+    </section>
+
+    <!-- 3 · AYNI İŞLER FARKLI PARAMETRELER -->
+    <section class="fp-section tone-b" id="parametreler" data-title="Aynı işler farklı parametreler">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🎛️ Aynı işler farklı parametreler</span>
+          <h2 class="slide-title reveal">Değişen şeyler: <span class="text-grad">Nasıl istemelisin? Neyi kullanmalısın?</span></h2>
+          <p class="slide-lead reveal lead-c">
+            Kendi günlük kullanımını gir; arkada ne yakıldığını gör.
+          </p>
         </div>
+
+        <div class="grid cols-2 reveal items-stretch">
+
+          <!-- GİRDİLER -->
+          <div class="card card-top">
+            <label class="label" for="ayakModel">Hangi yapay zekâyı kullanıyorsun?</label>
+            <select id="ayakModel" class="field"></select>
+            <p class="src" id="ayakModelNot"></p>
+
+            <label class="label label-row mt">
+              <span>Günde kaç kez soru soruyorsun?</span>
+              <span class="text-soft"><b id="ayakSorguLbl">20</b> sorgu</span>
+            </label>
+            <input id="ayakSorgu" type="range" min="0" max="200" step="5" value="20">
+
+            <label class="label label-row mt">
+              <span>Günde kaç Google araması yapıyorsun?</span>
+              <span class="text-soft"><b id="ayakAramaLbl">30</b> arama</span>
+            </label>
+            <input id="ayakArama" type="range" min="0" max="300" step="5" value="30">
+            <p class="src">Kıyas için: bir Google araması ≈ 0,30 Wh.</p>
+
+            <label class="label mt">Düşünme modu</label>
+            <div class="segment full" id="ayakMod"></div>
+            <p class="src" id="ayakModNot"></p>
+
+            <label class="label label-row mt">
+              <span>Ortalama cevap uzunluğu</span>
+              <span class="text-soft"><b id="ayakCiktiLbl">250</b> token</span>
+            </label>
+            <input id="ayakCikti" type="range" min="50" max="2000" step="50" value="250">
+            <p class="src">~250 token ≈ kısa bir paragraf. Çıktı token’ı, girdiden çok daha pahalıdır.</p>
+          </div>
+
+          <!-- SONUÇ -->
+          <div class="card card-top col-card">
+            <div class="center">
+              <div class="text-mute">Günlük yapay zekâ ayak izin</div>
+              <div id="ayakHuman" class="huge-num">—</div>
+              <div id="ayakWater" class="text-water">—</div>
+              <div id="ayakTech" class="src">—</div>
+            </div>
+
+            <div id="ayakMetrics" class="grid cols-3 grid-tight mt"></div>
+
+            <hr class="divider">
+            <div class="text-mute mb">Bir yılda</div>
+            <div id="ayakYillik" class="skor-dokum"></div>
+
+            <hr class="divider">
+            <div id="ayakDokum"></div>
+          </div>
+        </div>
+
         <div class="reveal center mt-lg">
-          <a class="btn btn-primary" href="modeller.html">Sırada: Modeller &amp; Tarih →</a>
+          <a class="btn btn-primary" href="veri-labi.html">Sırada: Veri Laboratuvarı →</a>
+          <a class="btn btn-ghost" href="kaynaklar.html">Bu fazın kaynakları →</a>
         </div>
       </div>
     </section>
@@ -66,13 +125,16 @@
 
   </div></div>
 
-  <!-- ===== SCRIPTLER ===== -->
   <script src="assets/js/config/units.config.js"></script>
+  <script src="assets/js/config/models.config.js"></script>
+  <script src="assets/js/config/tahminler.config.js"></script>
   <script src="assets/js/config/site.config.js"></script>
   <script src="assets/js/core/units.js"></script>
-  <script src="assets/js/pages/giris.js"></script>
+  <script src="assets/js/core/tahmin.js"></script>
+  <script src="assets/js/pages/faz1.js"></script>
   <script src="assets/js/core/footer.js"></script>
   <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/faz.js"></script>
   <script src="assets/js/core/nav.js"></script>
 </body>
 </html>

@@ -1,16 +1,26 @@
 Aktivite,Tur,Enerji_Wh,CO2_Salinimi_Gram,Su_Tuketimi_mL,Kaynak
-1 metin sorgusu (Gemini medyan),Metin,0.24,0.03,0.26,"Google 2025 - medyan metin promptu"
-1 metin sorgusu (ChatGPT),Metin,0.30,0.04,1.11,"Epoch AI 2025"
-1 metin sorgusu (uzun cevap ~1000 token),Metin,1.10,0.14,4.06,"Epoch AI 2025 - olcekleme"
-1 gorsel uretimi (FLUX.1-schnell),Gorsel,0.50,0.06,1.85,"HF/CMU - AI Energy Score"
-1 gorsel uretimi (SDXL),Gorsel,1.50,0.19,5.54,"Luccioni vd. 2024 - HF/CMU"
-1 gorsel uretimi (buyuk difuzyon modeli),Gorsel,2.90,0.36,10.70,"ML.ENERGY Leaderboard"
-1 Google aramasi,Dijital,0.30,0.20,0.50,"Google - yayinlanmis mertebe"
-1 telefon tam sarji,Fiziksel,12.00,5.50,40.00,"Yayinlanmis mertebe (~12 Wh)"
-1 saat LED ampul (10W),Fiziksel,10.00,4.50,33.00,"Mertebe hesabi"
-1 bardak musluk suyu kaynatma,Fiziksel,100.00,40.00,250.00,"Mertebe hesabi"
-1 kg cikolata uretimi,Fiziksel,5300.00,19000.00,17000000.00,"Our World in Data - Poore & Nemecek 2018"
-1 bardak inek sutu (200ml),Fiziksel,260.00,600.00,125000.00,"Our World in Data - Poore & Nemecek 2018"
-1 hamburger (siyir eti),Fiziksel,9700.00,33000.00,2350000.00,"Our World in Data - Poore & Nemecek 2018"
-Model egitimi GPT-3 (175B),Egitim,1287000000.00,552000000.00,4749030000.00,"Patterson vd. 2021 - su 3.69 L/kWh ile turetildi"
-Model egitimi Llama ailesi (toplam),Egitim,2638000000.00,1015000000.00,9734220000.00,"Meta model kartlari - su 3.69 L/kWh ile turetildi"
+1 metin sorgusu (Gemini medyan),Metin,0.24,0.03,0.26,Google 2025 (arXiv:2508.15734) - medyan metin promptu; RESMI olcum
+1 metin sorgusu (ChatGPT ortalama),Metin,0.34,0.04,0.32,"Altman 2025 (OpenAI) - 0,34 Wh ve 0,000085 galon; yontem yayimlanmadi"
+1 metin sorgusu (uzun cevap ~1000 token),Metin,1.10,0.14,4.06,"Epoch AI 2025 - olcekleme; su 3,69 L/kWh ile turetildi"
+1 e-posta (250 token) - Llama-3-70B,Metin,10.00,1.25,120.00,Shumba vd. 2025 COMPASS - hakemli; su makalede olculdu
+1 e-posta (250 token) - GPT-4,Metin,232.00,29.00,2600.00,Shumba vd. 2025 COMPASS - ayni gorev; farkli model
+10 sayfalik rapor (5000 token) - Llama-3-70B,Metin,52.25,6.53,600.00,Shumba vd. 2025 COMPASS
+10 sayfalik rapor (5000 token) - GPT-4,Metin,4660.00,582.50,53000.00,Shumba vd. 2025 COMPASS - Llama-3-70B ile arasinda ~88 kat fark
+1 gorsel uretimi - FLUX.1-schnell,Gorsel,0.50,0.06,1.85,HF/CMU - AI Energy Score
+1 gorsel uretimi - SDXL,Gorsel,1.50,0.19,5.54,Luccioni vd. 2024 - HF/CMU
+1 gorsel uretimi - buyuk difuzyon modeli,Gorsel,2.90,0.36,10.70,ML.ENERGY Leaderboard
+1 sorgu - dusunme KAPALI (DeepSeek-R1-70B),Metin,0.05,0.01,0.18,HF AI Energy Score v2 2025 - CodeCarbon ile olculdu (GPU enerjisi)
+1 sorgu - dusunme ACIK (DeepSeek-R1-70B),Metin,7.63,0.95,28.15,HF AI Energy Score v2 2025 - AYNI model; tek fark dusunme: 154 kat
+1 Google aramasi,Dijital,0.30,0.20,0.50,Google - yayinlanmis mertebe
+1 telefon tam sarji,Fiziksel,12.00,5.50,40.00,Yayinlanmis mertebe (~12 Wh)
+1 saat LED ampul (8W),Fiziksel,8.00,3.60,26.40,Mertebe hesabi - guc degeri units.config.js ile ayni (8 W)
+1 bardak musluk suyu kaynatma,Fiziksel,100.00,40.00,250.00,Mertebe hesabi
+1 kg cikolata uretimi,Fiziksel,5300.00,19000.00,17000000.00,Our World in Data - Poore & Nemecek 2018
+1 bardak inek sutu (200ml),Fiziksel,260.00,600.00,125000.00,Our World in Data - Poore & Nemecek 2018
+1 hamburger (siyir eti),Fiziksel,9700.00,33000.00,2350000.00,Our World in Data - Poore & Nemecek 2018
+Model egitimi - GPT-3 (175B),Egitim,1287000000.00,552000000.00,4749030000.00,"Patterson vd. 2021 - RESMI; su 3,69 L/kWh ile turetildi"
+Model egitimi - Llama 3.1 ailesi,Egitim,27510000000.00,11390000000.00,101511900000.00,"Meta model karti - RESMI; 39,3M GPU-saat x 700W"
+Model egitimi - DeepSeek-V3,Egitim,975800000.00,546448000.00,3600702000.00,DeepSeek teknik raporu - RESMI GPU-saat; enerji ve karbon turetildi
+Model egitimi - BLOOM (176B),Egitim,433196000.00,24700000.00,1598493000.00,Luccioni vd. 2022 - RESMI; Fransa sebekesi dusuk karbonlu
+Model egitimi - GPT-4,Egitim,45473159000.00,14642357000.00,167795957000.00,Epoch AI - TAHMIN; OpenAI hicbir sayi yayimlamadi
+Model egitimi - Grok 3,Egitim,237489097000.00,76471489000.00,876334768000.00,Epoch AI - TAHMIN; xAI hicbir sayi yayimlamadi

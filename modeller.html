@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modeller &amp; Tarihsel Gelişim · Yeşil Prompt Atölyesi</title>
+  <title>Meraklısına · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="80 dakikalık akışa sığmayan ama merak edenler için duran içerik: yapay zekâ tarihi, Transformer, model eğitimi, veri, güvenlik ve model aileleri." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -11,23 +12,53 @@
 </head>
 <body>
 
-  <nav class="nav"><div class="wrap">
-    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
-    <button class="nav-toggle" aria-label="Menü">☰</button>
-    <div class="nav-links">
-      <a href="index.html">Sergi</a>
-      <a href="atolye.html">Atölye Girişi</a>
-      <a href="modeller.html" class="active">Modeller &amp; Tarih</a>
-      <a href="token-lab.html">Token Lab</a>
-      <a href="prompt-muhendisligi.html">Prompt Mühendisliği</a>
-      <a href="hesaplayici.html">Ne Kadar?</a>
-    </div>
-  </div></nav>
+  <nav class="nav faz-nav"><div class="wrap"></div></nav>
 
   <div class="fp-root"><div class="fp-track">
 
+    <!-- 0 · ARŞİV GİRİŞİ -->
+    <section class="fp-section tone-hero" id="meraklisina" data-title="Meraklısına">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📦 Akış dışı</span>
+          <h2 class="slide-title reveal">Meraklısına</h2>
+          <p class="slide-lead reveal lead-c">
+            Buradakiler atölyenin <strong>80 dakikasına sığmadı</strong> ama silinmedi.
+            Turing’den Transformer’a tarih, bir modelin nasıl eğitildiği, eğitim verisinin
+            gerçek içeriği, güvenlik ayarı ve model aileleri — hepsi burada duruyor.
+          </p>
+        </div>
+        <div class="grid cols-4 reveal">
+          <div class="card card-top">
+            <div class="big-emoji">🕰️</div>
+            <h3>Tarih ve mimari</h3>
+            <p class="text-soft m-0">Turing’den Transformer’a zaman tüneli; dikkat mekanizması; bir cümlenin modelden geçişi.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🧠</div>
+            <h3>Model nasıl oluşur</h3>
+            <p class="text-soft m-0">Örnek kod, eğitim verisi, epoch animasyonu, The Pile’ın gerçek içeriği, eğitim enerjisi.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🛡️</div>
+            <h3>Güvenlik ve ölçek</h3>
+            <p class="text-soft m-0">RLHF, Anayasal YZ, kırmızı takım; model aileleri ve Yapay Zekâ Çağı.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🌍</div>
+            <h3>Diller ve token</h3>
+            <p class="text-soft m-0">“Model önce İngilizceye mi çeviriyor?” — mitin cevabı ve Türkçe token karşılaştırması.</p>
+          </div>
+        </div>
+        <div class="reveal center mt-lg">
+          <a class="btn btn-primary" href="atolye.html">Atölyeye dön → Faz 1</a>
+        </div>
+      </div>
+      <div class="scroll-hint"><div class="mouse"></div>Gez</div>
+    </section>
+
     <!-- 1 · TARİHÇE -->
-    <section class="fp-section tone-hero" id="tarih" data-title="Turing'den Transformer'a">
+    <section class="fp-section tone-a" id="tarih" data-title="Turing'den Transformer'a">
       <div class="fp-inner">
         <div class="section-head">
           <span class="eyebrow reveal">🕰️ Tarihsel gelişim</span>
@@ -331,38 +362,88 @@ model = KucukTransformer(kelime_sayisi=50000)
       </div>
     </section>
 
-    <!-- 10 · KAYNAKÇA -->
-    <section class="fp-section tone-c" id="kaynakca" data-title="Kaynakça (APA)">
+    <!-- 10 · DİLLER VE TOKEN (Token Lab'dan buraya taşındı) -->
+    <section class="fp-section tone-a" id="diller" data-title="Diller ve token">
+      <div class="fp-inner">
+        <div class="grid cols-2 items-center">
+          <div class="reveal">
+            <span class="eyebrow">🌍 Mit yıkımı</span>
+            <h2 class="slide-title">Bütün dilleri İngilizceye mi çeviriyor?</h2>
+            <p class="slide-lead"><strong>Hayır.</strong> Ayrı bir çeviri adımı <em>yoktur</em>.</p>
+            <ul class="list-soft">
+              <li>Model, metni <strong>kendi dilinde</strong> doğrudan küçük parçalara böler.</li>
+              <li>Aynı model onlarca dili aynı anda işleyebilir; çünkü eğitim verisinde o diller de vardı.</li>
+              <li>Yeni nesil parçalayıcılar (o200k, Gemini) kısa ve yaygın kelimelerde Türkçe–İngilizce farkını büyük ölçüde kapattı.</li>
+              <li>Fark, <strong>uzun, ekli, nadir</strong> kelimelerde belirginleşir.</li>
+            </ul>
+            <p class="text-soft">
+              <b>İlginç nüans:</b> Modelin ara katmanlarında kavramlar çoğu zaman ortak bir iç temsile
+              yaklaşır — ama bu bir ön-çeviri değildir ve <b>token sayısını değiştirmez</b>.
+            </p>
+            <p class="src">Kaynak: Kamali (2024), Hugging Face — Tokenization &amp; multilingual.</p>
+          </div>
+          <div class="reveal">
+            <div class="card card-top">
+              <div class="label">Kendi kelime çiftini ekle</div>
+              <div class="grid cols-2 grid-tight mb">
+                <input id="pairTr" class="field" type="text" placeholder="Türkçe kelime" aria-label="Türkçe kelime">
+                <input id="pairEn" class="field" type="text" placeholder="İngilizce karşılığı" aria-label="İngilizce karşılığı">
+              </div>
+              <button class="btn btn-ghost btn-sm mb" id="pairAdd" type="button">+ Tabloya ekle</button>
+              <table class="table" id="pairTable"></table>
+              <p class="src">“Su” ve “Water” neredeyse aynı; “Sürdürülebilirlik” değil.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · SHOT TİPLERİ (Faz 4'ten arşive taşındı) -->
+    <section class="fp-section tone-c" id="shot" data-title="Shot tipleri">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">📚 Kaynakça</span>
-          <h2 class="slide-title reveal">Kaynakça (APA)</h2>
+          <span class="eyebrow reveal">🎯 Örnekle öğretme</span>
+          <h2 class="slide-title reveal">Shot tipleri: zero · one · few</h2>
+          <p class="slide-lead reveal lead-c">
+            Modele kaç örnek verdiğine göre adlandırılır. İyi bir prompt mühendisliği konusudur —
+            ama <strong>yeşil</strong> prompt konusu değildir: hiçbir maliyet kaldıracını doğrudan
+            düşürmez. Bu yüzden atölye akışından çıkarılıp buraya alındı.
+          </p>
         </div>
-        <div class="card reveal">
-          <ol class="refs">
-            <li>Turing, A. M. (1950). Computing machinery and intelligence. <em>Mind, 59</em>(236), 433–460. <a href="https://doi.org/10.1093/mind/LIX.236.433" target="_blank" rel="noopener">https://doi.org/10.1093/mind/LIX.236.433</a></li>
-            <li>Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., &amp; Polosukhin, I. (2017). Attention is all you need. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">https://arxiv.org/abs/1706.03762</a></li>
-            <li>Brown, T. B., vd. (2020). Language models are few-shot learners. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener">https://arxiv.org/abs/2005.14165</a></li>
-            <li>Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., &amp; Fei-Fei, L. (2009). ImageNet: A large-scale hierarchical image database. <em>CVPR</em>. <a href="https://www.image-net.org/" target="_blank" rel="noopener">https://www.image-net.org/</a></li>
-            <li>Schuhmann, C., vd. (2022). LAION-5B: An open large-scale dataset for training next generation image-text models. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2210.08402" target="_blank" rel="noopener">https://arxiv.org/abs/2210.08402</a></li>
-            <li>Gao, L., vd. (2020). The Pile: An 800GB dataset of diverse text for language modeling. <a href="https://arxiv.org/abs/2101.00027" target="_blank" rel="noopener">https://arxiv.org/abs/2101.00027</a></li>
-            <li>Raffel, C., vd. (2020). Exploring the limits of transfer learning with a unified text-to-text transformer (T5 / C4). <em>JMLR</em>. <a href="https://arxiv.org/abs/1910.10683" target="_blank" rel="noopener">https://arxiv.org/abs/1910.10683</a></li>
-            <li>Ouyang, L., vd. (2022). Training language models to follow instructions with human feedback (InstructGPT). <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2203.02155" target="_blank" rel="noopener">https://arxiv.org/abs/2203.02155</a></li>
-            <li>Bai, Y., vd. (2022). Constitutional AI: Harmlessness from AI feedback. <em>Anthropic</em>. <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">https://arxiv.org/abs/2212.08073</a></li>
-            <li>Patterson, D., vd. (2021). Carbon emissions and large neural network training. <a href="https://arxiv.org/abs/2104.10350" target="_blank" rel="noopener">https://arxiv.org/abs/2104.10350</a></li>
-            <li>DeepSeek-AI. (2024). DeepSeek-V3 technical report. <em>arXiv</em>. <a href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">https://arxiv.org/abs/2412.19437</a></li>
-            <li>CompaniesMarketCap. (2026). <em>Companies ranked by market capitalization</em>. <a href="https://companiesmarketcap.com/" target="_blank" rel="noopener">https://companiesmarketcap.com/</a></li>
-            <li>Axios. (2026, 28 Mayıs). Anthropic tops OpenAI as most valuable AI startup. <a href="https://www.axios.com/2026/05/28/anthropic-ai-fundraising-openai" target="_blank" rel="noopener">https://www.axios.com/2026/05/28/anthropic-ai-fundraising-openai</a></li>
-          </ol>
+        <div class="grid cols-3 reveal">
+          <div class="card card-top">
+            <div class="big-emoji">0️⃣</div>
+            <div class="chip mb">Zero-shot</div>
+            <h3 class="m-0">Örneksiz</h3>
+            <p class="text-soft">Hiç örnek/stil vermeden doğrudan ne çizilmesini istediğini yazarsın. Model stili kendi seçer.</p>
+            <div class="prompt-box prompt-good">Bir bardak suyun içinde yüzen küçük bir yeşil yaprak çiz.</div>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">1️⃣</div>
+            <div class="chip mb">One-shot</div>
+            <h3 class="m-0">Tek örnek</h3>
+            <p class="text-soft">Tek bir stil örneği vererek istediğin görünümü gösterir, sonra yeni nesneyi istersin.</p>
+            <div class="prompt-box prompt-good">Örnek stil: “düz vektör, pastel renkler, kalın dış çizgi.”
+Aynı stilde: bir bisiklet çiz.</div>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🔢</div>
+            <div class="chip mb">Few-shot</div>
+            <h3 class="m-0">Birkaç örnek</h3>
+            <p class="text-soft">Birkaç örnekle stili netçe öğretirsin; üretilen görsellerde tutarlılık artar.</p>
+            <div class="prompt-box prompt-good">elma → düz vektör, pastel, kalın çizgi
+ev → düz vektör, pastel, kalın çizgi
+kedi → düz vektör, pastel, kalın çizgi
+ağaç →</div>
+          </div>
         </div>
-        <div class="reveal center mt">
-          <a class="btn btn-primary" href="token-lab.html">Sırada: Token Lab →</a>
-        </div>
+        <p class="src reveal center mt">Kaynak: Brown vd. (2020), “Language models are few-shot learners”. Tam kaynakça: <a href="kaynaklar.html">Kaynaklar</a>.</p>
       </div>
     </section>
 
   </div></div>
 
+  <script src="assets/js/core/tokenize.js"></script>
   <script src="assets/js/config/units.config.js"></script>
   <script src="assets/js/config/timeline.config.js"></script>
   <script src="assets/js/config/training.config.js"></script>
@@ -370,9 +451,11 @@ model = KucukTransformer(kelime_sayisi=50000)
   <script src="assets/js/config/valuations.config.js"></script>
   <script src="assets/js/config/site.config.js"></script>
   <script src="assets/js/core/units.js"></script>
+  <script type="module" src="assets/js/core/tokenizer.module.js"></script>
   <script src="assets/js/pages/modeller.js"></script>
   <script src="assets/js/core/footer.js"></script>
   <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/faz.js"></script>
   <script src="assets/js/core/nav.js"></script>
 </body>
 </html>

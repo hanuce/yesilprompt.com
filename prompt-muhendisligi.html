@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prompt Mühendisliği · Yeşil Prompt Atölyesi</title>
+  <title>4 · Yeşil Prompt · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Yeşil Prompt Kuralları ve sergi için tek bir görselin verimli biçimde üretilmesi." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -11,126 +12,107 @@
 </head>
 <body>
 
-  <nav class="nav"><div class="wrap">
-    <a class="brand" href="index.html"><span class="mark">🌿</span> Yeşil Prompt <span class="text-grad">Atölyesi</span></a>
-    <button class="nav-toggle" aria-label="Menü">☰</button>
-    <div class="nav-links">
-      <a href="index.html">Sergi</a>
-      <a href="atolye.html">Atölye Girişi</a>
-      <a href="modeller.html">Modeller &amp; Tarih</a>
-      <a href="token-lab.html">Token Lab</a>
-      <a href="prompt-muhendisligi.html" class="active">Prompt Mühendisliği</a>
-      <a href="hesaplayici.html">Ne Kadar?</a>
-    </div>
-  </div></nav>
+  <nav class="nav faz-nav"><div class="wrap"></div></nav>
 
   <div class="fp-root"><div class="fp-track">
 
-    <!-- 1 · NEDİR -->
-    <section class="fp-section tone-hero" id="nedir" data-title="Prompt mühendisliği nedir?">
-      <div class="fp-inner">
-        <div class="grid cols-2 items-center">
-          <div class="reveal">
-            <span class="eyebrow">✍️ Temel</span>
-            <h2 class="slide-title">Prompt mühendisliği nedir?</h2>
-            <p class="slide-lead">
-              Prompt, yapay zekâya verdiğin <strong>yönergedir</strong>. Aynı modelden çok farklı sonuçlar
-              almanın yolu, soruyu nasıl sorduğundan geçer. İyi prompt = <strong>net görev + yeterli bağlam +
-              istenen biçim</strong>.
-            </p>
-            <p class="slide-lead">
-              Bizim için bir boyut daha var: <span class="text-green">verimli prompt = yeşil prompt</span>.
-              Her belirsizlik bir yeniden deneme, her yeniden deneme elektrik <em>ve su</em> demek.
-            </p>
-          </div>
-          <div class="reveal">
-            <div class="card card-top">
-              <div class="label">Formül</div>
-              <div class="prompt-box prompt-good">Rol + Görev + Bağlam + Format + (Örnek) + Kısıt
-= net, tek seferde isabetli, az enerjili sonuç</div>
-              <p class="text-soft mt mb-0">Sonraki slaytlarda her parçayı tek tek açıyoruz.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2 · SHOT TİPLERİ -->
-    <section class="fp-section tone-a" id="shot" data-title="Shot tipleri">
+    <!-- 1 · YEŞİL PROMPT KURALLARI -->
+    <section class="fp-section tone-hero" id="kurallar" data-title="Yeşil Prompt Kuralları">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">🎯 Örnekle öğretme</span>
-          <h2 class="slide-title reveal">Shot tipleri: zero · one · few</h2>
-          <p class="slide-lead reveal lead-c">Modele kaç örnek verdiğine göre adlandırılır. Örnek arttıkça desen netleşir.</p>
-        </div>
-        <div id="shots" class="grid cols-3 reveal"></div>
-      </div>
-    </section>
-
-    <!-- 3 · İYİ PROMPTUN PARÇALARI -->
-    <section class="fp-section tone-b" id="teknikler" data-title="İyi promptun parçaları">
-      <div class="fp-inner">
-        <div class="section-head">
-          <span class="eyebrow reveal">🧰 Teknikler</span>
-          <h2 class="slide-title reveal">İyi bir promptun parçaları</h2>
-        </div>
-        <div id="techniques" class="grid cols-4 reveal"></div>
-      </div>
-    </section>
-
-    <!-- 4 · ÖNCE / SONRA -->
-    <section class="fp-section tone-c" id="once-sonra" data-title="Önce / Sonra">
-      <div class="fp-inner">
-        <div class="section-head">
-          <span class="eyebrow reveal">🔬 Uygula</span>
-          <h2 class="slide-title reveal">Önce / Sonra</h2>
-          <p class="slide-lead reveal lead-c">Aynı niyet, iki farklı prompt. Sağdakini Token Lab’da ölçtüğünde maliyet farkını görürsün.</p>
-        </div>
-        <div id="beforeAfter" class="grid cols-2 reveal"></div>
-      </div>
-    </section>
-
-    <!-- 5 · YEŞİL PROMPT KURALLARI -->
-    <section class="fp-section tone-a" id="kurallar" data-title="Yeşil Prompt Kuralları">
-      <div class="fp-inner">
-        <div class="section-head">
-          <span class="eyebrow reveal">🌿 Özet kart</span>
+          <span class="eyebrow reveal">🌿 Atölyenin özeti</span>
           <h2 class="slide-title reveal">Yeşil Prompt Kuralları</h2>
-          <p class="slide-lead reveal lead-c">Yazdırılabilir kart — her kural bir maliyet kaldıracını düşürür.</p>
+          <p class="slide-lead reveal lead-c">
+            Sekiz kural. Her biri <strong>bir maliyet kalemine</strong> dokunuyor —
+            hangisine dokunduğu kartın üstünde yazıyor.
+          </p>
         </div>
-        <div id="rules" class="grid cols-4 reveal"></div>
-        <div class="reveal center mt-lg">
-          <button class="btn btn-primary" id="printBtn">🖨️ Kartı yazdır</button>
-          <a class="btn btn-ghost" href="hesaplayici.html">Sırada: Ne Kadar? →</a>
+
+        <div id="kurallarKartlari" class="grid cols-4 reveal mb-lg"></div>
+
+        <div class="card card-top reveal">
+          <p class="m-0" id="kurallarOzet"></p>
         </div>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Sırada: kendi resmini üret
       </div>
     </section>
 
-    <!-- 6 · KAYNAKÇA -->
-    <section class="fp-section tone-b" id="kaynakca" data-title="Kaynakça (APA)">
+    <!-- 2 · SERGİ İÇİN RESİM ÜRETİMİ -->
+    <section class="fp-section tone-a" id="uretim" data-title="Sergi için resim üret">
       <div class="fp-inner">
         <div class="section-head">
-          <span class="eyebrow reveal">📚 Kaynakça</span>
-          <h2 class="slide-title reveal">Kaynakça (APA)</h2>
+          <span class="eyebrow reveal">🖼️ Yeşil Prompt Sergisi</span>
+          <h2 class="slide-title reveal">Şimdi <span class="text-grad">kendi resmini</span> üret</h2>
+          <p class="slide-lead reveal lead-c">
+            Hayal ettiğin resmi, az önceki kurallara uyarak ürettir.
+            Takım başına <strong>tek görsel</strong> — sonra ölçeceğiz.
+          </p>
         </div>
-        <div class="card reveal">
-          <ol class="refs">
-            <li>Brown, T. B., vd. (2020). Language models are few-shot learners. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener">https://arxiv.org/abs/2005.14165</a></li>
-            <li>Wei, J., vd. (2022). Chain-of-thought prompting elicits reasoning in large language models. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">https://arxiv.org/abs/2201.11903</a></li>
-            <li>OpenAI. (2024). <em>Prompt engineering guide</em>. <a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" rel="noopener">https://platform.openai.com/docs/guides/prompt-engineering</a></li>
-            <li>Google. (2025). <em>Measuring the environmental impact of AI inference</em>. <a href="https://blog.google/" target="_blank" rel="noopener">https://blog.google/</a></li>
-          </ol>
+
+        <div id="uretimAdimlari" class="grid cols-5 reveal mb-lg"></div>
+
+        <div class="grid cols-2 reveal items-start mb-lg">
+
+          <!-- PROMPT REÇETESİ + TASLAK -->
+          <div class="card card-top">
+            <div class="chip mb">✍️ Promptunun reçetesi</div>
+            <table class="table" id="receteTablo"></table>
+
+            <label class="label mt" for="taslak">Promptunu buraya yaz (taslak)</label>
+            <textarea id="taslak" class="field" rows="4"
+              placeholder="Konu + zaman/ışık + ayrıntı + stil + kısıt…"></textarea>
+            <div class="av-olcum mt">
+              <span>token</span><b id="taslakTok">0</b>
+              <span>reçeteden işaretlenen</span><b id="taslakRecete">0 / 5</b>
+            </div>
+            <p class="src mt mb-0">
+              Bu kutu bir taslak defteridir; hiçbir yere kaydedilmez.
+              Hazır olunca kopyalayıp seçtiğin araca yapıştır.
+            </p>
+          </div>
+
+          <!-- ARAÇLAR -->
+          <div class="card card-top">
+            <div class="chip mb">🧩 Bir araç seç ve aç</div>
+            <p class="text-soft m-0 mb">
+              Aşağıdakilerin hepsi tarayıcıdan çalışır.
+              <span class="tag tag-free">ücretsiz</span> etiketlilerde üyeliksiz ya da ücretsiz kotayla
+              deneyebilirsin. Yanındaki sayı, <b>bir görselin</b> tahmini enerjisidir.
+            </p>
+            <div id="uretimAraclari" class="stack gap-sm"></div>
+            <p class="src mt mb-0">
+              Hangi aracı seçtiğini <b>not et</b> — Ölç fazında onu seçeceksin.
+            </p>
+          </div>
+        </div>
+
+        <div class="card reveal mb-lg">
+          <p class="m-0" id="uretimUyari"></p>
+        </div>
+
+        <div class="reveal center">
+          <a class="btn btn-primary" href="hesaplayici.html">Ürettim → Şimdi ölçelim</a>
+          <a class="btn btn-ghost" href="kaynaklar.html">Kaynaklar →</a>
         </div>
       </div>
     </section>
 
   </div></div>
 
+  <script src="assets/js/core/tokenize.js"></script>
+  <script src="assets/js/config/units.config.js"></script>
+  <script src="assets/js/config/imagetools.config.js"></script>
+  <script src="assets/js/config/yesil-prompt.config.js"></script>
   <script src="assets/js/config/site.config.js"></script>
+  <script src="assets/js/core/units.js"></script>
+  <script type="module" src="assets/js/core/tokenizer.module.js"></script>
   <script src="assets/js/pages/prompt-muhendisligi.js"></script>
   <script src="assets/js/core/footer.js"></script>
   <script src="assets/js/core/fullpage.js"></script>
+  <script src="assets/js/core/faz.js"></script>
   <script src="assets/js/core/nav.js"></script>
-  <script src="assets/js/core/print.js"></script>
 </body>
 </html>
