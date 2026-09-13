@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4 · Yeşil Prompt · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Yeşil Prompt Kuralları ve sergi için tek bir görselin verimli biçimde üretilmesi." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap"></div></nav>
+
+  <script type="application/json" id="egitmenNotu">
+  {
+    "sure": 16,
+    "soyle": "Kuralları hızlı geç — hepsi zaten Faz 3'te tek tek ölçüldü. Asıl zaman ikinci slaytta: takımlar promptunu yazsın, TEK araç seçsin, TEK görsel üretsin. Üretim kuyruğu birkaç dakika sürebilir; erken başlat.",
+    "sorular": [
+      "Promptunda reçetenin kaç parçası var?",
+      "Kaç denemede istediğini aldın?"
+    ]
+  }
+  </script>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- ==================================================================
+         1 · PROMPT MÜHENDİSLİĞİ NEDİR?
+         ------------------------------------------------------------------
+         Kaynak: Google Cloud — "What is prompt engineering?"
+         Tekniklerin tanımları o sayfadan alınıp Türkçeleştirildi.
+         ⚠️ Bu slayt YEŞİL prompt anlatmaz; önce promptun kendisini
+            öğretir. Yeşil kısmı bir sonraki slaytlarda gelir.
+         ================================================================== -->
+    <section class="fp-section tone-hero" id="prompt-nedir" data-title="Prompt mühendisliği">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🎓 Önce promptu öğrenelim</span>
+          <h2 class="slide-title reveal">Prompt mühendisliği nedir?</h2>
+          <p class="slide-lead reveal lead-c">
+            Yapay zekâdan istediğini alabilmek için promptu <strong>tasarlamak</strong>.
+            Aynı soruyu farklı yazmak, farklı cevap getirir.
+          </p>
+        </div>
+
+        <h3 class="center reveal">Bir promptun parçaları</h3>
+        <div class="grid cols-5 reveal mb-lg">
+          <div class="card card-top">
+            <div class="big-emoji">🎯</div><h3 class="m-0">Görev</h3>
+            <p class="text-soft m-0">Ne yapmasını istiyorsun? Tek cümlede, açıkça.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🗺️</div><h3 class="m-0">Bağlam</h3>
+            <p class="text-soft m-0">Kim için, nerede, ne amaçla? Modelin bilmesi gereken arka plan.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🎭</div><h3 class="m-0">Rol</h3>
+            <p class="text-soft m-0">“Bir fen öğretmeni gibi anlat” — model hangi gözle baksın?</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🧾</div><h3 class="m-0">Örnek</h3>
+            <p class="text-soft m-0">İstediğin çıktıdan bir-iki tane göster; model kalıbı yakalar.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">📐</div><h3 class="m-0">Biçim</h3>
+            <p class="text-soft m-0">Kaç madde, ne uzunlukta, tablo mu düz metin mi?</p>
+          </div>
+        </div>
+
+        <h3 class="center reveal">Dört temel teknik</h3>
+        <div class="card reveal tool-scroll">
+          <table class="table">
+            <thead><tr><th>Teknik</th><th>Ne demek?</th><th>Örnek prompt</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><b>Sıfır örnekli</b><div class="src">zero-shot</div></td>
+                <td class="text-soft">Modele hiç örnek vermeden doğrudan görevi ya da soruyu verirsin.</td>
+                <td><div class="prompt-box">Yapay zekânın su tüketimini üç maddede anlat.</div></td>
+              </tr>
+              <tr>
+                <td><b>Az örnekli</b><div class="src">one-shot / few-shot</div></td>
+                <td class="text-soft">Asıl soruyu sormadan önce bir-iki <b>girdi–çıktı örneği</b> verirsin.
+                    Çıktının biçimini, üslubunu ve kapsamını böyle ayarlarsın.</td>
+                <td><div class="prompt-box">Kedi → memeli, 4 bacaklı
+Kartal → kuş, 2 kanatlı
+Balina →</div></td>
+              </tr>
+              <tr>
+                <td><b>Düşünce zinciri</b><div class="src">chain-of-thought</div></td>
+                <td class="text-soft">Modelden karmaşık bir işi <b>ara adımlara bölerek</b> çözmesini istersin;
+                    sonuç daha derli toplu olur.</td>
+                <td><div class="prompt-box">Bir sınıfta 24 öğrenci var, üçte biri servise biniyor.
+Önce servise binenleri bul, sonra kalanları yaz.</div></td>
+              </tr>
+              <tr>
+                <td><b>Sıfır örnekli düşünce zinciri</b><div class="src">zero-shot CoT</div></td>
+                <td class="text-soft">Örnek vermeden, sadece <b>“adım adım düşün”</b> diyerek modelden
+                    akıl yürütmesini yazmasını istersin. En kolay uygulanan yöntem.</td>
+                <td><div class="prompt-box">… Adım adım düşün.</div></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="src kaynak-satir">
+            Google Cloud. (2026). <em>What is prompt engineering?</em>
+            <a href="https://cloud.google.com/discover/what-is-prompt-engineering" target="_blank" rel="noopener">cloud.google.com/discover/what-is-prompt-engineering</a>
+          </p>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Sırada: görsel promptu
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         2 · GÖRSEL PROMPTU NASIL YAZILIR?
+         ------------------------------------------------------------------
+         Kaynak: Microsoft Learn — "Image prompt engineering techniques".
+         Altı temel ilke ve her birinin ÖNCE/SONRA prompt örneği o sayfadan
+         alınıp Türkçeleştirildi. Örnek promptlar birebir çevrilmiştir.
+         ================================================================== -->
+    <section class="fp-section tone-a" id="gorsel-prompt" data-title="Görsel promptu">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🖼️ Altı temel</span>
+          <h2 class="slide-title reveal">Görsel promptu nasıl yazılır?</h2>
+          <p class="slide-lead reveal lead-c">
+            Aynı resim, aynı model — tek fark promptun. Solda alışılmış hâli,
+            sağda düzeltilmiş hâli.
+          </p>
+        </div>
+
+        <div class="card reveal tool-scroll">
+          <table class="table">
+            <thead><tr><th>İlke</th><th>Ne yapar?</th><th>❌ Zayıf prompt</th><th>✅ Güçlü prompt</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><b>Bağlamı belirt</b></td>
+                <td class="text-soft">Sahneye bağlam eklemek, modelin doğru çıktıyı anlamasını sağlar;
+                    ilgisiz ayrıntılardan uzaklaştırır.</td>
+                <td><div class="prompt-box prompt-bad">Bu görselde ne var?</div></td>
+                <td><div class="prompt-box prompt-good">Bir doğa yürüyüşü ürün kataloğu için görseli anlat;
+heyecanlı ve profesyonel bir dil kullan.</div></td>
+              </tr>
+              <tr>
+                <td><b>Göreve odakla</b></td>
+                <td class="text-soft">Modele belirli bir görev vermek, cevabı o bakış açısıyla keskinleştirir.</td>
+                <td><div class="prompt-box prompt-bad">Bu görselde ne var?</div></td>
+                <td><div class="prompt-box prompt-good">Bu araç hasarını bir sigorta raporu için incele;
+hasarı tespit etmeye ve ayrıntılandırmaya odaklan.</div></td>
+              </tr>
+              <tr>
+                <td><b>Reddederse yeniden sor</b></td>
+                <td class="text-soft">Model “yapamam” diyorsa promptu inceltmek gerekir. Önce görseli
+                    ayrıntılı anlatmasını iste, sonra asıl görevi ver.</td>
+                <td><div class="prompt-box prompt-bad">Bu yemeği planla.</div></td>
+                <td><div class="prompt-box prompt-good">Hangi bilgiye ihtiyacın var?</div></td>
+              </tr>
+              <tr>
+                <td><b>Örnek ver</b></td>
+                <td class="text-soft">İstediğin cevabı temsil eden bir-iki örnek ekle.</td>
+                <td><div class="prompt-box prompt-bad">Bu köpek hangi cins, ortalama kilosu ve boyu nedir?</div></td>
+                <td><div class="prompt-box prompt-good">S: Bu köpek hangi cins, ortalama kilosu ve boyu nedir?
+C: Cins: Pomeranian; kilo: 1,5-3 kg; boy: 20-35 cm
+S: (yeni görsel) C:</div></td>
+              </tr>
+              <tr>
+                <td><b>İsteği parçala</b></td>
+                <td class="text-soft">Karmaşık isteği adım adım, yönetilebilir alt hedeflere böl.</td>
+                <td><div class="prompt-box prompt-bad">Bu görselde ne var?</div></td>
+                <td><div class="prompt-box prompt-good">Bu tarif kartına bakarak önce alınacak malzemelerin
+listesini çıkar, sonra hazırlık adımlarını yaz.</div></td>
+              </tr>
+              <tr>
+                <td><b>Biçimi söyle</b></td>
+                <td class="text-soft">Çıktının biçimini açıkça belirt: kaç cümle, hangi yapı, ne uzunlukta.</td>
+                <td><div class="prompt-box prompt-bad">Bu görseli anlat.</div></td>
+                <td><div class="prompt-box prompt-good">Yalnızca görselde görünenlere dayanarak ilanın
+en iyi üç özelliğini üç cümlede özetle.
+Son cümlede neden bugün ayırtmaları gerektiğini yaz.</div></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="src kaynak-satir">
+            Microsoft. (2026). <em>Image prompt engineering techniques</em> — Microsoft Learn.
+            <a href="https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/gpt-4-v-prompt-engineering" target="_blank" rel="noopener">learn.microsoft.com/.../gpt-4-v-prompt-engineering</a>
+          </p>
+        </div>
+
+        <div class="card card-top reveal mt">
+          <p class="m-0">
+            Altısının ortak noktası şu: <b>modele ne istediğini tam söylersen, tek seferde alırsın.</b>
+            Bir sonraki slaytta bunun neden aynı zamanda <b>yeşil</b> olduğunu göreceğiz —
+            her yeniden deneme, tam bedeli yeniden ödetir.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         3 · YEŞİL PROMPT KURALLARI
+         ------------------------------------------------------------------
+         Sekiz kart 4×2 ızgaraya tam oturur — kural sayısı çoğaltılmaz.
+         Her kart HANGİ MALİYET KALEMİNE dokunduğunu söyler (azaltır rozeti)
+         ve somut bir örnek verir.
+         ================================================================== -->
+    <section class="fp-section tone-b" id="kurallar" data-title="Yeşil Prompt Kuralları">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🌿 Atölyenin özeti</span>
+          <h2 class="slide-title reveal">Yeşil Prompt Kuralları</h2>
+          <p class="slide-lead reveal lead-c">
+            Sekiz kural. Her biri <strong>bir maliyet kalemine</strong> dokunuyor —
+            hangisine dokunduğu kartın üstünde yazıyor.
+          </p>
+        </div>
+
+        <div class="grid cols-4 reveal mb-lg">
+          <div class="card card-top kural-kart">
+            <div class="between"><span class="rule-num">1</span><span class="big-emoji">🎯</span></div>
+            <h3 class="mt-0">Net ol, ilk seferde doğru iste</h3>
+            <span class="tag tag-meas">azaltır: Deneme sayısı</span>
+            <p class="text-soft mt mb-0">“güzel bir resim” değil → konu + stil + ışık + kompozisyon, hepsi tek promptta.</p>
+          </div>
+          <div class="card card-top kural-kart">
+            <div class="between"><span class="rule-num">2</span><span class="big-emoji">✂️</span></div>
+            <h3 class="mt-0">Çıktının sınırını sen çiz</h3>
+            <span class="tag tag-meas">azaltır: Çıktı token’ı</span>
+            <p class="text-soft mt mb-0">“3 maddede, her madde tek cümle” de. Çıktı, girdiden kat kat pahalıdır.</p>
+          </div>
+          <div class="card card-top kural-kart">
+            <div class="between"><span class="rule-num">3</span><span class="big-emoji">💬</span></div>
+            <h3 class="mt-0">Görsel şart değilse metinle yetin</h3>
+            <span class="tag tag-meas">azaltır: Üretim türü</span>
+            <p class="text-soft mt mb-0">Metin ≈ 0,3 Wh · görsel ≈ 1,5 Wh · 5 sn video ≈ 944 Wh. Aradaki fark ~3.000 kat.</p>
+          </div>
+          <div class="card card-top kural-kart">
+            <div class="between"><span class="rule-num">4</span><span class="big-emoji">🧠</span></div>
+            <h3 class="mt-0">Basit işte düşünmeyi kıs</h3>
+            <span class="tag tag-meas">azaltır: Gizli düşünme token’ı</span>
+            <p class="text-soft mt mb-0">“2+2 kaç eder” sorusunda derin düşünme açık kalırsa enerji ~30 kat artıyor.</p>
+          </div>
+          <div class="card card-top kural-kart">
+            <div class="between"><span class="rule-num">5</span><span class="big-emoji">🧵</span></div>
+            <h3 class="mt-0">Bağlamı şişirme</h3>
+            <span class="tag tag-meas">azaltır: Girdi token’ı</span>
+            <p class="text-soft mt mb-0">Uzun sohbette her turda tüm geçmiş yeniden okunur. Yeni konuya yeni sohbet aç.</p>
+          </div>
+          <div class="card card-top kural-kart">
+            <div class="between"><span class="rule-num">6</span><span class="big-emoji">📋</span></div>
+            <h3 class="mt-0">Baştan tam tarif et</h3>
+            <span class="tag tag-meas">azaltır: Deneme × üretim</span>
+            <p class="text-soft mt mb-0">“Şunu ekle, bunu değiştir” demek her seferinde TAM yeni bir üretimdir.</p>
+          </div>
+          <div class="card card-top kural-kart">
+            <div class="between"><span class="rule-num">7</span><span class="big-emoji">🧪</span></div>
+            <h3 class="mt-0">Önce metinde prova, sonra tek görsel</h3>
+            <span class="tag tag-meas">azaltır: Üretim türü</span>
+            <p class="text-soft mt mb-0">Fikri sohbette olgunlaştır, sonra tek seferde üret. Prova metinde, gösteri görselde.</p>
+          </div>
+          <div class="card card-top kural-kart">
+            <div class="between"><span class="rule-num">8</span><span class="big-emoji">💾</span></div>
+            <h3 class="mt-0">İyi promptu sakla</h3>
+            <span class="tag tag-meas">azaltır: Deneme sayısı</span>
+            <p class="text-soft mt mb-0">Çalışan bir promptu kaydet; her seferinde sıfırdan denemeye başlama.</p>
+          </div>
+        </div>
+
+        <div class="card card-top reveal">
+          <p class="m-0">
+            Sekiz kuralın hepsi tek bir cümleye iner: <b>amaç en kısa prompt değil, en az toplam maliyet.</b>
+            <br>Toplam ≈ Girdi + Çıktı + (Deneme × üretim) + Düşünme.
+            Net ama biraz uzun bir prompt, belirsiz kısa bir prompttan <b>toplamda daha ucuzdur</b>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         4 · SERGİ İÇİN RESİM ÜRETİMİ
+         ------------------------------------------------------------------
+         Öğrenci burada gerçek bir araca gidip TEK görsel üretir.
+
+         ⚠️ ARAÇ SIRASI BİLİNÇLİDİR: önce gerçekten ücretsiz olanlar,
+            sonra en çok kullanılanlar, sonra enerjisi düşük olanlar —
+            öğrenci en erişilebilir aracı en üstte görsün.
+         ⚠️ Wh değerleri hesaplayici.html'deki listeyle AYNI tutulur;
+            iki sayfada iki farklı gerçek olmamalı.
+         rozetler: ücretsiz · ölçüm (bağımsız ölçüme dayanır) ·
+                   tahmin (ölçüm yok, benzer sınıftan ölçeklendi)
+         ================================================================== -->
+    <section class="fp-section tone-c" id="uretim" data-title="Sergi için resim üret">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🖼️ Yeşil Prompt Sergisi</span>
+          <h2 class="slide-title reveal">Şimdi <span class="text-grad">kendi resmini</span> üret</h2>
+          <p class="slide-lead reveal lead-c">
+            Hayal ettiğin resmi, az önceki kurallara uyarak ürettir.
+            Takım başına <strong>tek görsel</strong> — sonra ölçeceğiz.
+          </p>
+        </div>
+
+        <div class="grid cols-2 reveal items-start mb-lg">
+
+          <!-- PROMPT REÇETESİ + TASLAK -->
+          <div class="card card-top">
+            <div class="chip mb">✍️ Promptunun reçetesi</div>
+            <table class="table" id="receteTablo">
+              <thead><tr><th>Parça</th><th>Ne yazacaksın?</th><th>Örnek</th></tr></thead>
+              <tbody>
+                <tr><td><b>Konu</b></td><td class="src">ne / kim görünüyor?</td>
+                    <td class="text-soft">yenilenebilir enerjiyle çalışan bir şehir</td></tr>
+                <tr><td><b>Zaman &amp; ışık</b></td><td class="src">gündüz mü, gün batımı mı?</td>
+                    <td class="text-soft">gündüz, yumuşak ışık</td></tr>
+                <tr><td><b>Ayrıntı</b></td><td class="src">sahneyi ayırt eden 2-3 şey</td>
+                    <td class="text-soft">güneş panelli çatılar, yeşil teraslar</td></tr>
+                <tr><td><b>Stil</b></td><td class="src">nasıl çizilsin?</td>
+                    <td class="text-soft">izometrik illüstrasyon</td></tr>
+                <tr><td><b>Kısıt</b></td><td class="src">ne OLMASIN / biçim</td>
+                    <td class="text-soft">kare, yazısız</td></tr>
+              </tbody>
+            </table>
+
+            <label class="label mt" for="taslak">Promptunu buraya yaz (taslak)</label>
+            <textarea id="taslak" class="field" rows="4"
+              placeholder="Konu + zaman/ışık + ayrıntı + stil + kısıt…"></textarea>
+            <div class="av-olcum mt">
+              <span>token</span><b id="taslakTok">0</b>
+              <span>reçeteden işaretlenen</span><b id="taslakRecete">0 / 5</b>
+            </div>
+            <p class="src mt mb-0">
+              Bu kutu bir taslak defteridir; hiçbir yere kaydedilmez.
+              Hazır olunca kopyalayıp seçtiğin araca yapıştır.
+            </p>
+          </div>
+
+          <!-- ARAÇLAR -->
+          <div class="card card-top">
+            <div class="chip mb">🧩 Bir araç seç ve aç</div>
+            <p class="text-soft m-0 mb">
+              Aşağıdakilerin hepsi tarayıcıdan çalışır.
+              <span class="tag tag-free">ücretsiz</span> etiketlilerde üyeliksiz ya da ücretsiz kotayla
+              deneyebilirsin. Yanındaki sayı, <b>bir görselin</b> tahmini enerjisidir.
+            </p>
+
+            <div class="stack gap-sm">
+              <a class="arac-satir" href="https://firefly.adobe.com/" target="_blank" rel="noopener">
+                <span class="arac-ad">Adobe Firefly <span class="ext">↗</span><span class="src"> · Adobe</span></span>
+                <span class="arac-rozet"><span class="tag tag-free">ücretsiz</span><span class="tag tag-est">tahmin</span></span>
+                <span class="arac-wh">2,00 Wh</span>
+              </a>
+              <a class="arac-satir" href="https://gemini.google.com/" target="_blank" rel="noopener">
+                <span class="arac-ad">Gemini görsel (Nano Banana) <span class="ext">↗</span><span class="src"> · Google</span></span>
+                <span class="arac-rozet"><span class="tag tag-free">ücretsiz</span><span class="tag tag-est">tahmin</span></span>
+                <span class="arac-wh">2,20 Wh</span>
+              </a>
+              <a class="arac-satir" href="https://grok.com/" target="_blank" rel="noopener">
+                <span class="arac-ad">Grok Imagine <span class="ext">↗</span><span class="src"> · xAI</span></span>
+                <span class="arac-rozet"><span class="tag tag-free">ücretsiz</span><span class="tag tag-est">tahmin</span></span>
+                <span class="arac-wh">2,50 Wh</span>
+              </a>
+              <a class="arac-satir" href="https://www.craiyon.com/" target="_blank" rel="noopener">
+                <span class="arac-ad">Craiyon <span class="ext">↗</span><span class="src"> · Craiyon</span></span>
+                <span class="arac-rozet"><span class="tag tag-free">ücretsiz</span><span class="tag tag-est">tahmin</span></span>
+                <span class="arac-wh">0,60 Wh</span>
+              </a>
+              <a class="arac-satir" href="https://pollinations.ai/" target="_blank" rel="noopener">
+                <span class="arac-ad">Pollinations.ai <span class="ext">↗</span><span class="src"> · Pollinations</span></span>
+                <span class="arac-rozet"><span class="tag tag-free">ücretsiz</span><span class="tag tag-est">tahmin</span></span>
+                <span class="arac-wh">0,90 Wh</span>
+              </a>
+              <a class="arac-satir" href="https://www.canva.com/" target="_blank" rel="noopener">
+                <span class="arac-ad">Canva Magic Media <span class="ext">↗</span><span class="src"> · Canva</span></span>
+                <span class="arac-rozet"><span class="tag tag-free">ücretsiz</span><span class="tag tag-est">tahmin</span></span>
+                <span class="arac-wh">2,00 Wh</span>
+              </a>
+              <a class="arac-satir" href="https://ideogram.ai/" target="_blank" rel="noopener">
+                <span class="arac-ad">Ideogram <span class="ext">↗</span><span class="src"> · Ideogram AI</span></span>
+                <span class="arac-rozet"><span class="tag tag-free">ücretsiz</span><span class="tag tag-est">tahmin</span></span>
+                <span class="arac-wh">2,00 Wh</span>
+              </a>
+              <a class="arac-satir" href="https://designer.microsoft.com/image-creator" target="_blank" rel="noopener">
+                <span class="arac-ad">Microsoft Designer <span class="ext">↗</span><span class="src"> · Microsoft (DALL·E tabanlı)</span></span>
+                <span class="arac-rozet"><span class="tag tag-free">ücretsiz</span><span class="tag tag-meas">ölçüm</span></span>
+                <span class="arac-wh">2,90 Wh</span>
+              </a>
+              <a class="arac-satir" href="https://www.midjourney.com/" target="_blank" rel="noopener">
+                <span class="arac-ad">Midjourney <span class="ext">↗</span><span class="src"> · Midjourney</span></span>
+                <span class="arac-rozet"><span class="tag tag-est">tahmin</span></span>
+                <span class="arac-wh">2,60 Wh</span>
+              </a>
+              <a class="arac-satir" href="https://chatgpt.com/" target="_blank" rel="noopener">
+                <span class="arac-ad">ChatGPT görsel (GPT Image) <span class="ext">↗</span><span class="src"> · OpenAI</span></span>
+                <span class="arac-rozet"><span class="tag tag-meas">ölçüm</span></span>
+                <span class="arac-wh">2,90 Wh</span>
+              </a>
+            </div>
+
+            <p class="src mt mb-0">
+              Hangi aracı seçtiğini <b>not et</b> — Ölç fazında onu seçeceksin.
+            </p>
+          </div>
+        </div>
+
+        <div class="card reveal mb-lg">
+          <p class="m-0">
+            ⚠️ <b>Neden tek görsel?</b> Bir aracın “üret” tuşuna her basışın tam bedel öder —
+            beğenmediğin görselin enerjisi de harcanmıştır. Üstelik çoğu araç tek tıkta 4 alternatif
+            üretir; sen birini seçsen bile <b>dördünün de</b> bedeli ödenir.
+            Bu yüzden önce promptu düzelt, sonra üret.
+          </p>
+        </div>
+
+        <div class="reveal center">
+          <a class="btn btn-primary" href="hesaplayici.html">Ürettim → Şimdi ölçelim</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 5 · KAYNAKÇA -->
+    <section class="fp-section tone-a" id="kaynakca" data-title="Kaynakça">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📚 Kaynakça</span>
+          <h2 class="slide-title reveal">Kaynakça</h2>
+        </div>
+        <div class="card reveal tool-scroll">
+          <ol class="refs">
+            <li>Altman, S. (2025). <em>The gentle singularity</em> (ChatGPT sorgusu ≈ 0,34 Wh, 0,000085 galon su). <a href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">https://blog.samaltman.com/the-gentle-singularity</a></li>
+            <li>Google. (2025). <em>Measuring the environmental impact of delivering AI at Google scale</em> (Gemini medyan promptu: 0,24 Wh · 0,03 gCO₂e · 0,26 mL). <a href="https://arxiv.org/abs/2508.15734" target="_blank" rel="noopener">https://arxiv.org/abs/2508.15734</a></li>
+            <li>Google Cloud. (2026). <em>What is prompt engineering?</em> <a href="https://cloud.google.com/discover/what-is-prompt-engineering" target="_blank" rel="noopener">cloud.google.com/discover/what-is-prompt-engineering</a></li>
+            <li>Microsoft. (2026). <em>Image prompt engineering techniques</em>. Microsoft Learn. <a href="https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/gpt-4-v-prompt-engineering" target="_blank" rel="noopener">learn.microsoft.com/.../gpt-4-v-prompt-engineering</a></li>
+            <li>Hugging Face. (2025). <em>AI Energy Score v2 leaderboard</em> (düşünme açık/kapalı ölçümleri; 166 model). <a href="https://huggingface.co/spaces/AIEnergyScore/Leaderboard" target="_blank" rel="noopener">https://huggingface.co/spaces/AIEnergyScore/Leaderboard</a></li>
+            <li>Luccioni, S., Jernite, Y., &amp; Strubell, E. (2024). Power hungry processing: Watts driving the cost of AI deployment? <em>FAccT</em>. <a href="https://arxiv.org/abs/2311.16863" target="_blank" rel="noopener">https://arxiv.org/abs/2311.16863</a></li>
+            <li>Shumba, N., Tshekiso, O., Li, P., Fanti, G., &amp; Ren, S. (2025). A water efficiency dataset for African data centers. <em>COMPASS ’25</em>. <a href="https://doi.org/10.1145/3715335.3735483" target="_blank" rel="noopener">https://doi.org/10.1145/3715335.3735483</a></li>
+            <li>Wei, J., vd. (2022). Chain-of-thought prompting elicits reasoning in large language models. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">https://arxiv.org/abs/2201.11903</a></li>
+          </ol>
+        </div>
+        <p class="src reveal center mt">Tam kaynakça ve atölye materyalleri: <a href="kaynaklar.html">Kaynaklar</a>.</p>
+      </div>
+    </section>
+
+    <!-- Son slayt (künye · site haritası · telif) ortak.js ile eklenir -->
+  </div></div>
+
+  <script src="ortak.js"></script>
+  <script src="prompt-muhendisligi.js"></script>
+</body>
+</html>

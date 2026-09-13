@@ -1,0 +1,10 @@
+Model,Kurum,Ulke,Yil,Parametre_Milyar,GPU,GPU_Sayisi,Egitim_MWh,Karbon_ton,Su_m3,Karbon_Yogunlugu,Veri_Turu,Kaynak
+GPT-3,OpenAI,ABD,2020,175,V100,10000,1287,552,4749,429,resmi,Patterson 2021
+PaLM,Google,ABD,2022,540,TPUv4,6144,3436,271,12679,79,resmi,Patterson 2021
+BLOOM,BigScience,Fransa,2022,176,A100,384,433,25,1598,57,resmi,Luccioni 2022
+Llama 3.1 405B,Meta,ABD,2024,405,H100,16000,21588,8930,79660,359,resmi,Meta model karti
+DeepSeek-V3,DeepSeek,Cin,2024,671,H800,2048,976,546,3601,560,resmi,DeepSeek raporu
+Mistral Large 2,Mistral AI,Fransa,2024,123,,,,20400,281000,57,resmi,Mistral ADEME
+GPT-4,OpenAI,ABD,2023,,H100,25000,45473,14642,167796,322,tahmini,Epoch AI
+Claude 3.7 Sonnet,Anthropic,ABD,2025,,,,,,,322,veri yok,Yayimlanmadi
+Qwen3-Max,Alibaba,Cin,2025,,,,,,,560,veri yok,Yayimlanmadi

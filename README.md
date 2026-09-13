@@ -28,9 +28,10 @@ BLOK 1 (40 dk)                        BLOK 2 (40 dk)
 | **4 · Yeşil Prompt** | `prompt-muhendisligi.html` | Sekiz kuralı görür, kendi resmini bir araçta **tek seferde** ürettirir |
 | **5 · Ölç & Sergile** | `hesaplayici.html` | Tek görsel üretir, ölçer, damgalar, sergiye ekler |
 
-Akış dışı: **Meraklısına** (`modeller.html`) — 80 dakikaya sığmayan ama silinmeyen içerik ·
+Akış dışı: **Ana giriş** (`index.html`) — sitenin kapısı; ne olduğunu söyler ve akışı açar ·
+**Meraklısına** (`modeller.html`) — 80 dakikaya sığmayan ama silinmeyen içerik ·
 **Kaynaklar** (`kaynaklar.html`) — materyaller, veri kümeleri ve tam kaynakça ·
-**Sergi** (`index.html`) — menüsüz galeri salonu, akışın çıktı yüzeyi.
+**Sergi** (`sergi.html`) — galeri salonu, akışın çıktı yüzeyi. Menüden ulaşılır.
 
 ## Öğrenen merkezli yapan şey
 
@@ -111,7 +112,8 @@ Sitede **ses yoktur**.
 python -m http.server 8080      # veya:  npx serve .
 ```
 
-Ardından `http://localhost:8080`. Eğitmen modu için: `.../atolye.html?egitmen=1`
+Ardından `http://localhost:8080` — açılan sayfa **ana giriştir** (`index.html`).
+Eğitmen modu için: `.../atolye.html?egitmen=1`
 
 ## Katkı ve proje notları
 

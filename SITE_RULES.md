@@ -123,20 +123,23 @@ kolaylaştırır. Sergi ise bir slayt gösterisi değil, gezilen bir salondur.
 - ✅ **Yapılır:** Slayt animasyonları `.fp-section.active ...` seçicisiyle tetiklenir.
 - ℹ️ **Sayfa içi bağlantı:** `<a href="#slayt-id">` yazmak yeterlidir; `fullpage.js` tıklamayı
   yakalayıp o slayta geçer. Ayrıca `onclick` yazmaya gerek yoktur.
-- ⚠️ **TEK İSTİSNA — `index.html` (sergi):** Anasayfa slayt motorunu **kullanmaz**, normal
-  kaydırılır. Sergi bir galeri salonudur; eserler tek akışta gezilir. `fullpage.js` bu sayfaya
-  hiç yüklenmez. Görünümü 16. CSS bölümündedir.
+- ⚠️ **TEK İSTİSNA — `sergi.html`:** Sergi slayt motorunu **kullanmaz**, normal kaydırılır.
+  Bir galeri salonudur; eserler tek akışta gezilir. `fullpage.js` bu sayfaya hiç yüklenmez.
+  Görünümü 16. CSS bölümündedir.
+- ℹ️ **Ana giriş (`index.html`) slayt motorunu KULLANIR.** Bir faz değildir ama atölyeyle aynı
+  yüzeydir: iki slayt (giriş + akış) + `footer.js`'in eklediği künye slaytı.
 
 ---
 
 ## 2) SAYFALAR (faz rayı sırası)
 
-Site bir ansiklopedi değil, **80 dakikalık bir akıştır**. Sergi dışındaki her sayfa bu akışın
-bir **fazıdır** ve süresi bellidir. Anasayfa doğrudan sergidir.
+Site bir ansiklopedi değil, **80 dakikalık bir akıştır**. Numaralı her sayfa bu akışın
+bir **fazıdır** ve süresi bellidir. Anasayfa (`index.html`) bir faz değil, **ana giriştir**:
+atölyenin ne olduğunu söyler ve akışın kapısını açar. Sergi ise menünün bir sayfasıdır.
 
 | # | Dosya | Faz adı | Süre | Sayfa JS | Ana config | Slayt motoru |
 |---|---|---|---|---|---|---|
-| — | `index.html` | *(menüsüz — sergi salonu)* | — | `pages/anasayfa.js` | `site.config.js` (`SERGI`, `GALLERY`) | ❌ normal kaydırma |
+| — | `index.html` | **Ana giriş** — akış dışı | — | `pages/giris.js` | `site.config.js` (`FAZLAR`) | ✅ |
 | 1 | `atolye.html` | **Giriş** (Engage) | 12 dk | `pages/faz1.js` | `tahminler.config.js`, `TARTISMALAR`, `models` | ✅ |
 | 2 | `veri-labi.html` | **Veri** (Explore · CODAP) | 22 dk | `pages/veri-labi.js` | `veri-labi.config.js` | ✅ |
 | 3 | `token-lab.html` | **Token Lab** (Explain) | 14 dk | `pages/token-lab.js` | `mekanizma.config.js`, `models` | ✅ |
@@ -144,6 +147,7 @@ bir **fazıdır** ve süresi bellidir. Anasayfa doğrudan sergidir.
 | 5 | `hesaplayici.html` | **Ölç & Sergile** (Evaluate) | 10 dk | `pages/hesaplayici.js` | `imagetools`, `units` | ✅ |
 | — | `modeller.html` | **Meraklısına** — akış dışı | — | `pages/modeller.js` | `timeline`, `training`, `families`, `valuations` | ✅ |
 | — | `kaynaklar.html` | **Kaynaklar** — akış dışı | — | `pages/kaynaklar.js` | `site.config.js` (`MATERIALS`) | ✅ |
+| — | `sergi.html` | **Sergi** — akış dışı | — | `pages/sergi.js` | `site.config.js` (`SERGI`, `GALLERY`) | ❌ normal kaydırma |
 
 > ⏱️ **Süre toplamı 80 dakikadır** ve `site.config.js` → `FAZLAR` içinde tutulur:
 > 12 + 22 + 14 + 16 + 10 = 74 dk içerik + geçişler ve esneme payı.
@@ -235,7 +239,8 @@ assets/
 │   │   ├── tahmin.js            # tahmin kartı (soru → Cevabı Gör → gerçek + hesap)
 │   │   └── faz.js               # faz rayı + eğitmen modu (?egitmen=1)
 │   └── pages/               # her sayfanın kendi render mantığı
-│       ├── anasayfa.js          # sergi ızgarası + lightbox
+│       ├── giris.js             # ana giriş: atölye akışı kartları (FAZLAR'dan)
+│       ├── sergi.js             # sergi ızgarası + lightbox
 │       ├── faz1.js              # tartışma kartları + günlük ayak izi ölçer
 │       ├── veri-labi.js         # CODAP görev kartları
 │       └── kaynaklar.js         # materyal havuzu
@@ -300,15 +305,23 @@ Sayfanın başına bir **arşiv girişi** slaytı eklendi; ne olduğunu tek cüm
 
 ---
 
-## 4b) index.html — RESİM GALERİSİ
+## 4b) sergi.html — RESİM GALERİSİ
 
-Anasayfa, atölyeyle **aynı beyaz-nane tabanı** kullanır (`--mint-50`); yazı tipleri ve yeşil
-palet de aynıdır. Ayrıldığı tek yer: **üst menü ve açıklama metni yoktur.**
+> ℹ️ **Sergi eskiden anasayfaydı; artık menünün bir sayfasıdır** (`sergi.html`) ve öyle kalır.
+> Anasayfa artık **ana giriştir** (bkz. 4k). Sergiye üst menüden, footer site haritasından ve
+> Faz 5'in "Sergiye git" düğmesinden ulaşılır.
 
-- ✅ Sayfanın en üstünde tek bir başlık: **"Yeşil Prompt Resim Galerisi"**. Hemen altında eserler.
-- ❌ **Navbar YOKTUR.** Marka, menü, tanıtım metni, künye şeridi, alt bilgi — hiçbiri yok.
-- ✅ Gezinme yalnızca **sağ alttaki yuvarlak "Atölyeye gir" düğmesiyle** yapılır (`.fab-dock`).
-  Site menüsüne atölye sayfalarından erişilir.
+Sergi, atölyeyle **aynı beyaz-nane tabanı** kullanır (`--mint-50`); yazı tipleri, yeşil palet
+ve **üst menü** de aynıdır. Ayrıldığı tek yer: **açıklama/tanıtım metni yoktur.**
+
+- ✅ Sayfanın en üstünde site menüsü, altında tek bir başlık: **"Yeşil Prompt Resim Galerisi"**.
+  Hemen altında eserler.
+- ✅ **Üst menü VARDIR** (`<nav class="nav faz-nav">` — `core/faz.js` doldurur). Sergi bir menü
+  sayfası olduğu için gezinme her sayfadaki gibi menüden yapılır.
+- ✅ Sağ alttaki yuvarlak **"Atölyeye gir"** düğmesi (`.fab-dock`) kalır — menüye ek, hızlı bir
+  kısayoldur; menünün yerine geçmez.
+- ❌ **Footer YOKTUR.** Sayfada `.fp-track` olmadığı için `footer.js` hiçbir şey eklemez
+  (bkz. 4j); site haritası menüden okunur.
 
 **Eser dizilimi:** sabit **3'lü ızgara** (`.gal-grid`). Dar ekranda 2'ye, telefonda 1'e iner.
 Her eser **kare olarak kırpılır** (`object-fit: cover`) — satırlar hizalı ve düzenli kalır.
@@ -341,7 +354,7 @@ sonra **maliyeti** okunur. Emoji etiketin yerini tutar; metin karşılığı `ti
 - ✅ **Yapılır:** Galeri mevcut palet ve değişkenleri **yeniden kullanır** (`--green-*`,
   `--mint-50`, `--font-head`, `--radius-sm`). 16. bölümde yalnızca galeriye özel birkaç
   ölçü tanımlanır; 1. bölümdeki hiçbir değişken ezilmez.
-- ❌ **Yapılmaz:** Anasayfaya `.fp-section` eklenmez; sayfa normal kaydırılır (bkz. 1.5).
+- ❌ **Yapılmaz:** Sergiye `.fp-section` eklenmez; sayfa normal kaydırılır (bkz. 1.5).
 - ❌ **Yapılmaz:** Galeriye açıklayıcı metin, tanıtım bloğu ya da menü konmaz. Anlatılacak her
   şey atölye sayfalarına aittir; buranın işi eserleri ve künyelerini göstermektir.
 
@@ -378,6 +391,7 @@ Hepsi `style.css` → 16. bölümün başındaki değişkenlerdedir:
 - **Yükselti gölgesi:** `--gal-lift` (duruyorken) ve `--gal-lift-hi` (üzerine gelince).
 - **Galeri zemini:** `--gal-bg`.
 - **Atölye düğmesinin yazısı/hedefi:** `site.config.js` → `SERGI`.
+- **Menüdeki adı/sırası:** `site.config.js` → `FAZ_EK` (üst menü) ve `FOOTER.sitemap`.
 
 ---
 
@@ -693,9 +707,42 @@ Materyal havuzu (`MATERIALS`) da atölye girişinden buraya taşındı.
 
 ---
 
+## 4k) index.html — ANA GİRİŞ (akış dışı)
+
+Sitenin kapısı. **Eskiden burada sergi vardı**; sergi kendi sayfasına taşındı (bkz. 4b) ve
+anasayfa boşaldı. Boşluk, akışın kendisiyle dolduruldu: ziyaretçi siteye girdiğinde önce
+**bunun ne olduğunu**, sonra **beş adımın ne olduğunu** görür.
+
+İki slayt (+ `footer.js`'in eklediği künye slaytı):
+
+1. **Yeşil Prompt** (`#giris`) — *statik*. Atölyenin ne olduğunu ve amacını söyleyen iki
+   paragraf, ardından iki düğme: **Atölyeye başla →** (`atolye.html`) ·
+   **Sergiyi gez** (`sergi.html`).
+2. **Atölye akışı** (`#akis`) → `FAZLAR` — beş faz, tek sütun, numaralı kartlar.
+   Her kart `ad` + `ozet` gösterir ve o fazın sayfasına gider.
+
+- ✅ **Yapılır:** Kartların içeriği `site.config.js` → `FAZLAR` içinden okunur. Ray, footer site
+  haritası ve bu liste **tek kaynaktan** beslenir; ikinci bir faz listesi yazılmaz.
+- ℹ️ **Menülerdeki adı "Yeşil Prompt"tur** (`FOOTER.sitemap` ve ilk slaydın `data-title`'ı) —
+  sitenin adı budur; "Ana giriş" yalnızca bu belgedeki rol adıdır. Faz 1'in adı **"Giriş"**
+  olarak kalır (`FAZLAR[0].ad`); ikisi karıştırılmaz.
+- ✅ **Yapılır:** `ozet` alanı öğrenciye hitap eder ve **ne yapacağını** söyler
+  ("tahmin et", "kendin çiz", "ölç"). Bir sayı ya da iddia içermez — sayıların yeri fazlardır.
+- ❌ **Yapılmaz: Kartta DAKİKA YAZMAZ.** `FAZLAR[i].sure` bu sayfada bilerek okunmaz;
+  süre bütçesi yalnızca eğitmen şeridine aittir (bkz. 2b.2).
+- ❌ **Yapılmaz:** Ana giriş bir faza dönüştürülmez, faz rayına numaralı bir adım olarak
+  eklenmez. 80 dakika beş fazdır; giriş o sürenin dışındadır.
+- ❌ **Yapılmaz:** Buraya eser, galeri ızgarası ya da lightbox geri konmaz — sergi
+  `sergi.html`'dedir ve orada kalır.
+- ℹ️ **Faz listesi tek sütundur** ve bilerek öyledir: bu bir sıra, bir akıştır; ızgaraya
+  dağıtılınca sıra okunmaz olur. Görünümü **20. CSS bölümündedir**.
+
+---
+
 ## 4j) ORTAK FOOTER — `core/footer.js`
 
-Künye, site haritası ve telif; **sergi (`index.html`) hariç her sayfada** bulunur.
+Künye, site haritası ve telif; **sergi (`sergi.html`) hariç her sayfada** bulunur —
+ana giriş (`index.html`) dâhil.
 
 **Neden son slayt?** Atölye sayfalarında `.fp-root` sabit konumludur (`position: fixed`)
 ve ekranı tamamen kaplar; gövdenin sonuna konan bir `<footer>` **hiçbir zaman görünmez.**
@@ -708,7 +755,7 @@ kendiliğinden sayar, noktasını ve okunu üretir.
   Telif yılı otomatiktir (`startYear` geçmişse "2026–2027" yazar) — elle yazma.
 - ✅ **Yapılır:** Menü adı değişirse `FOOTER.sitemap` de güncellenir; site haritası
   üst menüyle aynı sırayı ve aynı adları taşır.
-- ❌ **Yapılmaz:** Sergiye footer eklenmez (bkz. 4b: anasayfada künye şeridi, alt bilgi yoktur).
+- ❌ **Yapılmaz:** Sergiye footer eklenmez (bkz. 4b: sergide künye şeridi, alt bilgi yoktur).
 - ❌ **Yapılmaz:** Künye ayrıca bir slayta kopyalanmaz — tek kaynağı footer'dır.
 
 Görünüm 18. CSS bölümündedir; koyu tonlar (`--foot-*`) lightbox'ta olduğu gibi
@@ -731,10 +778,12 @@ yalnızca `.fp-footer` içine kapalı tanımlıdır.
 **`19) Atölye fazları`** (`.faz-rail` / `.faz-step` faz rayı — **dakika rozeti yok**,
 `.egitmen-bar` eğitmen şeridi, `.tahmin-*` tahmin kartı, `.gorev-*` CODAP görev kartı, `.duello-*` prompt düellosu,
 `.oyun-*` teknik oyunu, `.avci-*` token avı, `.skor-*` skor kartı,
-`.tag-resmi/-beyan/-olculdu/-tahmini` şeffaflık rozetleri).
+`.tag-resmi/-beyan/-olculdu/-tahmini` şeffaflık rozetleri) ·
+**`20) Ana giriş`** (`.faz-liste` tek sütunlu akış listesi, `.faz-kart` / `.faz-ad-buyuk` /
+`.faz-ozet` / `.faz-ok` — **dakika yazmaz**).
 
 Dosyanın sonunda iki blok daha vardır: **hareket azaltma** (`prefers-reduced-motion`) ve
-**yazdırma** (`@media print`). Sergi anasayfası her ikisinde de ele alınmıştır — yazdırıldığında
+**yazdırma** (`@media print`). Sergi sayfası her ikisinde de ele alınmıştır — yazdırıldığında
 katalog gibi basılır.
 
 - ✅ **Yapılır:** Yeni stil eklerken önce 14/15. bölümdeki mevcut sınıflar **yeniden kullanılır**;

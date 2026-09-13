@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2 · Veri · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Yapay zekâ kullanımının büyümesi, CODAP'ta enerji-su-karbon grafikleri, şeffaflık tablosu ve eğitim ile kullanımın karşılaştırması." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap"></div></nav>
+
+  <script type="application/json" id="egitmenNotu">
+  {
+    "sure": 22,
+    "soyle": "CSV'yi indirtip CODAP'a sürüklet. Sen grafik kurma — dolaş, takılanı çöz. Her görevde önce tahmini SÖZLÜ al.",
+    "sorular": [
+      "Grafiğin neden okunmuyor?",
+      "Su ekseninde sıralama neden değişti?",
+      "En çok kullandığın modelin verisi neden yok?"
+    ]
+  }
+  </script>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- 5 · EĞİTİM vs KULLANIM -->
+    <section class="fp-section tone-hero" id="egitim-kullanim" data-title="Model Eğitimi vs. Modeli Kullanmak">
+      <div class="fp-inner">
+        <div class="section-head">
+          <h2 class="slide-title reveal">LLM Eğitimi & LLM'i Kullanmak</h2>
+
+        </div>
+
+        <div class="grid cols-2 reveal items-stretch">
+          <div class="card card-top center">
+            <div class="big-emoji">🏗️</div>
+            <div class="chip mb">EĞİTİM — Bir Kez</div>
+            <div class="skor-num">45 GWh</div>
+            <div class="skor-alt">GPT-4’ü baştan eğitmek (Epoch AI tahmini)</div>
+            <p class="text-soft mt mb-0">
+              Aylarca, on binlerce ekran kartı. Ama <b>yalnızca bir kez</b> yapılır ve model uzun süre kullanılır.
+            </p>
+          </div>
+          <div class="card card-top center">
+            <div class="big-emoji">🔁</div>
+            <div class="chip mb">KULLANIM — Günde</div>
+            <div class="skor-num">0,85 GWh</div>
+            <div class="skor-alt">ChatGPT’nin BİR GÜNLÜK kullanımı</div>
+            <p class="text-soft mt mb-0">
+              2,5 milyar prompt/gün × 0,34 Wh. Küçük bir sayı, <b>milyarlarca kez</b> tekrarlanıyor.
+            </p>
+          </div>
+        </div>
+
+        <p class="src kaynak-satir">
+          Epoch AI. (2026). <em>Notable AI models</em> [veri kümesi]. <a href="https://epoch.ai/data/notable-ai-models" target="_blank" rel="noopener">https://epoch.ai/data/notable-ai-models</a><br>
+          OpenAI. (2023–2026). <em>ChatGPT haftalık aktif kullanıcı sayısı duyuruları</em> [şirket açıklamaları]. <a href="https://openai.com/news/" target="_blank" rel="noopener">https://openai.com/news/</a><br>
+          Altman, S. (2025). <em>The gentle singularity</em> (bir sorgu ≈ 0,34 Wh). <a href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">https://blog.samaltman.com/the-gentle-singularity</a>
+        </p>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Kaydır ya da sağ-alttaki okları kullan
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         4 · VERİ OKURYAZARLIĞI — şeffaflık tablosu
+         ------------------------------------------------------------------
+         Aynı modele iki bağımsız kaynağın verdiği sayı yan yana.
+         ⚠️ Tabloda YALNIZCA elde sayı olan araçlar durur (ChatGPT, Gemini,
+            Grok, DeepSeek). Sayısı olmayanlar tablodan çıkarıldı; onların
+            hiç ölçülmemiş olduğu tablonun ALTINDAKİ derste yazar.
+         ⚠️ Bilinmeyen bir hücreyi doldurmak için makul görünen bir sayı
+            UYDURULMAZ — o satır tabloya hiç girmez.
+         Şarj birimi = eğitim enerjisinin telefon şarjı karşılığı
+                       (kWh × 1000 ÷ 12 Wh).
+         ================================================================== -->
+    <section class="fp-section tone-a" id="seffaflik" data-title="Veri okuryazarlığı">
+      <div class="fp-inner">
+        <div class="section-head">
+          <h2 class="slide-title reveal">LLM Eğitimi Enerji Verileri</h2>
+          <p class="slide-lead reveal lead-c">
+            Bazı LLM'ler verileri açıklıyor. Birçoğu ise açıklamıyor...
+          </p>
+        </div>
+
+        <div class="card reveal tool-scroll">
+          <table class="table">
+            <thead>
+              <tr><th>LLM</th><th>Resmî Veri mi?</th><th class="num">KAGGLE.COM</th>
+                  <th class="num">EPOCH.AI</th><th class="num">Kaç Telefon Şarjı Eder?</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><b>ChatGPT (GPT-4)</b></td><td><span class="tag tag-tahmini">hayır</span></td>
+                  <td class="num src">16.099.378 kWh</td><td class="num src">45.473.159 kWh</td>
+                  <td class="num text-green"><b>≈ 3,8 milyar şarj</b></td></tr>
+              <tr><td><b>Gemini (1.0 Ultra)</b></td><td><span class="tag tag-tahmini">hayır</span></td>
+                  <td class="num src">açıklanmadı</td><td class="num src">92.217.360 kWh</td>
+                  <td class="num text-green"><b>≈ 7,7 milyar şarj</b></td></tr>
+              <tr><td><b>Grok (3)</b></td><td><span class="tag tag-tahmini">hayır</span></td>
+                  <td class="num src">154.000.000 kWh</td><td class="num src">237.489.097 kWh</td>
+                  <td class="num text-green"><b>≈ 19,8 milyar şarj</b></td></tr>
+              <tr><td><b>DeepSeek (V3)</b></td><td><span class="tag tag-resmi">evet</span></td>
+                  <td class="num src">1.123.598 kWh</td><td class="num src">1.122.170 kWh</td>
+                  <td class="num text-green"><b>≈ 94 milyon şarj</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card reveal mt">
+          <p class="m-0">
+            Tabloda <b>tek bir resmi veri</b> var: DeepSeek. Üretici GPU-saatini yayımladığı için
+            biliyoruz. Yayımlamayanların ise (Gemini Pro, Claude, Qwen, Midjourney, Veo vb.) verilerini bilmiyoruz. Yani en çok kullandığımız araçlar, hakkında en az şey bildiklerimiz.
+          </p>
+          <p class="src kaynak-satir">
+          Kaggle. (2025). <em>LLM energy consumption</em>. <a href="https://www.kaggle.com/datasets?search=llm+energy+consumption" target="_blank" rel="noopener">kaggle.com/datasets?search=llm+energy+consumption</a><br>
+          Epoch AI. (2026). <em>Notable AI models</em>. <a href="https://epoch.ai/data/notable-ai-models" target="_blank" rel="noopener">https://epoch.ai/data/notable-ai-models</a><br>
+          DeepSeek-AI. (2024). <em>DeepSeek-V3 technical report</em> (2,788 M H800 GPU-saat). <a href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">https://arxiv.org/abs/2412.19437</a>
+        </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         CODAP · VERİYİ KENDİN AÇ
+         ------------------------------------------------------------------
+         ⚠️ BU SLAYT CEVAP VERMEZ. Ne görüneceği, hangi ilişkinin
+            çıkacağı YAZILMAZ — öğrenci kendi keşfeder. Kartta yalnızca
+            YAPILACAK İŞLER vardır, sonuçları değil.
+
+         CSV’ler CODAP için yeniden yazıldı: her sütun ya SAYISALır ya da
+         az sayıda tekrar eden KıSA BİR ETİKETTİR. Uzun serbest metin,
+         parantezli açıklama ve karışık birim yoktur — böylece her sütun
+         doğrudan bir eksene ya da renge sürüklenebilir.
+         ================================================================== -->
+    <section class="fp-section tone-b" id="codap" data-title="CODAP’ta veriyi aç">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🧭 Sıra sende</span>
+          <h2 class="slide-title reveal">Veriyi CODAP’ta kendin aç</h2>
+          <p class="slide-lead reveal lead-c">
+            Üç dosya. Grafiği <strong>sen kuracaksın</strong> — hangi sütunun hangi
+            eksene gideceğine de sen karar vereceksin.
+          </p>
+        </div>
+
+        <div class="card card-top reveal dar-orta">
+          <div class="chip mb">🛠️ Yapılacaklar</div>
+          <ol class="adimlar">
+            <li>Aşağıdaki üç CSV dosyasından birini bilgisayarına indir.</li>
+            <li><b>CODAP Aç</b> düğmesine bas — yeni sekmede boş bir CODAP açılır.</li>
+            <li>İndirdiğin dosyayı <b>sürükleyip CODAP ekranına bırak</b>; tablo kendiliğinden açılır.</li>
+            <li>Üstteki <b>Graph</b> düğmesine bas — boş bir grafik gelir.</li>
+            <li>Bir sütunu <b>yatay eksene</b>, başka bir sütunu <b>dikey eksene</b> sürükle.</li>
+            <li>Üçüncü bir sütunu grafiğin <b>ortasına</b> bırak — noktalar renklenir.</li>
+            <li>İki sayı sütunu seçersen <b>nokta grafiği</b>, bir etiket + bir sayı seçersen
+                <b>sütun grafiği</b> çıkar. İkisini de dene.</li>
+            <li>Bir nokta grafiği tek bir değere kilitliyorsa, o noktayı seçip
+                <b>gizlemeyi</b> dene (Hide selected) — kalanlar açılır. Sonra geri getir.</li>
+            <li>Eksenleri değiştir, başka sütunlar dene. <b>Bulduklarını not et.</b></li>
+          </ol>
+
+          <div class="cluster-c mt-lg">
+            <a class="btn btn-primary" href="https://codap.concord.org/app/?v=3"
+               target="_blank" rel="noopener">CODAP Aç ↗</a>
+            <a class="btn btn-ghost btn-sm" href="../veri/yapay_zeka_uretimi.csv" download>⬇️ yapay_zeka_uretimi.csv</a>
+            <a class="btn btn-ghost btn-sm" href="../veri/llm_egitimi.csv" download>⬇️ llm_egitimi.csv</a>
+            <a class="btn btn-ghost btn-sm" href="../veri/ulke_elektrik_uretimi.csv" download>⬇️ ulke_elektrik_uretimi.csv</a>
+          </div>
+
+          <p class="src mt mb-0">CODAP açılmıyorsa eğitmene haber ver — çevrimdışı yedek hazır.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 7 · KAYNAKÇA -->
+    <section class="fp-section tone-c" id="kaynakca" data-title="Kaynakça">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📚 Kaynakça</span>
+          <h2 class="slide-title reveal">Kaynakça</h2>
+        </div>
+        <div class="card reveal tool-scroll">
+          <ol class="refs">
+            <li>Altman, S. (2025). <em>The gentle singularity</em>. <a href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">https://blog.samaltman.com/the-gentle-singularity</a></li>
+            <li>DeepSeek-AI. (2024). <em>DeepSeek-V3 technical report</em> (2,788 M H800 GPU-saat). <a href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">https://arxiv.org/abs/2412.19437</a></li>
+            <li>Ember. (2026). <em>Global Electricity Review 2026</em> — ülke bazında kaynak kırılımlı elektrik üretimi (2025) [veri]. <a href="https://ember-energy.org/latest-insights/global-electricity-review-2026/" target="_blank" rel="noopener">ember-energy.org/latest-insights/global-electricity-review-2026/</a></li>
+            <li>Epoch AI. (2026). <em>Notable AI models</em> [veri kümesi]. <a href="https://epoch.ai/data/notable-ai-models" target="_blank" rel="noopener">https://epoch.ai/data/notable-ai-models</a></li>
+            <li>Google. (2025). <em>Measuring the environmental impact of delivering AI at Google scale</em>. <a href="https://arxiv.org/abs/2508.15734" target="_blank" rel="noopener">https://arxiv.org/abs/2508.15734</a></li>
+            <li>Kaggle. (2025). <em>LLM energy consumption</em> [veri kümesi araması]. <a href="https://www.kaggle.com/datasets?search=llm+energy+consumption" target="_blank" rel="noopener">kaggle.com/datasets?search=llm+energy+consumption</a></li>
+            <li>Luccioni, S., Viguier, S., &amp; Ligozat, A.-L. (2022). Estimating the carbon footprint of BLOOM. <em>JMLR</em>. <a href="https://www.jmlr.org/papers/volume24/23-0069/23-0069.pdf" target="_blank" rel="noopener">https://www.jmlr.org/papers/volume24/23-0069/23-0069.pdf</a></li>
+            <li>Meta. (2024). <em>Llama 3.1 model card</em> (39,3 M GPU-saat; 11.390 tCO₂e). <a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md" target="_blank" rel="noopener">https://github.com/meta-llama/llama-models</a></li>
+            <li>Mistral AI, Carbone 4, &amp; ADEME. (2025). <em>Mistral Large 2 life-cycle analysis</em>. <a href="https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai" target="_blank" rel="noopener">https://mistral.ai/</a></li>
+            <li>OpenAI. (2023–2026). <em>ChatGPT haftalık aktif kullanıcı sayısı duyuruları</em> [şirket açıklamaları]. <a href="https://openai.com/news/" target="_blank" rel="noopener">https://openai.com/news/</a></li>
+            <li>Patterson, D., vd. (2021). Carbon emissions and large neural network training. <a href="https://arxiv.org/abs/2104.10350" target="_blank" rel="noopener">https://arxiv.org/abs/2104.10350</a></li>
+            <li>Stanford CRFM. (2025). <em>The 2025 Foundation Model Transparency Index</em>. <a href="https://crfm.stanford.edu/fmti/" target="_blank" rel="noopener">https://crfm.stanford.edu/fmti/</a></li>
+          </ol>
+        </div>
+        <p class="src reveal center mt">Tam kaynakça ve atölye materyalleri: <a href="kaynaklar.html">Kaynaklar</a>.</p>
+      </div>
+    </section>
+
+    <!-- Son slayt (künye · site haritası · telif) ortak.js ile eklenir -->
+  </div></div>
+
+  <script src="ortak.js"></script>
+</body>
+</html>

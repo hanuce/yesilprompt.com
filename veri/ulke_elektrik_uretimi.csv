@@ -1,0 +1,108 @@
+Ulke,Kita,Kaynak,Tur,Pay_Yuzde
+Turkiye,Avrupa/Asya,Komur,Fosil,34.3
+Turkiye,Avrupa/Asya,Dogalgaz,Fosil,22.1
+Turkiye,Avrupa/Asya,Petrol ve diger fosil,Fosil,0.3
+Turkiye,Avrupa/Asya,Hidroelektrik,Yenilenebilir,16.2
+Turkiye,Avrupa/Asya,Ruzgar,Yenilenebilir,11.1
+Turkiye,Avrupa/Asya,Gunes,Yenilenebilir,10.5
+Turkiye,Avrupa/Asya,Biyoenerji ve diger,Yenilenebilir,5.4
+Almanya,Avrupa,Komur,Fosil,20.6
+Almanya,Avrupa,Dogalgaz,Fosil,16.5
+Almanya,Avrupa,Petrol ve diger fosil,Fosil,3.8
+Almanya,Avrupa,Hidroelektrik,Yenilenebilir,3.9
+Almanya,Avrupa,Ruzgar,Yenilenebilir,27.2
+Almanya,Avrupa,Gunes,Yenilenebilir,17.9
+Almanya,Avrupa,Biyoenerji ve diger,Yenilenebilir,10.1
+Fransa,Avrupa,Komur,Fosil,0.3
+Fransa,Avrupa,Dogalgaz,Fosil,3.0
+Fransa,Avrupa,Petrol ve diger fosil,Fosil,1.8
+Fransa,Avrupa,Nukleer,Nukleer,68.8
+Fransa,Avrupa,Hidroelektrik,Yenilenebilir,10.4
+Fransa,Avrupa,Ruzgar,Yenilenebilir,8.2
+Fransa,Avrupa,Gunes,Yenilenebilir,5.6
+Fransa,Avrupa,Biyoenerji ve diger,Yenilenebilir,1.9
+Ispanya,Avrupa,Komur,Fosil,0.3
+Ispanya,Avrupa,Dogalgaz,Fosil,21.6
+Ispanya,Avrupa,Petrol ve diger fosil,Fosil,3.5
+Ispanya,Avrupa,Nukleer,Nukleer,18.8
+Ispanya,Avrupa,Hidroelektrik,Yenilenebilir,11.4
+Ispanya,Avrupa,Ruzgar,Yenilenebilir,20.4
+Ispanya,Avrupa,Gunes,Yenilenebilir,21.8
+Ispanya,Avrupa,Biyoenerji ve diger,Yenilenebilir,2.2
+Polonya,Avrupa,Komur,Fosil,50.4
+Polonya,Avrupa,Dogalgaz,Fosil,14.3
+Polonya,Avrupa,Petrol ve diger fosil,Fosil,3.8
+Polonya,Avrupa,Hidroelektrik,Yenilenebilir,1.0
+Polonya,Avrupa,Ruzgar,Yenilenebilir,14.2
+Polonya,Avrupa,Gunes,Yenilenebilir,11.3
+Polonya,Avrupa,Biyoenerji ve diger,Yenilenebilir,5.0
+Norvec,Avrupa,Komur,Fosil,0.6
+Norvec,Avrupa,Dogalgaz,Fosil,0.4
+Norvec,Avrupa,Hidroelektrik,Yenilenebilir,90.0
+Norvec,Avrupa,Ruzgar,Yenilenebilir,8.4
+Norvec,Avrupa,Gunes,Yenilenebilir,0.3
+Norvec,Avrupa,Biyoenerji ve diger,Yenilenebilir,0.2
+Birlesik Krallik,Avrupa,Komur,Fosil,0.1
+Birlesik Krallik,Avrupa,Dogalgaz,Fosil,31.1
+Birlesik Krallik,Avrupa,Petrol ve diger fosil,Fosil,4.4
+Birlesik Krallik,Avrupa,Nukleer,Nukleer,12.4
+Birlesik Krallik,Avrupa,Hidroelektrik,Yenilenebilir,1.9
+Birlesik Krallik,Avrupa,Ruzgar,Yenilenebilir,29.4
+Birlesik Krallik,Avrupa,Gunes,Yenilenebilir,6.6
+Birlesik Krallik,Avrupa,Biyoenerji ve diger,Yenilenebilir,14.1
+ABD,Amerika,Komur,Fosil,16.3
+ABD,Amerika,Dogalgaz,Fosil,40.0
+ABD,Amerika,Petrol ve diger fosil,Fosil,0.7
+ABD,Amerika,Nukleer,Nukleer,17.4
+ABD,Amerika,Hidroelektrik,Yenilenebilir,5.3
+ABD,Amerika,Ruzgar,Yenilenebilir,10.3
+ABD,Amerika,Gunes,Yenilenebilir,8.6
+ABD,Amerika,Biyoenerji ve diger,Yenilenebilir,1.4
+Kanada,Amerika,Komur,Fosil,4.0
+Kanada,Amerika,Dogalgaz,Fosil,17.9
+Kanada,Amerika,Petrol ve diger fosil,Fosil,1.2
+Kanada,Amerika,Nukleer,Nukleer,13.1
+Kanada,Amerika,Hidroelektrik,Yenilenebilir,52.8
+Kanada,Amerika,Ruzgar,Yenilenebilir,7.9
+Kanada,Amerika,Gunes,Yenilenebilir,1.6
+Kanada,Amerika,Biyoenerji ve diger,Yenilenebilir,1.6
+Brezilya,Amerika,Komur,Fosil,2.3
+Brezilya,Amerika,Dogalgaz,Fosil,7.3
+Brezilya,Amerika,Petrol ve diger fosil,Fosil,1.7
+Brezilya,Amerika,Nukleer,Nukleer,2.1
+Brezilya,Amerika,Hidroelektrik,Yenilenebilir,51.8
+Brezilya,Amerika,Ruzgar,Yenilenebilir,15.7
+Brezilya,Amerika,Gunes,Yenilenebilir,11.8
+Brezilya,Amerika,Biyoenerji ve diger,Yenilenebilir,7.3
+Cin,Asya,Komur,Fosil,54.6
+Cin,Asya,Dogalgaz,Fosil,3.0
+Cin,Asya,Petrol ve diger fosil,Fosil,0.8
+Cin,Asya,Nukleer,Nukleer,4.6
+Cin,Asya,Hidroelektrik,Yenilenebilir,13.2
+Cin,Asya,Ruzgar,Yenilenebilir,10.7
+Cin,Asya,Gunes,Yenilenebilir,11.1
+Cin,Asya,Biyoenerji ve diger,Yenilenebilir,2.0
+Hindistan,Asya,Komur,Fosil,70.8
+Hindistan,Asya,Dogalgaz,Fosil,2.3
+Hindistan,Asya,Petrol ve diger fosil,Fosil,0.2
+Hindistan,Asya,Nukleer,Nukleer,2.6
+Hindistan,Asya,Hidroelektrik,Yenilenebilir,8.5
+Hindistan,Asya,Ruzgar,Yenilenebilir,5.0
+Hindistan,Asya,Gunes,Yenilenebilir,9.4
+Hindistan,Asya,Biyoenerji ve diger,Yenilenebilir,1.1
+Japonya,Asya,Komur,Fosil,32.1
+Japonya,Asya,Dogalgaz,Fosil,32.8
+Japonya,Asya,Petrol ve diger fosil,Fosil,2.5
+Japonya,Asya,Nukleer,Nukleer,9.1
+Japonya,Asya,Hidroelektrik,Yenilenebilir,7.2
+Japonya,Asya,Ruzgar,Yenilenebilir,1.2
+Japonya,Asya,Gunes,Yenilenebilir,9.8
+Japonya,Asya,Biyoenerji ve diger,Yenilenebilir,5.3
+Rusya,Avrupa/Asya,Komur,Fosil,18.4
+Rusya,Avrupa/Asya,Dogalgaz,Fosil,44.7
+Rusya,Avrupa/Asya,Petrol ve diger fosil,Fosil,1.2
+Rusya,Avrupa/Asya,Nukleer,Nukleer,18.3
+Rusya,Avrupa/Asya,Hidroelektrik,Yenilenebilir,16.7
+Rusya,Avrupa/Asya,Ruzgar,Yenilenebilir,0.3
+Rusya,Avrupa/Asya,Gunes,Yenilenebilir,0.2
+Rusya,Avrupa/Asya,Biyoenerji ve diger,Yenilenebilir,0.1

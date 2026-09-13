@@ -1,9 +1,19 @@
 /* =================================================================
    YEŞİL PROMPT ATÖLYESİ — TEK STİL DOSYASI (style.css)
    =================================================================
-   KURAL: Sitedeki TÜM görünüm yalnızca bu dosyadan gelir.
-   HTML etiketlerinde ve JS içinde HİÇBİR satır-içi (inline) stil yoktur.
-   Bir şeyi değiştirmek istersen aşağıdaki BÖLÜM başlıklarından bul.
+   SİTENİN YAPISI (hepsi kök dizinde, alt klasör yok):
+
+     *.html      → sayfanın METNİ, VERİSİ ve YAPISI. İçeriği burada düzenle.
+     ortak.js    → her sayfada yüklenen paylaşılan mekanikler
+                   (menü, footer, slayt motoru, birim çevirici, token sayacı)
+     <sayfa>.js  → yalnızca o sayfanın mekaniği (hesap, grafik, animasyon)
+     style.css   → TÜM görünüm — bu dosya
+     veri/       → CSV veri kümeleri     resim/ → galeri görselleri
+
+   KURAL: Sitedeki tüm görünüm yalnızca bu dosyadan gelir.
+   HTML etiketlerinde ve JS içinde satır-içi (inline) stil YOKTUR.
+   Tek istisna: çalışma zamanında hesaplanan ölçüler (bar genişliği,
+   slayt yüksekliği, SVG koordinatları) — onlar inline sayılmaz.
 
    İÇİNDEKİLER
      1)  DEĞİŞKENLER (renk, yazı tipi, ölçüler)  ← en sık burayı değiştirirsin
@@ -18,15 +28,16 @@
      10) DURUM ROZETİ / SEGMENT / TOKEN ÇİPLERİ
      11) TAM EKRAN SLAYT MOTORU
      12) SLAYT KONTROLÜ (dikey, sağ-alt) + nokta göstergesi
-     13) YARDIMCI DÜZEN SINIFLARI (eski inline stillerin yerine)
+     13) YARDIMCI DÜZEN SINIFLARI
      14) BİLEŞENLER (soru kartları, zaman tüneli, difüzyon, shot kartları…)
-     15) EK BİLEŞENLER (kod kutusu, epoch animasyonu, YZ çağı grafiği)
+     15) EK BİLEŞENLER (kod kutusu, epoch animasyonu, çizgi grafiği)
      16) SERGİ SALONU (galeri ızgarası, künye şeridi, lightbox, yüzen düğme)
      17) HESAPLAYICI (dayanak rozetleri, damga önizlemesi, araç tablosu)
      18) FOOTER (künye + site haritası + telif — sergi hariç her sayfada)
-     19) ATÖLYE FAZLARI (faz rayı, eğitmen şeridi, tahmin/görev kartı,
+     19) ATÖLYE FAZLARI (menü rayı, eğitmen şeridi, tahmin/görev kartı,
          iki sütunlu karşılaştırma, kural kartları, araç bağlantıları)
-   ================================================================= */
+   =================================================================
+*/
 
 
 /* ===== 1) DEĞİŞKENLER ============================================ */
@@ -183,6 +194,17 @@ a.chip:hover { border-color: var(--green-400); }
 .src { font-size: .8rem; color: var(--ink-mute); }
 .src a { color: var(--water); }
 
+/* Tek satırlık terim tanımı (Giriş · prompt · token).
+   Kart değil, sade bir satır: terim kalın, tanım normal. */
+.tanim { margin: .3rem 0 0; font-size: .95rem; line-height: 1.6;
+  color: var(--ink-soft); text-align: center; }
+.tanim b { color: var(--green-800); }
+
+/* Grafiğin ya da tablonun HEMEN ALTINDAKİ APA kaynağı.
+   Şekilden ayrılmaz: sayının nereden geldiği, sayının yanında durur. */
+.kaynak-satir { margin: .85rem 0 0; padding-top: .6rem; line-height: 1.65;
+  border-top: 1px dashed var(--line); }
+
 
 /* ===== 7) METRİK KUTUSU ========================================= */
 .metric { background: var(--mint-50); border: 1px solid var(--line); border-radius: var(--radius-sm);
@@ -313,6 +335,7 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 .cluster     { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
 .cluster-c   { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
 .between      { display: flex; justify-content: space-between; align-items: center; }
+.items-start { align-items: start; }
 .items-center { align-items: center; }
 .items-stretch{ align-items: stretch; }
 .fill        { flex: 1; }
@@ -331,6 +354,9 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
 .col-card { display: flex; flex-direction: column; }     /* sonuç kartı dikey yerleşim */
 .section-head { text-align: center; margin-bottom: 1.4rem; }   /* başlık + eyebrow ortalı blok */
 .lead-c { margin-left: auto; margin-right: auto; }       /* ortalı slide-lead */
+
+/* Tek başına duran kartı slaytın ortasında, dar tut (ör. CODAP yönergesi) */
+.dar-orta { max-width: 780px; margin-left: auto; margin-right: auto; }
 
 .list-soft { color: var(--ink-soft); }
 .list-soft li { margin: .25rem 0; }
@@ -373,8 +399,6 @@ input[type=range] { accent-color: var(--green-600); width: 100%; }
    özel .family-* kuralı gerekmez. */
 
 /* --- 14.5 DİFÜZYON SİMÜLASYONU --- */
-.diff-canvas { width: 260px; max-width: 100%; aspect-ratio: 1 / 1; image-rendering: pixelated;
-  border-radius: 14px; border: 1px solid var(--line); }
 .big-num { font-family: var(--font-head); font-weight: 800; font-size: 2.4rem; color: var(--green-700); }
 .huge-num { font-family: var(--font-head); font-weight: 800; font-size: 1.9rem; color: var(--green-800); line-height: 1.15; margin: .2rem 0; }
 
@@ -471,10 +495,11 @@ circle.era-trrez { fill: var(--amber); }
 .era-key.era-trgdp { color: var(--red); }
 .era-key.era-trrez { color: var(--amber); }
 
-/* ===== 16) RESİM GALERİSİ (index.html) ==========================
-   Anasayfa, atölyeyle AYNI beyaz-nane tabanı kullanır; ayrıldığı yer
-   şu: üst menü ve açıklama metni yoktur. Başlıktan sonra doğrudan
-   eserler gelir, gezinme sağ alttaki yuvarlak düğmelerle olur.
+/* ===== 16) RESİM GALERİSİ (sergi.html) ==========================
+   Sergi, atölyeyle AYNI beyaz-nane tabanını ve AYNI üst menüyü
+   kullanır — artık menünün bir sayfasıdır. Ayrıldığı yer şu:
+   açıklama/tanıtım metni yoktur; menünün hemen altında başlık,
+   onun da altında doğrudan eserler gelir.
 
    Eserler sabit 3'lü ızgarada, yeşil çerçeveli ve gölgeli durur —
    zeminden yükselmiş, çerçevelenmiş tablolar gibi.
@@ -495,7 +520,8 @@ circle.era-trrez { fill: var(--amber); }
 .gal-page { background: var(--gal-bg); min-height: 100%; }
 .gal-page.box-open { overflow: hidden; }
 
-.gal-head { text-align: center; padding: 3.4rem 22px 2.2rem; }
+/* Üstteki .nav sabit konumludur; başlık onun altından başlar. */
+.gal-head { text-align: center; padding: calc(var(--nav-h) + 2.2rem) 22px 2.2rem; }
 .gal-title { font-family: var(--font-head); font-weight: 800; letter-spacing: -0.02em;
   font-size: clamp(1.9rem, 4.6vw, 3rem); line-height: 1.12; margin: 0; color: var(--ink); }
 
@@ -550,9 +576,6 @@ circle.era-trrez { fill: var(--amber); }
 .gal-wh { flex: none; font-size: .72rem; font-weight: 700; letter-spacing: .02em;
   color: var(--green-700); white-space: nowrap; }
 
-.gal-empty { grid-column: 1 / -1; color: var(--ink-mute); text-align: center;
-  border: 2px dashed var(--line); border-radius: var(--radius); padding: 3.5rem 2rem; }
-.gal-empty code { font-family: ui-monospace, 'SF Mono', monospace; font-size: .85rem; color: var(--green-700); }
 
 /* --- 16.3 LIGHTBOX — ışık esere düşer, bilgi altta kompakt durur ---
    Sayfa açık renk, lightbox koyu: esere bakarken göz dağılmasın.
@@ -678,7 +701,7 @@ circle.era-trrez { fill: var(--amber); }
 
 
 /* ===== 18) FOOTER ===============================================
-   Künye · site haritası · telif. Sergi (index.html) hariç her
+   Künye · site haritası · telif. Sergi (sergi.html) hariç her
    sayfanın SON SLAYTIDIR — bkz. core/footer.js'teki açıklama:
    .fp-root sabit konumlu olduğu için gövde sonuna konan bir
    <footer> hiçbir zaman görünmez.
@@ -740,8 +763,9 @@ circle.era-trrez { fill: var(--amber); }
    ve mevcut bileşenler (.card .chip .field .tag) yeniden kullanılır. */
 
 /* --- 19.1 FAZ RAYI (nav'ın yerine, atölye sayfalarında) ---
-   Düz bir menü 80 dakikalık yapıyı göstermez; bu ray gösterir.
-   Her adımda süre bütçesi yazar; biten fazlar yeşil dolar. */
+   Fazlar soldan sağa sırasıyla dizilir; bulunulan faz vurgulanır.
+   ❌ NUMARA DAMGASI YOKTUR — sırayı dizilişin kendisi söyler.
+   ❌ DAKİKA YAZMAZ (bkz. core/faz.js). */
 .faz-rail { list-style: none; margin: 0 0 0 auto; padding: 0; gap: 2px; }
 .faz-rail li { display: flex; align-items: center; }
 
@@ -750,33 +774,22 @@ circle.era-trrez { fill: var(--amber); }
   padding: .38rem .6rem; border-radius: 10px; white-space: nowrap; transition: .15s; }
 .faz-step:hover { color: var(--green-700); background: var(--mint-100); }
 
-.faz-num { flex: none; width: 20px; height: 20px; border-radius: 50%;
-  display: grid; place-items: center; font-size: .72rem; font-weight: 800;
-  background: var(--mint-100); color: var(--green-700);
-  border: 1px solid var(--line); }
-.faz-sure { font-size: .7rem; font-weight: 700; color: var(--ink-mute);
-  font-variant-numeric: tabular-nums; }
-
-.faz-step.done .faz-num { background: var(--green-600); color: #fff; border-color: var(--green-600); }
-.faz-step.done .faz-num::after { content: "✓"; }
-.faz-step.done .faz-num { font-size: 0; }        /* rakam yerine onay işareti */
-.faz-step.done .faz-num::after { font-size: .72rem; }
-
 .faz-step.active { color: var(--green-800); background: var(--mint-200); }
-.faz-step.active .faz-num { background: linear-gradient(135deg, var(--green-500), var(--green-700));
-  color: #fff; border-color: transparent; }
-.faz-step.active .faz-sure { color: var(--green-700); }
 
 .faz-ayrac { width: 1px; height: 22px; background: var(--line); margin: 0 .5rem; }
 .faz-ek-link { text-decoration: none; color: var(--ink-mute); font-size: .78rem; font-weight: 600;
   padding: .36rem .5rem; border-radius: 9px; white-space: nowrap; }
 .faz-ek-link:hover { color: var(--green-700); background: var(--mint-50); }
 
-@media (max-width: 1180px) { .faz-ad { display: none; } }
+/* Dar ekranda faz adı GİZLENMEZ: numara damgası kalktığı için
+   ad gizlenirse rayda okunacak hiçbir şey kalmaz. */
+@media (max-width: 1180px) {
+  .faz-step { padding: .34rem .45rem; font-size: .8rem; }
+}
 @media (max-width: 1040px) {
   .faz-rail { flex-direction: column; align-items: stretch; }
   .faz-rail li { width: 100%; }
-  .faz-ad { display: inline; }
+  .faz-step { padding: .5rem .72rem; font-size: .84rem; }
   .faz-step, .faz-ek-link { width: 100%; }
   .faz-ayrac { width: 100%; height: 1px; margin: .4rem 0; }
 }
@@ -853,8 +866,6 @@ body.eg-on .fab-dock  { bottom: 92px; }
 
 /* --- 19.5 İKİ SÜTUNLU KARŞILAŞTIRMA (Token Lab · Önce/Sonra) ---
    Solda verilen/bozuk hâl, sağda öğrencinin hâli. */
-.duello-col { display: flex; flex-direction: column; gap: .6rem; }
-.duello-col.kotu { border-top-color: var(--red); }
 
 /* --- 19.6 YEŞİL PROMPT (Faz 4) --- */
 .kural-kart { display: flex; flex-direction: column; }
@@ -896,6 +907,13 @@ body.eg-on .fab-dock  { bottom: 92px; }
 .akis-adim.akis-donus .akis-no { background: var(--amber); }
 
 /* Üç üretim türünün mini akışı */
+/* Kompakt akış: adımlar tek satır, ızgara daha sık */
+.akis-kompakt { grid-template-columns: repeat(2, 1fr); gap: .5rem; }
+.akis-kompakt .akis-adim { padding: .5rem .7rem; }
+.akis-kompakt .akis-govde { font-size: .9rem; line-height: 1.5; color: var(--ink-soft); }
+.akis-kompakt .akis-govde b { color: var(--ink); }
+@media (max-width: 760px) { .akis-kompakt { grid-template-columns: 1fr; } }
+
 .akis-mini { list-style: none; margin: .6rem 0; padding: 0; display: flex; flex-wrap: wrap;
   gap: .25rem; font-size: .76rem; color: var(--ink-soft); }
 .akis-mini li { background: var(--mint-50); border: 1px solid var(--line);
@@ -952,9 +970,11 @@ body.eg-on .fab-dock  { bottom: 92px; }
 .tag-olculdu{ color: var(--water);     background: var(--water-50);  border-color: #b6dff5; }
 .tag-tahmini{ color: var(--violet);    background: #f0e9fb;          border-color: #d5c6f5; }
 
-/* --- 19.10b BÜYÜME GRAFİĞİ (Faz 2, çift eksenli) ---
-   15.3'teki .era-* bileşenini yeniden kullanır; burada yalnızca
-   iki serinin rengi ve son-nokta etiketi tanımlıdır. */
+/* --- 19.10b BÜYÜME GRAFİKLERİ (Giriş sütunları · Faz 2 çizgileri) ---
+   15.3'teki .era-* bileşenini yeniden kullanır; burada yalnızca iki
+   serinin rengi tanımlıdır. Aynı iki renk hem sütunlarda, hem
+   çizgilerde, hem kat rozetlerinde geçer — kullanıcı hep yeşil,
+   kullanım hep turuncu. */
 .era-kullanici { stroke: var(--green-600); }
 .era-token     { stroke: var(--amber); }
 circle.era-kullanici { fill: var(--green-600); }
@@ -964,6 +984,11 @@ text.era-token     { fill: var(--amber); stroke: none; }
 .era-key.era-kullanici { color: var(--green-700); }
 .era-key.era-token     { color: var(--amber); }
 .buyume-son { font-family: var(--font-head); font-weight: 800; font-size: 13px; }
+
+/* Sütun grafiği (Giriş): çubuklar dolu boyanır, çizgi kuralı geçmesin */
+rect.era-kullanici { fill: var(--green-600); stroke: none; }
+rect.era-token     { fill: var(--amber);     stroke: none; }
+.sutun-deger { font-family: var(--font-head); font-weight: 800; font-size: 13px; }
 
 /* Kat şeridi: çift eksenin yarattığı "ikisi de aynı büyümüş" yanılsamasını
    düzelten sayısal karşılık. Grafiğin hemen altında durur. */
@@ -1048,7 +1073,7 @@ text.era-token     { fill: var(--amber); stroke: none; }
 
   /* Yazdırırken eğitmen şeridi ve etkileşim düğmeleri çıkmaz;
      kâğıtta yalnızca içerik ve açılmış cevaplar kalsın. */
-  .egitmen-bar, .tahmin-ac { display: none !important; }
+  .egitmen-bar, .ac-kapa { display: none !important; }
   .tahmin-reveal[hidden] { display: block !important; }   /* yazdırırken cevaplar açık bassın */
   .not-kutu { border: 1px solid #999; min-height: auto; }
   .gorev, .tahmin-kart { break-inside: avoid; }

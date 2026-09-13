@@ -3,64 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yeşil Prompt Resim Galerisi</title>
-  <meta name="description" content="Her eserin altında çevre maliyetinin yer aldığı, yapay zekâ ile üretilmiş kürasyonlu bir resim galerisi." />
+  <title>Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Yapay zekânın görünmeyen enerji ve su maliyetini gündelik birimlerle ölçen, beş fazlı bir atölye." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
 </head>
-<body class="gal-page">
+<body>
 
-  <!-- ===== BAŞLIK ===== -->
-  <header class="gal-head">
-    <h1 class="gal-title">Yeşil Prompt <span class="text-grad">Resim Galerisi</span></h1>
-  </header>
+  <!-- Üst menüyü ortak.js doldurur (menü satırı: ortak.js → 1. bölüm) -->
+  <nav class="nav"><div class="wrap"></div></nav>
 
-  <!-- ===== ESERLER (menü ve açıklama yok) ===== -->
-  <main id="gallery" class="gal-grid" aria-label="Yeşil Prompt Resim Galerisi"></main>
+  <div class="fp-root"><div class="fp-track">
 
-  <!-- ===== SAĞ ALT: yüzen düğme ===== -->
-  <div class="fab-dock">
+    <!-- ANA GİRİŞ — sayfanın tek içerik slaytı -->
+    <section class="fp-section tone-hero" id="giris" data-title="Yeşil Prompt">
+      <div class="fp-inner center">
+        <div class="section-head">
+          <span class="eyebrow reveal">🌿 Sürdürülebilir Yeşil Prompt Atölyesi</span>
+          <h1 class="slide-title reveal">
+            Yapay zekânın ürettiği her çıktı <span class="text-grad">enerji ve su</span> harcar
+          </h1>
+          <p class="slide-lead reveal lead-c">
+            Yapay zeka kullanmanın dünya için bir bedeli var. Bu atölyede yapay zekânın enerji ve su
+            tüketimi ile ilgili veri görselleştirmeler yapacağız. Daha az enerji ve su harcamak için bir prompt (istem) nasıl düzenlenir, yani nasıl <b>yeşil</b> prompt oluşturulur, bunu öğreneceğiz. Sonra <span class="text-grad">sürdürülebilir
+            promptlar</span> ile görseller üretip, altına tahmini tüketim etiketini yazacak ve çevrimiçi sergimizde sunacağız.
+          </p>
+          <p class="slide-lead reveal lead-c">
+            Amacımız, yapay zekâ kullandıkça artan enerji ve su tüketimini görünür kılmak ve
+            bu araçları ernerji tüketimi açısından sorumlu biçimde kullanılmasını sağlamak.
+          </p>
+        </div>
+        <div class="cluster-c reveal">
+          <a class="btn btn-primary" href="sayfa/atolye.html">Atölyeye başla →</a>
+          <a class="btn btn-ghost" href="sayfa/sergi.html">Sergiyi gez</a>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Kaydır ya da sağ-alttaki okları kullan
+      </div>
+    </section>
 
-    <a id="sergiCta" class="fab fab-primary" href="atolye.html" aria-label="Atölyeye gir">
-      <span class="fab-label">Atölyeye gir</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M14 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-        <path d="M10 16.5 14.5 12 10 7.5"/>
-        <path d="M14.5 12H3.5"/>
-      </svg>
-    </a>
+    <!-- Son slayt (künye · site haritası · telif) core/footer.js ile eklenir -->
 
-  </div>
+  </div></div>
 
-  <!-- ===== LIGHTBOX ===== -->
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Eser detayı" hidden>
-    <button id="boxClose" class="box-btn box-close" type="button" aria-label="Kapat">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-        <path d="M6 6l12 12M18 6L6 18"/>
-      </svg>
-    </button>
-    <button id="boxPrev" class="box-btn box-prev" type="button" aria-label="Önceki eser">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M14.5 5 7.5 12l7 7"/>
-      </svg>
-    </button>
-    <button id="boxNext" class="box-btn box-next" type="button" aria-label="Sonraki eser">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M9.5 5l7 7-7 7"/>
-      </svg>
-    </button>
-
-    <div class="box-stage" id="boxMedia"></div>
-    <div class="box-bar" id="boxInfo"></div>
-  </div>
-
-  <!-- ===== SCRIPTLER ===== -->
-  <script src="assets/js/config/units.config.js"></script>
-  <script src="assets/js/config/site.config.js"></script>
-  <script src="assets/js/core/units.js"></script>
-  <script src="assets/js/pages/anasayfa.js"></script>
+  <script src="sayfa/ortak.js"></script>
 </body>
 </html>

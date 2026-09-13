@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5 · Ölç &amp; Sergile · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Ürettiğin tek görselin enerji, su ve karbon maliyetini ölç ve sergi damgasını üret." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap"></div></nav>
+
+  <script type="application/json" id="egitmenNotu">
+  {
+    "sure": 10,
+    "soyle": "Tek görsel kuralını hatırlat. Damgayı ürettirip sergiye ekle. Son dakikaları öz değerlendirme sorularına ayır — kapanış orada.",
+    "sorular": [
+      "Metin ile görselin maliyet farkını açıklayabiliyor musun?",
+      "Bir sonraki promptunda neyi değiştireceksin?"
+    ]
+  }
+  </script>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- ==================================================================
+         5.1 · ÖLÇ + DAMGALA
+         ------------------------------------------------------------------
+         FORM SIRASI BİLİNÇLİDİR:
+           prompt → araç → boyut → eser adı/üreten/tarih → (çizgi) →
+           varyant → deneme
+         Öğrenci PROMPTUYLA başlar (elinde ilk duran şey odur); sayaç
+         niteliğindeki iki alan en alta, ayırıcı çizginin altına konur.
+         ❌ Alanların altına uzun açıklama yazılmaz — tek istisna araç
+            seçicinin altındaki DAYANAK satırıdır (rozet + kaynak).
+
+         ARAÇ LİSTESİ (data-*):
+           data-wh    = 1024×1024 TEK görselin enerjisi (Wh)
+           data-basis = "olcum"  → bağımsız bir ölçüme dayanır
+                        "tahmin" → ölçüm YOK; benzer mimari ve adım
+                                   sayısından ölçeklenmiş SINIF TAHMİNİ
+           data-src   = dayanağın açıklaması (asla gizlenmez)
+         ⚠️ Bir tahmin asla "olcum" diye işaretlenmez.
+         ⚠️ Wh değerleri prompt-muhendisligi.html'deki listeyle AYNI tutulur.
+         ⚠️ Varsayılan araç hem ÜCRETSİZ hem ÖLÇÜMÜ olan araçtır; öğrenci
+            listeyi hiç açmasa bile doğru bir başlangıç görür.
+         ================================================================== -->
+    <section class="fp-section tone-hero" id="hesapla" data-title="Kendi üretimini ölç">
+      <div class="fp-inner">
+        <div class="section-head">
+          <h2 class="slide-title reveal">Kendi üretimini ölç</h2>
+          <p class="slide-lead reveal lead-c">
+            Ne ürettin? Seç, birkaç bilgi gir — enerji, su ve karbon karşılığını gör.
+          </p>
+        </div>
+
+        <!-- ==============================================================
+             TÜR SEÇİCİ — hangi düğme seçiliyse o kart görünür.
+             Kartlar hesaplayici.js tarafından açılıp kapanır (hidden).
+             ============================================================== -->
+        <div class="segment full reveal mb-lg" id="turSec">
+          <button type="button" class="active" data-tur="metin">💬 Metin</button>
+          <button type="button" data-tur="gorsel">🖼️ Görsel</button>
+          <button type="button" data-tur="video">🎬 Video</button>
+        </div>
+
+        <div class="grid cols-2 reveal items-stretch">
+
+          <!-- ---------- METİN ----------
+               data-in  = 1000 GİRDİ token'ı işlemenin enerjisi (Wh)
+               data-out = 1000 ÇIKTI token'ı üretmenin enerjisi (Wh)
+               data-cikti = modelin tipik cevap uzunluğu (token)
+               ⚠️ Cevabın uzunluğunu KULLANICI ayarlamaz; bu bir model
+                  özelliğidir, seçilen araca göre değişir ve salt okunur. -->
+          <div class="card card-top" id="kartMetin">
+            <label class="label" for="metinArac">Hangi aracı kullandın?</label>
+            <select id="metinArac" class="field">
+              <optgroup label="⭐ En çok kullanılan 5">
+                <option data-in="0.03" data-out="1.35" data-cikti="400" data-rozet="tag-beyan" data-rozet-ad="şirket beyanı"
+                        data-kaynak="Altman (2025) — ortalama sorgu 0,34 Wh. Yöntem yayımlanmadı.">ChatGPT · OpenAI</option>
+                <option data-in="0.02" data-out="0.90" data-cikti="300" data-rozet="tag-resmi" data-rozet-ad="resmî"
+                        data-kaynak="Google (2025), arXiv:2508.15734 — medyan metin promptu 0,24 Wh">Gemini · Google</option>
+                <option data-in="0.05" data-out="2.00" data-cikti="500" data-rozet="tag-tahmini" data-rozet-ad="bağımsız tahmin"
+                        data-kaynak="EcoLogits tahmini. Anthropic hiçbir enerji/su verisi yayımlamıyor.">Claude · Anthropic</option>
+                <option data-in="0.05" data-out="2.20" data-cikti="450" data-rozet="tag-tahmini" data-rozet-ad="bağımsız tahmin"
+                        data-kaynak="Büyük model sınıfından ölçeklendi. xAI enerji verisi yayımlamadı.">Grok · xAI</option>
+                <option data-in="0.03" data-out="1.00" data-cikti="400" data-rozet="tag-olculdu" data-rozet-ad="bağımsız ölçüm"
+                        data-kaynak="Hugging Face AI Energy Score v2 — ağırlıkları açık, bağımsız ölçülebiliyor.">DeepSeek · DeepSeek</option>
+              </optgroup>
+              <optgroup label="Diğer araçlar">
+                <option data-in="0.03" data-out="1.35" data-cikti="350" data-rozet="tag-tahmini" data-rozet-ad="bağımsız tahmin"
+                        data-kaynak="Arkasında GPT ailesi çalışır; ChatGPT değerleri kullanıldı.">Copilot · Microsoft</option>
+                <option data-in="0.03" data-out="1.00" data-cikti="300" data-rozet="tag-olculdu" data-rozet-ad="bağımsız ölçüm"
+                        data-kaynak="Arkasındaki Llama ailesinin ağırlıkları açık; bağımsız ölçümü var.">Meta AI · Meta</option>
+                <option data-in="0.04" data-out="1.60" data-cikti="350" data-rozet="tag-resmi" data-rozet-ad="resmî"
+                        data-kaynak="Mistral + Carbone 4 / ADEME yaşam döngüsü analizi.">Le Chat · Mistral AI</option>
+                <option data-in="0.04" data-out="1.50" data-cikti="400" data-rozet="tag-tahmini" data-rozet-ad="bağımsız tahmin"
+                        data-kaynak="Alibaba, Stanford şeffaflık raporunda “bilgi yok” dedi.">Qwen Chat · Alibaba</option>
+                <option data-in="0.05" data-out="1.60" data-cikti="300" data-rozet="tag-tahmini" data-rozet-ad="bağımsız tahmin"
+                        data-kaynak="Hem arama hem model çalıştırdığı için sınıf ortalamasının üstü varsayıldı.">Perplexity</option>
+              </optgroup>
+            </select>
+            <p class="src" id="metinNot"></p>
+
+            <label class="label mt" for="metinPrompt">Kullandığın prompt
+              (girdi: <b id="metinToken" class="text-green">0</b> token)</label>
+            <textarea id="metinPrompt" class="field" rows="3">Yapay zekânın su tüketimini 9. sınıf öğrencisine 3 maddede anlat.</textarea>
+
+            <div class="sabit-kutu mt">
+              <span class="sabit-etiket">Cevabın uzunluğu</span>
+              <span class="sabit-deger"><b id="metinCikti">—</b> token</span>
+              <span class="sabit-not">Bunu sen değil, <b>model</b> belirler — seçtiğin araca göre değişir.</span>
+            </div>
+
+            <label class="label mt">Düşünme modu</label>
+            <div class="segment full" id="metinDusunme">
+              <button type="button" data-gizli="0"
+                      data-not="Model doğrudan cevabı yazmaya başlar.">⚡ Hızlı</button>
+              <button type="button" class="active" data-gizli="1500"
+                      data-not="Kısa bir plan yapıp yazar. Çoğu sohbet uygulamasının varsayılanı.">⚖️ Standart</button>
+              <button type="button" data-gizli="11000"
+                      data-not="Cevaptan önce binlerce gizli token üretir — ölçülen ortalama artış ~30 kat.">🧠 Derin Düşünme</button>
+            </div>
+            <p class="src" id="metinDusunmeNot"></p>
+
+            <label class="label label-row mt">
+              <span>Kaç promptta hedefine ulaştın?</span>
+              <span class="text-soft">×<b id="metinDenemeLbl">1</b></span>
+            </label>
+            <input id="metinDeneme" type="range" min="1" max="15" step="1" value="1">
+          </div>
+
+          <!-- ---------- GÖRSEL ----------
+               data-wh    = 1024×1024 TEK görselin enerjisi
+               data-basis = "olcum" | "tahmin" (bir tahmin asla olcum diye işaretlenmez) -->
+          <div class="card card-top" id="kartGorsel" hidden>
+            <label class="label" for="gorselArac">Hangi aracı kullandın?</label>
+            <select id="gorselArac" class="field">
+              <optgroup label="⭐ En çok kullanılan 5">
+                <option data-wh="2.90" data-basis="olcum" data-free="hayır" data-url="https://chatgpt.com/"
+                        data-src="Luccioni vd. (2024) — DALL·E sınıfı, ölçülmüş en pahalı grup">ChatGPT görsel (GPT Image) — 2,9 Wh</option>
+                <option data-wh="2.20" data-basis="tahmin" data-free="evet" data-url="https://gemini.google.com/"
+                        data-src="Sohbet modeli içinden üreten sınıf — Google görsel için enerji yayımlamadı">Gemini görsel (Nano Banana) — 2,2 Wh (tahmin)</option>
+                <option data-wh="2.60" data-basis="tahmin" data-free="hayır" data-url="https://www.midjourney.com/"
+                        data-src="Büyük difüzyon üst sınıfı — Midjourney hiçbir enerji verisi yayımlamaz">Midjourney — 2,6 Wh (tahmin)</option>
+                <option data-wh="2.50" data-basis="tahmin" data-free="evet" data-url="https://grok.com/"
+                        data-src="Sohbet modeli içinden üreten sınıf — xAI enerji verisi yayımlamaz">Grok Imagine — 2,5 Wh (tahmin)</option>
+                <option data-wh="2.00" data-basis="tahmin" data-free="evet" data-url="https://firefly.adobe.com/"
+                        data-src="Büyük difüzyon sınıfı — Adobe enerji verisi yayımlamaz">Adobe Firefly — 2 Wh (tahmin)</option>
+              </optgroup>
+              <optgroup label="Diğer araçlar">
+                <option selected data-wh="2.90" data-basis="olcum" data-free="evet" data-url="https://designer.microsoft.com/image-creator"
+                        data-src="DALL·E ile aynı sınıf (Luccioni vd., 2024)">Microsoft Designer — 2,9 Wh</option>
+                <option data-wh="2.00" data-basis="tahmin" data-free="evet" data-url="https://www.canva.com/"
+                        data-src="Büyük difüzyon sınıfı; arkadaki model değişebilir">Canva Magic Media — 2 Wh (tahmin)</option>
+                <option data-wh="2.00" data-basis="tahmin" data-free="evet" data-url="https://ideogram.ai/"
+                        data-src="Büyük difüzyon sınıfı">Ideogram — 2 Wh (tahmin)</option>
+                <option data-wh="0.60" data-basis="tahmin" data-free="evet" data-url="https://www.craiyon.com/"
+                        data-src="Küçük model sınıfı · hızlı modeller ölçümünden ölçeklendi">Craiyon — 0,6 Wh (tahmin)</option>
+                <option data-wh="0.90" data-basis="tahmin" data-free="evet" data-url="https://pollinations.ai/"
+                        data-src="⚠️ Kendi modeli yok — orta hâlli açık difüzyon varsayıldı">Pollinations.ai — 0,9 Wh (tahmin)</option>
+              </optgroup>
+            </select>
+            <p class="src" id="gorselNot"></p>
+
+            <label class="label mt" for="gorselPrompt">Kullandığın prompt
+              (<b id="gorselToken" class="text-green">0</b> token)</label>
+            <textarea id="gorselPrompt" class="field" rows="2">2050, yenilenebilir enerjiyle çalışan İstanbul; güneş panelli çatılar, izometrik illüstrasyon</textarea>
+
+            <label class="label label-row mt"><span>Görüntü boyutu</span>
+              <span class="text-soft" id="pxNote"></span></label>
+            <select id="sizeSel" class="field">
+              <option data-en="512"  data-boy="512">512 × 512 (küçük kare)</option>
+              <option data-en="768"  data-boy="768">768 × 768 (orta kare)</option>
+              <option selected data-en="1024" data-boy="1024">1024 × 1024 (standart kare)</option>
+              <option data-en="1024" data-boy="576">1024 × 576 (16:9 yatay)</option>
+              <option data-en="768"  data-boy="1024">768 × 1024 (3:4 dikey)</option>
+              <option data-en="1280" data-boy="1280">1280 × 1280 (büyük kare)</option>
+              <option data-en="1536" data-boy="1536">1536 × 1536 (çok büyük)</option>
+              <option data-en="1920" data-boy="1080">1920 × 1080 (Full HD)</option>
+              <option data-en="2048" data-boy="2048">2048 × 2048 (2K kare)</option>
+            </select>
+
+            <label class="label mt" for="titleIn">Eser adı</label>
+            <input id="titleIn" class="field" type="text" value="Yenilenebilir İstanbul, 2050">
+
+            <div class="grid cols-2 grid-tight mt">
+              <div>
+                <label class="label" for="byIn">Üreten</label>
+                <input id="byIn" class="field" type="text" placeholder="Ad ya da takım">
+              </div>
+              <div>
+                <label class="label" for="dateIn">Oluşturulma tarihi</label>
+                <input id="dateIn" class="field" type="date">
+              </div>
+            </div>
+
+            <hr class="divider">
+
+            <label class="label label-row">
+              <span>Tek denemede kaç görsel üretiliyor?</span>
+              <span class="text-soft"><b id="varLbl">1</b> görsel</span>
+            </label>
+            <input id="variants" type="range" min="1" max="8" step="1" value="1">
+
+            <label class="label label-row mt">
+              <span>Kaç kez “üret” dedin?</span>
+              <span class="text-soft">×<b id="attLbl">1</b></span>
+            </label>
+            <input id="attempts" type="range" min="1" max="15" step="1" value="1">
+          </div>
+
+          <!-- ---------- VİDEO ----------
+               data-wh-sn = saniye başına enerji (Wh).
+               ⚠️ Hiçbir ticari video aracı enerji verisi yayımlamıyor.
+                  Elimizdeki TEK ölçüm açık bir araştırma modeline ait:
+                  5 sn = 944 Wh → 189 Wh/sn. Aşağıdaki değerler o noktadan
+                  ölçeklenmiş SINIF TAHMİNLERİDİR. -->
+          <div class="card card-top" id="kartVideo" hidden>
+            <label class="label" for="videoArac">Hangi aracı kullandın?</label>
+            <select id="videoArac" class="field">
+              <option data-wh-sn="240" data-url="https://openai.com/sora"
+                      data-src="Ölçülen tek video noktasından (189 Wh/sn) ölçeklendi. OpenAI enerji verisi yayımlamıyor.">Sora · OpenAI — 240 Wh/sn (tahmin)</option>
+              <option selected data-wh-sn="190" data-url="https://deepmind.google/technologies/veo/"
+                      data-src="Ölçülen tek video noktasından (189 Wh/sn) ölçeklendi. Google video için enerji yayımlamadı.">Veo · Google — 190 Wh/sn (tahmin)</option>
+              <option data-wh-sn="165" data-url="https://klingai.com/"
+                      data-src="Ölçülen tek video noktasından (189 Wh/sn) ölçeklendi.">Kling · Kuaishou — 165 Wh/sn (tahmin)</option>
+              <option data-wh-sn="150" data-url="https://hailuoai.video/"
+                      data-src="Ölçülen tek video noktasından (189 Wh/sn) ölçeklendi.">Hailuo · MiniMax — 150 Wh/sn (tahmin)</option>
+              <option data-wh-sn="130" data-url="https://runwayml.com/"
+                      data-src="Ölçülen tek video noktasından (189 Wh/sn) ölçeklendi.">Runway Gen — 130 Wh/sn (tahmin)</option>
+            </select>
+            <p class="src" id="videoNot"></p>
+
+            <label class="label mt" for="videoPrompt">Kullandığın prompt
+              (<b id="videoToken" class="text-green">0</b> token)</label>
+            <textarea id="videoPrompt" class="field" rows="2">Rüzgâr türbinlerinin arasından geçen drone çekimi, gün batımı</textarea>
+            <p class="src">Videoda prompt uzunluğu maliyeti neredeyse hiç değiştirmez — bedel <b>saniyede</b>.</p>
+
+            <label class="label label-row mt">
+              <span>Videonun süresi</span>
+              <span class="text-soft"><b id="videoSureLbl">5</b> saniye</span>
+            </label>
+            <input id="videoSure" type="range" min="1" max="60" step="1" value="5">
+
+            <label class="label label-row mt">
+              <span>Kaç kez “üret” dedin?</span>
+              <span class="text-soft">×<b id="videoDenemeLbl">1</b></span>
+            </label>
+            <input id="videoDeneme" type="range" min="1" max="15" step="1" value="1">
+          </div>
+
+          <!-- ---------- ORTAK SONUÇ KARTI ----------
+               Üç tür de aynı karta yazar. Eşdeğer HER ZAMAN telefon şarjı,
+               su HER ZAMAN 500 mL şişe. -->
+          <div class="card card-top col-card" id="sonucKart" data-esik-orta="3" data-esik-yuksek="8">
+            <div class="center">
+              <span id="status" class="status green">🌱 Verimli</span>
+              <div class="text-mute mt">Bu kadar enerji şuna eşdeğer:</div>
+              <div id="human" class="huge-num">—</div>
+              <div id="humanWater" class="text-water">—</div>
+              <div id="tech" class="src">—</div>
+            </div>
+
+            <div id="metrics" class="grid cols-3 grid-tight mt"></div>
+
+            <hr class="divider">
+            <div id="dokum"></div>
+
+            <div id="damgaBlok">
+              <hr class="divider">
+              <div class="text-mute mb">Sergi damgası</div>
+              <div id="stampPreview" class="stamp-preview"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SERGİ ETİKETİ ÇIKTISI — yalnızca GÖRSEL modunda görünür.
+             Bu blok doğrudan sergi.html'in <main id="galeri"> içine yapıştırılır. -->
+        <div class="card reveal mt-lg" id="sergiBlok">
+          <div class="between mb">
+            <div class="label m-0">sergi.html içine yapıştırılacak hazır blok</div>
+            <button id="copyBtn" class="btn btn-ghost btn-sm" type="button">📋 Kopyala</button>
+          </div>
+          <pre class="code-box"><code id="stampCode"></code></pre>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Kaydır
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         5.2 · ARAÇ KARŞILAŞTIRMA + YÖNTEM
+         ------------------------------------------------------------------
+         Tablo Wh'ye göre küçükten büyüğe sıralıdır. "telefon şarjı"
+         sütununu hesaplayici.js data-wh'den hesaplar — elle yazma.
+         ================================================================== -->
+    <section class="fp-section tone-a" id="araclar" data-title="Araçlar &amp; yöntem">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🧰 Şeffaflık</span>
+          <h2 class="slide-title reveal">Hangi araç ne harcıyor — ve nereden biliyoruz?</h2>
+          <p class="slide-lead reveal lead-c">
+            1024×1024 tek görsel için. <span class="tag tag-est">tahmin</span> rozetli satırlarda
+            <strong>yayımlanmış ölçüm yoktur</strong>; sayı benzer mimariden ölçeklenmiştir.
+          </p>
+        </div>
+
+        <div class="card reveal tool-scroll mb">
+          <table class="table" id="toolTable">
+            <thead>
+              <tr><th>Araç</th><th>Sınıf</th><th class="num">Wh</th>
+                  <th class="num">telefon şarjı</th><th>Dayanak</th></tr>
+            </thead>
+            <tbody>
+              <tr data-wh="0.60">
+                <td><b><a href="https://www.craiyon.com/" target="_blank" rel="noopener">Craiyon <span class="ext">↗</span></a></b>
+                    <div class="src">Craiyon <span class="tag tag-free">ücretsiz</span></div></td>
+                <td class="src">Diğer araçlar</td>
+                <td class="num text-green"><b>0,60</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-est">tahmin</span>
+                    <div class="src">Küçük model sınıfı · hızlı modeller ölçümünden ölçeklendi</div></td>
+              </tr>
+              <tr data-wh="0.90">
+                <td><b><a href="https://pollinations.ai/" target="_blank" rel="noopener">Pollinations.ai <span class="ext">↗</span></a></b>
+                    <div class="src">Pollinations <span class="tag tag-free">ücretsiz</span></div></td>
+                <td class="src">Diğer araçlar</td>
+                <td class="num text-green"><b>0,90</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-est">tahmin</span>
+                    <div class="src">⚠️ Kendi modeli yok — orta hâlli açık difüzyon varsayıldı</div></td>
+              </tr>
+              <tr data-wh="2.00">
+                <td><b><a href="https://firefly.adobe.com/" target="_blank" rel="noopener">Adobe Firefly <span class="ext">↗</span></a></b>
+                    <div class="src">Adobe <span class="tag tag-free">ücretsiz</span></div></td>
+                <td class="src">⭐ En çok kullanılan 5</td>
+                <td class="num text-green"><b>2,00</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-est">tahmin</span>
+                    <div class="src">Büyük difüzyon sınıfı — Adobe enerji verisi yayımlamaz</div></td>
+              </tr>
+              <tr data-wh="2.00">
+                <td><b><a href="https://www.canva.com/" target="_blank" rel="noopener">Canva Magic Media <span class="ext">↗</span></a></b>
+                    <div class="src">Canva <span class="tag tag-free">ücretsiz</span></div></td>
+                <td class="src">Diğer araçlar</td>
+                <td class="num text-green"><b>2,00</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-est">tahmin</span>
+                    <div class="src">Büyük difüzyon sınıfı; arkadaki model değişebilir</div></td>
+              </tr>
+              <tr data-wh="2.00">
+                <td><b><a href="https://ideogram.ai/" target="_blank" rel="noopener">Ideogram <span class="ext">↗</span></a></b>
+                    <div class="src">Ideogram AI <span class="tag tag-free">ücretsiz</span></div></td>
+                <td class="src">Diğer araçlar</td>
+                <td class="num text-green"><b>2,00</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-est">tahmin</span>
+                    <div class="src">Büyük difüzyon sınıfı</div></td>
+              </tr>
+              <tr data-wh="2.20">
+                <td><b><a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini görsel (Nano Banana) <span class="ext">↗</span></a></b>
+                    <div class="src">Google <span class="tag tag-free">ücretsiz</span></div></td>
+                <td class="src">⭐ En çok kullanılan 5</td>
+                <td class="num text-green"><b>2,20</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-est">tahmin</span>
+                    <div class="src">Sohbet modeli içinden üreten sınıf — Google görsel için enerji yayımlamadı</div></td>
+              </tr>
+              <tr data-wh="2.50">
+                <td><b><a href="https://grok.com/" target="_blank" rel="noopener">Grok Imagine <span class="ext">↗</span></a></b>
+                    <div class="src">xAI <span class="tag tag-free">ücretsiz</span></div></td>
+                <td class="src">⭐ En çok kullanılan 5</td>
+                <td class="num text-green"><b>2,50</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-est">tahmin</span>
+                    <div class="src">Sohbet modeli içinden üreten sınıf — xAI enerji verisi yayımlamaz</div></td>
+              </tr>
+              <tr data-wh="2.60">
+                <td><b><a href="https://www.midjourney.com/" target="_blank" rel="noopener">Midjourney <span class="ext">↗</span></a></b>
+                    <div class="src">Midjourney</div></td>
+                <td class="src">⭐ En çok kullanılan 5</td>
+                <td class="num text-green"><b>2,60</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-est">tahmin</span>
+                    <div class="src">Büyük difüzyon üst sınıfı — Midjourney hiçbir enerji verisi yayımlamaz</div></td>
+              </tr>
+              <tr data-wh="2.90">
+                <td><b><a href="https://designer.microsoft.com/image-creator" target="_blank" rel="noopener">Microsoft Designer <span class="ext">↗</span></a></b>
+                    <div class="src">Microsoft (DALL·E tabanlı) <span class="tag tag-free">ücretsiz</span></div></td>
+                <td class="src">Diğer araçlar</td>
+                <td class="num text-green"><b>2,90</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-meas">ölçüm</span>
+                    <div class="src">DALL·E ile aynı sınıf (Luccioni vd., 2024)</div></td>
+              </tr>
+              <tr data-wh="2.90">
+                <td><b><a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT görsel (GPT Image) <span class="ext">↗</span></a></b>
+                    <div class="src">OpenAI</div></td>
+                <td class="src">⭐ En çok kullanılan 5</td>
+                <td class="num text-green"><b>2,90</b></td>
+                <td class="num arac-sarj"></td>
+                <td><span class="tag tag-meas">ölçüm</span>
+                    <div class="src">Luccioni vd. (2024) — DALL·E sınıfı, ölçülmüş en pahalı grup</div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="src kaynak-satir">
+          Luccioni, S., Jernite, Y., &amp; Strubell, E. (2024). Power hungry processing: Watts driving the cost of AI deployment? <em>FAccT</em>. <a href="https://arxiv.org/abs/2311.16863" target="_blank" rel="noopener">https://arxiv.org/abs/2311.16863</a><br>
+          “How hungry is AI?” (2025). Enerji + su + karbon (PUE/WUE; 3,69 L/kWh). <a href="https://arxiv.org/html/2505.09598v1" target="_blank" rel="noopener">https://arxiv.org/html/2505.09598v1</a><br>
+          Google. (2025). <em>Measuring the environmental impact of delivering AI at Google scale</em>. <a href="https://arxiv.org/abs/2508.15734" target="_blank" rel="noopener">https://arxiv.org/abs/2508.15734</a>
+        </p>
+
+        <div class="grid cols-3 reveal">
+          <div class="card card-top">
+            <div class="big-emoji">📏</div>
+            <h3>Formül</h3>
+<pre class="code-box"><code>Toplam = Temel × Boyut × Görsel × Deneme
+
+Temel  = 1024×1024 için Wh
+Boyut  = (en × boy) ÷ (1024×1024)
+Görsel = tek denemede üretilen alternatif
+Su     = Wh ÷ 1000 × 3,69 L
+CO₂    = Wh × 0,125 g</code></pre>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🎯</div>
+            <h3>Elimizdeki gerçek ölçümler</h3>
+            <ul class="list-soft">
+              <li><b>~0,3 Wh</b> — az adımda üreten hızlı modeller</li>
+              <li><b>~1,5 Wh</b> — SDXL, ~30 adım <span class="ref-tag">(Luccioni vd., 2024)</span></li>
+              <li><b>~2,9 Wh</b> — ölçülmüş en pahalı sınıf</li>
+            </ul>
+            <p class="src mb-0">Listedeki 10 aracın <b>2’sinin</b> doğrudan ölçümü var (ChatGPT görsel ve Microsoft Designer — ikisi de DALL·E sınıfı). Kalanı bu noktalardan ölçeklendi.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🚫</div>
+            <h3>Neyi bilmiyoruz</h3>
+            <p class="text-soft m-0">
+              Midjourney, Gemini görsel, Grok Imagine, Firefly, Canva —
+              <b>hiçbiri enerji verisi yayımlamıyor.</b> Onların sayısı, ölçümü yapılmış
+              benzer modellerden <b>hesaplanmış bir tahmindir</b>: büyüklük sırası doğrudur,
+              kesin değer değildir.
+            </p>
+            <p class="src mt mb-0">
+              Bu yüzden turuncu “tahmin” rozeti var — Faz 2’de gördüğün şeffaflık
+              sorununun hesaplayıcıdaki karşılığı.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 5.3 · KAPANIŞ — kartlar yalnızca OKUNUR, cevap toplanmaz -->
+    <section class="fp-section tone-b" id="kapanis" data-title="Kapanış">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🔁 Kapanış</span>
+          <h2 class="slide-title reveal">Şimdi ne biliyorsun?</h2>
+          <p class="slide-lead reveal lead-c">
+            Bu soruları sınıfça konuşun. Doğru cevap aramıyoruz — kendi cümlenizle
+            anlatabiliyorsanız öğrenmişsiniz demektir.
+          </p>
+        </div>
+
+        <div class="grid cols-2 reveal items-start">
+          <div>
+            <div class="card q-card mb"><span class="q-num">1</span>
+              <span class="q-txt text-soft">Metin ile görselin maliyet farkını bir cümleyle açıklayabiliyor muyum?</span></div>
+            <div class="card q-card mb"><span class="q-num">2</span>
+              <span class="q-txt text-soft">Eğitim ile kullanım arasındaki farkı bir örnekle anlatabilir miyim?</span></div>
+            <div class="card q-card mb"><span class="q-num">3</span>
+              <span class="q-txt text-soft">Bir sayının “ölçüm” mü “tahmin” mi olduğunu nereden anlarım?</span></div>
+            <div class="card q-card mb"><span class="q-num">4</span>
+              <span class="q-txt text-soft">Bir sonraki promptumda neyi değiştireceğim?</span></div>
+          </div>
+          <div class="card card-top">
+            <div class="chip mb">🖼️ Eserini sergiye ekle</div>
+            <p class="text-soft m-0 mb">
+              Yukarıda ürettiğin <b>hazır bloğu</b> kopyala, eğitmenine ver.
+              Eser, altındaki enerji ve su damgasıyla birlikte sergide yayımlanacak.
+            </p>
+            <hr class="divider">
+            <div class="chip mb">🌿 Kuralları yanında götür</div>
+            <p class="text-soft m-0 mb">
+              Yeşil Prompt Kuralları kartına Faz 4’ten tekrar bakabilirsin.
+            </p>
+            <div class="cluster">
+              <a class="btn btn-primary btn-sm" href="sergi.html">Sergiye git →</a>
+              <a class="btn btn-ghost btn-sm" href="prompt-muhendisligi.html#kurallar">Kurallar kartı →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 5.4 · KAYNAKÇA -->
+    <section class="fp-section tone-c" id="kaynakca" data-title="Kaynakça">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📚 Kaynakça</span>
+          <h2 class="slide-title reveal">Kaynakça</h2>
+        </div>
+        <div class="card reveal tool-scroll">
+          <ol class="refs">
+            <li>Environmental and Energy Study Institute. (2025). <em>Data centers and water consumption</em>. <a href="https://www.eesi.org/articles/view/data-centers-and-water-consumption" target="_blank" rel="noopener">https://www.eesi.org/articles/view/data-centers-and-water-consumption</a></li>
+            <li>Google. (2025). <em>Measuring the environmental impact of delivering AI at Google scale</em> (Gemini medyan promptu: 0,24 Wh · 0,03 gCO₂e · 0,26 mL). <a href="https://arxiv.org/abs/2508.15734" target="_blank" rel="noopener">https://arxiv.org/abs/2508.15734</a></li>
+            <li>Hugging Face. (2025). <em>AI Energy Score v2 leaderboard</em> (düşünme açık/kapalı ölçümleri; 166 model). <a href="https://huggingface.co/spaces/AIEnergyScore/Leaderboard" target="_blank" rel="noopener">https://huggingface.co/spaces/AIEnergyScore/Leaderboard</a></li>
+            <li>Lincoln Institute of Land Policy. (2025). <em>The land and water impacts of the AI boom</em>. <a href="https://www.lincolninst.edu/publications/land-lines-magazine/articles/land-water-impacts-data-centers/" target="_blank" rel="noopener">https://www.lincolninst.edu/</a></li>
+            <li>Luccioni, S., Jernite, Y., &amp; Strubell, E. (2024). Power hungry processing: Watts driving the cost of AI deployment? <em>FAccT</em>. <a href="https://arxiv.org/abs/2311.16863" target="_blank" rel="noopener">https://arxiv.org/abs/2311.16863</a></li>
+            <li>Shumba, N., Tshekiso, O., Li, P., Fanti, G., &amp; Ren, S. (2025). A water efficiency dataset for African data centers. <em>COMPASS ’25</em>. <a href="https://doi.org/10.1145/3715335.3735483" target="_blank" rel="noopener">https://doi.org/10.1145/3715335.3735483</a></li>
+            <li>“How hungry is AI?” (2025). Enerji + su + karbon (PUE/WUE; 3,69 L/kWh). <a href="https://arxiv.org/html/2505.09598v1" target="_blank" rel="noopener">https://arxiv.org/html/2505.09598v1</a></li>
+          </ol>
+        </div>
+        <p class="src reveal center mt">Tam kaynakça ve atölye materyalleri: <a href="kaynaklar.html">Kaynaklar</a>.</p>
+      </div>
+    </section>
+
+    <!-- Son slayt (künye · site haritası · telif) ortak.js ile eklenir -->
+  </div></div>
+
+  <script src="ortak.js"></script>
+  <script src="hesaplayici.js"></script>
+</body>
+</html>

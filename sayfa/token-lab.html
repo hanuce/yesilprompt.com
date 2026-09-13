@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3 · Token Lab · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Yapay zekâ bir cevabı nasıl üretir, görsel neden pahalı, hangi parametre neyi değiştirir — ve senin elinde ne var?" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap"></div></nav>
+
+  <script type="application/json" id="egitmenNotu">
+  {
+    "sure": 14,
+    "soyle": "Akış slaytında boğulma — derinliği Meraklısına'ya bırak. Faz 2'de açık bıraktığın iki soruyu burada kapat: görsel neden pahalı, düşünme ne yapıyor. Parametre slaytında öğrenciye ÜÇÜNÜ DE denet.",
+    "sorular": [
+      "Hangi parametre rakamı en çok oynattı?",
+      "Senin elinde olmayan neydi, olan neydi?"
+    ]
+  }
+  </script>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- ==================================================================
+         1 · NASIL ÇALIŞIYOR — KOMPAKT
+         ------------------------------------------------------------------
+         Yedi adım tek satırlık maddelere indirildi. Asıl mesaj 6. adımdaki
+         DÖNGÜ (.akis-donus): cevaptaki her kelime için model baştan çalışır.
+         ❌ Dikkat mekanizması, matris çarpımı, eğitim döngüsü burada
+            anlatılmaz — derinlik isteyen için alttaki üç bağlantı var.
+         ================================================================== -->
+    <section class="fp-section tone-hero" id="nasil" data-title="Nasıl çalışıyor?">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">⚙️ Arka planda ne oluyor?</span>
+          <h2 class="slide-title reveal">Yapay zekâ bir cevabı <span class="text-grad">nasıl üretiyor?</span></h2>
+          <p class="slide-lead reveal lead-c">
+            Yedi adım. Asıl önemlisi aradaki <strong>döngü</strong> — maliyetin tamamı orada.
+          </p>
+        </div>
+
+        <div class="reveal mb-lg">
+          <ol class="akis akis-kompakt">
+            <li class="akis-adim"><span class="akis-no">1</span><span class="akis-ikon">⌨️</span>
+              <span class="akis-govde"><b>Girdi</b> — promptun olduğu gibi alınır, çeviri yapılmaz.</span></li>
+            <li class="akis-adim"><span class="akis-no">2</span><span class="akis-ikon">✂️</span>
+              <span class="akis-govde"><b>Tokenizasyon</b> — metin token’lara bölünür (“Sürdür-üle-bilir”).</span></li>
+            <li class="akis-adim"><span class="akis-no">3</span><span class="akis-ikon">🔢</span>
+              <span class="akis-govde"><b>Sayıya çevir</b> — her token bir sayı listesine dönüşür.</span></li>
+            <li class="akis-adim"><span class="akis-no">4</span><span class="akis-ikon">🕸️</span>
+              <span class="akis-govde"><b>Ağırlıklardan geç</b> — model hangi kelimenin hangisiyle ilgili olduğuna bakar.</span></li>
+            <li class="akis-adim"><span class="akis-no">5</span><span class="akis-ikon">🎯</span>
+              <span class="akis-govde"><b>Tahmin</b> — sıradaki token ne olmalı? Bir tane seçer.</span></li>
+            <li class="akis-adim akis-donus"><span class="akis-no">6</span><span class="akis-ikon">🔁</span>
+              <span class="akis-govde"><b>Ve baştan…</b> — seçilen token girdiye eklenir, 3. adıma dönülür.
+                <b>Cevaptaki her kelime için yeniden.</b></span></li>
+            <li class="akis-adim"><span class="akis-no">7</span><span class="akis-ikon">📤</span>
+              <span class="akis-govde"><b>Çıktı</b> — token’lar harflere çevrilir, cevap ekranda görünür.</span></li>
+          </ol>
+        </div>
+
+        <div class="card card-top reveal mb">
+          <p class="m-0">
+            Promptun <b>bir kez</b> okunur; cevap ise <b>kelime kelime</b> üretilir.
+            Girdinin ucuz, çıktının pahalı olmasının sebebi tam olarak bu döngüdür.
+          </p>
+        </div>
+
+        <div class="card reveal dar-orta">
+          <div class="chip mb">🔍 Daha iyi anlamak için</div>
+          <p class="text-soft m-0 mb">
+            Üçü de tarayıcıda çalışan, adım adım gösteren araçlar. Zamanın varsa aç ve oyna.
+          </p>
+          <div class="stack gap-sm">
+            <a class="arac-satir" href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener">
+              <span class="arac-ad">Transformer Explainer <span class="ext">↗</span>
+                <span class="src"> · Georgia Tech — kendi cümleni yaz, modelin içinden geçişini izle</span></span>
+            </a>
+            <a class="arac-satir" href="https://animatedllm.github.io/" target="_blank" rel="noopener">
+              <span class="arac-ad">Animated LLM <span class="ext">↗</span>
+                <span class="src"> · adım adım animasyonlu anlatım</span></span>
+            </a>
+            <a class="arac-satir" href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">
+              <span class="arac-ad">The Illustrated Transformer <span class="ext">↗</span>
+                <span class="src"> · Jay Alammar — çizimlerle klasik anlatım</span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Kaydır ya da sağ-alttaki okları kullan
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         3 · HANGİ PARAMETRE EN ÇOK DEĞİŞTİRİYOR
+         ------------------------------------------------------------------
+         Öğrencinin değiştirebildiği ÜÇ şey: araç · düşünme modu ·
+         kaç promptta hedefe ulaştığı.
+
+         ❌ Cevabın uzunluğunu KULLANICI ayarlamaz — bu bir model
+            özelliğidir; option'daki data-cikti okunur ve salt okunur
+            gösterilir. Araç değişince değer de değişir.
+         ❌ "kaldıraç" kelimesi kullanılmaz; sayfa boyunca "parametre".
+
+    <!-- ==================================================================
+         5 · TOKEN AVI — üç tür için üç kutu
+         ------------------------------------------------------------------
+         data-tur, enerjinin nasıl hesaplanacağını söyler:
+           metin  → (girdi token ÷ 1000 × data-in) + (data-cikti ÷ 1000 × data-out)
+           gorsel → data-wh (prompt uzunluğu enerjiye KATILMAZ)
+           video  → data-wh-sn × data-saniye (prompt uzunluğu KATILMAZ)
+
+         ⚠️ Görsel ve videoda token sayısı GÖSTERİLİR ama enerjiye
+            katılmaz — öğrencinin göreceği şey "prompt uzun ama fark
+            etmiyor" gerçeğidir.
+         ================================================================== -->
+    <section class="fp-section tone-a" id="token-avi" data-title="Token avı">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🎯 Token avı</span>
+          <h2 class="slide-title reveal">Üç prompt yaz, üçünün de bedelini gör</h2>
+          <p class="slide-lead reveal lead-c">
+            Aynı fikri metin, görsel ve video olarak iste. Aracını seç, promptunu yaz —
+            token sayısı ve tahmini bedel anında çıksın.
+          </p>
+        </div>
+
+        <div class="grid cols-3 reveal">
+
+          <div class="card card-top col-card avci" data-tur="metin">
+            <div class="big-emoji">💬</div>
+            <h3 class="m-0">Metin</h3>
+            <label class="label mt">Araç</label>
+            <select class="field av-model">
+              <optgroup label="⭐ En çok kullanılan 5">
+                <option data-in="0.03" data-out="1.35" data-cikti="400">ChatGPT · OpenAI</option>
+                <option data-in="0.02" data-out="0.90" data-cikti="300">Gemini · Google</option>
+                <option data-in="0.05" data-out="2.00" data-cikti="500">Claude · Anthropic</option>
+                <option data-in="0.05" data-out="2.20" data-cikti="450">Grok · xAI</option>
+                <option data-in="0.03" data-out="1.00" data-cikti="400">DeepSeek · DeepSeek</option>
+              </optgroup>
+              <optgroup label="Diğer araçlar">
+                <option data-in="0.03" data-out="1.35" data-cikti="350">Copilot · Microsoft</option>
+                <option data-in="0.03" data-out="1.00" data-cikti="300">Meta AI · Meta</option>
+                <option data-in="0.04" data-out="1.60" data-cikti="350">Le Chat · Mistral AI</option>
+                <option data-in="0.04" data-out="1.50" data-cikti="400">Qwen Chat · Alibaba</option>
+                <option data-in="0.05" data-out="1.60" data-cikti="300">Perplexity</option>
+              </optgroup>
+            </select>
+            <label class="label mt">Bir şey sor ya da yazdır</label>
+            <textarea class="field av-prompt" rows="3">Yapay zekânın su tüketimini 9. sınıf öğrencisine 3 maddede anlat.</textarea>
+            <div class="tok-box mt av-cipler"></div>
+            <div class="av-olcum mt">
+              <span>token</span><b class="av-token">0</b>
+              <span>enerji</span><b><span class="av-wh">0</span> Wh</b>
+              <span>su</span><b class="av-su">0 mL</b>
+            </div>
+            <div class="huge-num center mt av-sarj">—</div>
+            <p class="src mb-0">Metinde hem promptun hem cevabın uzunluğu maliyeti belirler.</p>
+          </div>
+
+          <div class="card card-top col-card avci" data-tur="gorsel">
+            <div class="big-emoji">🖼️</div>
+            <h3 class="m-0">Görsel</h3>
+            <label class="label mt">Araç</label>
+            <select class="field av-model">
+              <optgroup label="⭐ En çok kullanılan 5">
+                <option data-wh="2.90">ChatGPT görsel · OpenAI</option>
+                <option data-wh="2.20">Gemini görsel · Google</option>
+                <option data-wh="2.60">Midjourney</option>
+                <option data-wh="2.50">Grok Imagine · xAI</option>
+                <option data-wh="2.00">Adobe Firefly</option>
+              </optgroup>
+              <optgroup label="Diğer araçlar">
+                <option data-wh="2.90">Microsoft Designer</option>
+                <option data-wh="0.60">Craiyon</option>
+              </optgroup>
+            </select>
+            <label class="label mt">Bir görsel tarif et</label>
+            <textarea class="field av-prompt" rows="3">2050, yenilenebilir enerjiyle çalışan İstanbul; güneş panelli çatılar, izometrik illüstrasyon.</textarea>
+            <div class="tok-box mt av-cipler"></div>
+            <div class="av-olcum mt">
+              <span>token</span><b class="av-token">0</b>
+              <span>enerji</span><b><span class="av-wh">0</span> Wh</b>
+              <span>su</span><b class="av-su">0 mL</b>
+            </div>
+            <div class="huge-num center mt av-sarj">—</div>
+            <p class="src mb-0">Görselde prompt uzunluğunun etkisi neredeyse yok — bedel difüzyon adımlarında.</p>
+          </div>
+
+          <div class="card card-top col-card avci" data-tur="video" data-saniye="5">
+            <div class="big-emoji">🎬</div>
+            <h3 class="m-0">Video</h3>
+            <label class="label mt">Araç</label>
+            <select class="field av-model">
+              <optgroup label="⭐ En çok kullanılan 5">
+                <option data-wh-sn="240">Sora · OpenAI</option>
+                <option data-wh-sn="190">Veo · Google</option>
+                <option data-wh-sn="165">Kling · Kuaishou</option>
+                <option data-wh-sn="130">Runway Gen</option>
+                <option data-wh-sn="150">Hailuo · MiniMax</option>
+              </optgroup>
+            </select>
+            <label class="label mt">Bir video tarif et</label>
+            <textarea class="field av-prompt" rows="3">Rüzgâr türbinlerinin arasından geçen drone çekimi, gün batımı, 5 saniye.</textarea>
+            <div class="tok-box mt av-cipler"></div>
+            <div class="av-olcum mt">
+              <span>token</span><b class="av-token">0</b>
+              <span>enerji</span><b><span class="av-wh">0</span> Wh</b>
+              <span>su</span><b class="av-su">0 mL</b>
+            </div>
+            <div class="huge-num center mt av-sarj">—</div>
+            <p class="src mb-0">Videoda saniye başına maliyet ödenir; prompt yine neredeyse etkisiz.</p>
+          </div>
+
+        </div>
+        <p class="src reveal center mt" id="avciMotor">…</p>
+      </div>
+    </section>
+
+
+    <!-- 7 · KAYNAKÇA -->
+    <section class="fp-section tone-c" id="kaynakca" data-title="Kaynakça">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📚 Kaynakça</span>
+          <h2 class="slide-title reveal">Kaynakça</h2>
+        </div>
+        <div class="card reveal tool-scroll">
+          <ol class="refs">
+            <li>Altman, S. (2025). <em>The gentle singularity</em> (ChatGPT sorgusu ≈ 0,34 Wh, 0,000085 galon su). <a href="https://blog.samaltman.com/the-gentle-singularity" target="_blank" rel="noopener">https://blog.samaltman.com/the-gentle-singularity</a></li>
+            <li>Google. (2025). <em>Measuring the environmental impact of delivering AI at Google scale</em> (Gemini medyan promptu: 0,24 Wh · 0,03 gCO₂e · 0,26 mL). <a href="https://arxiv.org/abs/2508.15734" target="_blank" rel="noopener">https://arxiv.org/abs/2508.15734</a></li>
+            <li>Hugging Face. (2025). <em>AI Energy Score v2 leaderboard</em> (düşünme açık/kapalı ölçümleri; 166 model). <a href="https://huggingface.co/spaces/AIEnergyScore/Leaderboard" target="_blank" rel="noopener">https://huggingface.co/spaces/AIEnergyScore/Leaderboard</a></li>
+            <li>Kamali, O. (2024). <em>Tokenization &amp; multilingual</em>. Hugging Face Blog. <a href="https://huggingface.co/blog/omarkamali/tokenization" target="_blank" rel="noopener">https://huggingface.co/blog/omarkamali/tokenization</a></li>
+            <li>Luccioni, S., Jernite, Y., &amp; Strubell, E. (2024). Power hungry processing: Watts driving the cost of AI deployment? <em>FAccT</em>. <a href="https://arxiv.org/abs/2311.16863" target="_blank" rel="noopener">https://arxiv.org/abs/2311.16863</a></li>
+            <li>ML.ENERGY. (2025). <em>ML.ENERGY leaderboard</em>. <a href="https://ml.energy/leaderboard/" target="_blank" rel="noopener">https://ml.energy/leaderboard/</a></li>
+            <li>Vaswani, A., vd. (2017). Attention is all you need. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">https://arxiv.org/abs/1706.03762</a></li>
+            <li>Wei, J., vd. (2022). Chain-of-thought prompting elicits reasoning in large language models. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">https://arxiv.org/abs/2201.11903</a></li>
+          </ol>
+        </div>
+        <p class="src reveal center mt">Tam kaynakça ve atölye materyalleri: <a href="kaynaklar.html">Kaynaklar</a>.</p>
+      </div>
+    </section>
+
+    <!-- Son slayt (künye · site haritası · telif) ortak.js ile eklenir -->
+  </div></div>
+
+  <script src="ortak.js"></script>
+  <script src="token-lab.js"></script>
+</body>
+</html>

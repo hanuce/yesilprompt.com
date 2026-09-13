@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meraklısına · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="80 dakikalık akışa sığmayan ama merak edenler için duran içerik: yapay zekâ tarihi, Transformer, model eğitimi, veri, güvenlik ve model aileleri." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav"><div class="wrap"></div></nav>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- 0 · ARŞİV GİRİŞİ -->
+    <section class="fp-section tone-hero" id="meraklisina" data-title="Meraklısına">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📦 Akış dışı</span>
+          <h2 class="slide-title reveal">Meraklısına</h2>
+          <p class="slide-lead reveal lead-c">
+            Buradakiler atölyenin <strong>80 dakikasına sığmadı</strong> ama silinmedi.
+            Turing’den Transformer’a tarih, bir modelin nasıl eğitildiği, eğitim verisinin
+            gerçek içeriği, güvenlik ayarı ve model aileleri — hepsi burada duruyor.
+          </p>
+        </div>
+        <div class="grid cols-4 reveal">
+          <div class="card card-top">
+            <div class="big-emoji">🕰️</div>
+            <h3>Tarih ve mimari</h3>
+            <p class="text-soft m-0">Turing’den Transformer’a zaman tüneli; dikkat mekanizması; bir cümlenin modelden geçişi.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🧠</div>
+            <h3>Model nasıl oluşur</h3>
+            <p class="text-soft m-0">Örnek kod, eğitim verisi, epoch animasyonu, The Pile’ın gerçek içeriği, eğitim enerjisi.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🛡️</div>
+            <h3>Güvenlik ve ölçek</h3>
+            <p class="text-soft m-0">RLHF, Anayasal YZ, kırmızı takım; model aileleri ve Yapay Zekâ Çağı.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🌍</div>
+            <h3>Diller ve token</h3>
+            <p class="text-soft m-0">“Model önce İngilizceye mi çeviriyor?” — mitin cevabı ve Türkçe token karşılaştırması.</p>
+          </div>
+        </div>
+        <div class="reveal center mt-lg">
+          <a class="btn btn-primary" href="atolye.html">Atölyeye dön → Faz 1</a>
+        </div>
+      </div>
+      <div class="scroll-hint"><div class="mouse"></div>Gez</div>
+    </section>
+
+    <!-- 1 · TARİHÇE -->
+    <section class="fp-section tone-a" id="tarih" data-title="Turing'den Transformer'a">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🕰️ Tarihsel gelişim</span>
+          <h2 class="slide-title reveal">Düşünen makine fikrinden Transformer’a</h2>
+          <p class="slide-lead reveal lead-c">1950’de Turing’in sorduğu “makineler düşünebilir mi?” sorusundan, bugünkü tüm modellerin temeli olan Transformer’a kadar.</p>
+        </div>
+        <!-- ⚠️ TEK SÜTUN, DİKEY AKIŞ. İki sütuna sıkıştırmak denendi ve geri
+             alındı: kronoloji soldan sağa zıplayınca okunmuyor, kartlar da eziliyor. -->
+        <div class="reveal">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-year">1950</div>
+              <div class="tl-body">
+                <div class="tl-title">Turing: “Makineler düşünebilir mi?”</div>
+                <div class="src mb-0">Alan Turing</div>
+                <p class="text-soft m-0">“Computing Machinery and Intelligence” makalesi ve Taklit Oyunu (Turing Testi): bir makinenin düşünüp düşünemeyeceğini sorgulayan ilk somut fikir.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">1956</div>
+              <div class="tl-body">
+                <div class="tl-title">Yapay Zekâ teriminin doğuşu</div>
+                <div class="src mb-0">Dartmouth Konferansı (McCarthy, Minsky…)</div>
+                <p class="text-soft m-0">“Artificial Intelligence” terimi ilk kez burada kullanıldı; alan resmen kuruldu.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">1974–1993</div>
+              <div class="tl-body">
+                <div class="tl-title">Yapay Zeka Kışı</div>
+                <div class="src mb-0">Hükümetler &amp; araştırma fonları</div>
+                <p class="text-soft m-0">Erken vaatler tutmayınca hükümetler ve kurumlar çeşitli çekincelerle yapay zeka çalışmalarına ayrılan kaynağı kıstı. Finansmanın kuruduğu, ilerlemenin yavaşladığı bu uzun döneme “YZ kışı” denir.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2012</div>
+              <div class="tl-body">
+                <div class="tl-title">AlexNet — derin öğrenme patlaması</div>
+                <div class="src mb-0">Krizhevsky, Sutskever &amp; Hinton</div>
+                <p class="text-soft m-0">ImageNet yarışmasını GPU’larla ezici farkla kazandı; “derin öğrenme çağı” başladı.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2017</div>
+              <div class="tl-body">
+                <div class="tl-title">“Attention Is All You Need” — TRANSFORMER</div>
+                <div class="src mb-0">Vaswani vd. · Google</div>
+                <p class="text-soft m-0">Bugünkü tüm büyük dil modellerinin temeli olan Transformer mimarisi. “Dikkat (attention)” mekanizması, modelin cümledeki tüm kelimeleri aynı anda ilişkilendirmesini sağlar.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2018–2020</div>
+              <div class="tl-body">
+                <div class="tl-title">Modern öncü LLM’lerin çıkışı</div>
+                <div class="src mb-0">OpenAI (GPT) · Google · Anthropic…</div>
+                <p class="text-soft m-0">Transformer büyütüldükçe GPT-2/GPT-3 gibi öncü büyük dil modelleri çıktı; bugünün GPT, Gemini ve Claude gibi modellerinin temeli atıldı.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2022–Günümüz</div>
+              <div class="tl-body">
+                <div class="tl-title">Yapay Zeka Patlaması</div>
+                <div class="src mb-0">OpenAI · Google · Anthropic · Meta · DeepSeek…</div>
+                <p class="text-soft m-0">ChatGPT ile üretken YZ herkesin eline geçti. Artık modeller cevap vermeden önce “düşünüyor” ve metni, resmi, sesi birlikte işliyor. Kullanım ve yatırım patladı.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · TRANSFORMER TEKNOLOJİSİ -->
+    <section class="fp-section tone-a" id="transformer" data-title="Transformer nedir?">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">⚡ Mimari</span>
+          <h2 class="slide-title reveal">Transformer teknolojisi nedir?</h2>
+          <p class="slide-lead reveal lead-c">
+            2017’de yayımlanan “Attention Is All You Need” makalesinde anlatılan tasarım.
+            Bugün adını duyduğun bütün büyük modeller — GPT, Gemini, Claude, Llama — aynı fikrin üzerine kurulu.
+          </p>
+        </div>
+
+        <!-- ÖNCESİ / SONRASI -->
+        <div class="grid cols-2 reveal mb">
+          <div class="card">
+            <div class="chip mb">⏳ Transformer’dan önce</div>
+            <p class="text-soft m-0">
+              Model cümleyi <b>soldan sağa, kelime kelime</b> okurdu. Cümlenin sonuna gelindiğinde
+              baştaki kelimeler solmuş olurdu — “Kediyi gören <u>çocuk</u> koştu, çünkü <u>o</u> korkmuştu”
+              cümlesinde <b>o</b>’nun kime gittiğini bulmakta zorlanırdı. Üstelik kelimeler sırayla
+              işlendiği için eğitim de yavaştı.
+            </p>
+          </div>
+          <div class="card card-top">
+            <div class="chip mb">⚡ Transformer’dan sonra</div>
+            <p class="text-soft m-0">
+              Model cümlenin <b>tamamına aynı anda</b> bakar ve her kelimenin diğerleriyle ne kadar
+              ilgili olduğunu hesaplar. “o” doğrudan “çocuk”a bağlanır — arada kaç kelime olduğu
+              fark etmez. Sıra beklemek gerekmediği için eğitim binlerce ekran kartına bölünebilir.
+            </p>
+          </div>
+        </div>
+
+        <!-- BİR CÜMLE MODELDEN NASIL GEÇER -->
+        <h3 class="center reveal">Bir cümle modelin içinden nasıl geçer?</h3>
+        <div class="grid cols-4 reveal mb">
+          <div class="card card-top">
+            <div class="big-emoji">✂️</div>
+            <h3>1 · Parçalara ayır</h3>
+            <p class="text-soft m-0">Metin önce token denen küçük parçalara bölünür (“Sürdür-üle-bilir”).</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🔢</div>
+            <h3>2 · Sayıya çevir</h3>
+            <p class="text-soft m-0">Her parça bir sayı listesine dönüşür. Yakın anlamlı kelimeler yakın sayılar alır.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🔗</div>
+            <h3>3 · İlişkileri kur</h3>
+            <p class="text-soft m-0">Dikkat katmanları, hangi kelimenin hangisine bağlı olduğunu bulur. Bu, onlarca katman boyunca tekrarlanır.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🎯</div>
+            <h3>4 · Sonrakini tahmin et</h3>
+            <p class="text-soft m-0">Model tek bir şey yapar: sıradaki kelimeyi tahmin eder. Cevabı kelime kelime böyle yazar.</p>
+          </div>
+        </div>
+
+        <!-- NEDEN ÖNEMLİ -->
+        <div class="grid cols-3 reveal">
+          <div class="card">
+            <h3 class="mt-0">🧠 Dikkat: “neye bakmalıyım?”</h3>
+            <p class="text-soft m-0">
+              Transformer’ın kalbi. Model her kelime için “bu cümlede beni en çok hangi kelimeler
+              ilgilendiriyor?” sorusunu sorar ve önemli olanlara ağırlık verir. Dil bilgisi kuralları
+              elle yazılmaz; model bunu milyarlarca örnekten kendisi çıkarır.
+            </p>
+          </div>
+          <div class="card">
+            <h3 class="mt-0">⏩ Aynı anda okumak</h3>
+            <p class="text-soft m-0">
+              Kelimeler birbirini beklemediği için hesap bölünebilir. Asıl devrim budur: bu sayede
+              devasa veriyi makul sürede eğitmek mümkün oldu. <b>Ama aynı paralellik, aynı anda
+              çalışan binlerce çip demektir</b> — enerji faturasının kaynağı da burası.
+            </p>
+          </div>
+          <div class="card">
+            <h3 class="mt-0">📈 Büyüdükçe iyileşmek</h3>
+            <p class="text-soft m-0">
+              Daha çok katman ve daha çok veri, düzenli olarak daha iyi sonuç verdi. Bu beklenmedik
+              düzenlilik, herkesi modelleri büyütmeye itti — ve maliyeti de birlikte büyüttü.
+              Bugün tartışılan enerji sorununun kökeni bu yarıştır.
+            </p>
+          </div>
+        </div>
+        <p class="src reveal center mt">Kaynak: Vaswani vd. (2017), “Attention Is All You Need”.</p>
+      </div>
+    </section>
+
+    <!-- 3 · MODEL NEDİR / NASIL EĞİTİLİR (kod + veri + epoch animasyonu) -->
+    <section class="fp-section tone-b" id="model-nedir" data-title="Model nedir?">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🧠 Temel</span>
+          <h2 class="slide-title reveal">Model nedir, nasıl eğitilir?</h2>
+          <p class="slide-lead reveal lead-c">Model = Transformer’ı çalıştıran kod + eğitimle öğrenilmiş milyarlarca sayı (ağırlık).</p>
+        </div>
+
+        <div class="grid cols-2 items-stretch reveal mb">
+          <!-- MODEL: örnek (pseudo) Python kodu -->
+          <div class="card card-top col-card">
+            <div class="chip mb">🧩 Model</div>
+            <p class="text-soft m-0 mb">Model, Transformer’ı çalıştıran <b>kod</b> + eğitimle ayarlanan milyarlarca <b>ağırlıktır</b>. Kod herkeste aynı olabilir; değerli olan ağırlıklardır. Basitleştirilmiş Python’la iskeleti:</p>
+            <pre class="code-box"><code>import torch
+import torch.nn as nn
+
+class KucukTransformer(nn.Module):
+    def __init__(self, kelime_sayisi, boyut=512, katman=12):
+        super().__init__()
+        self.gomme  = nn.Embedding(kelime_sayisi, boyut)   # kelime → sayı vektörü
+        self.bloklar = nn.ModuleList(
+            TransformerBlok(boyut) for _ in range(katman)  # dikkat katmanları
+        )
+        self.cikis  = nn.Linear(boyut, kelime_sayisi)      # → sonraki kelime tahmini
+
+    def forward(self, x):
+        h = self.gomme(x)
+        for blok in self.bloklar:          # katman katman işle
+            h = blok(h)
+        return self.cikis(h)               # her kelime için olasılık
+
+model = KucukTransformer(kelime_sayisi=50000)
+# Ağırlıklar RASTGELE başlar; eğitimle anlamlı hâle gelir.</code></pre>
+          </div>
+
+          <!-- VERİ: örnek eğitim verisi -->
+          <div class="card card-top col-card">
+            <div class="chip mb">📚 Veri</div>
+            <p class="text-soft m-0 mb">Modele “bir sonraki kelimeyi” tahmin ettiririz. Örnek bir eğitim verisi (girdi → hedef):</p>
+            <pre class="code-box"><code>"Türkiye’nin başkenti"        → "Ankara"
+"Bir elin nesi var, iki"      → "elin"
+"Su, 100 derecede"            → "kaynar"
+"Yapay zeka veriden"          → "öğrenir"
+"Güneş doğudan"               → "doğar"</code></pre>
+            <p class="src mt mb-0">Milyarlarca böyle örnek; her biri ağırlıkları azıcık düzeltir. “Her veri” değil, temizlenip <b>seçilmiş</b> veri.</p>
+          </div>
+        </div>
+
+        <!-- EĞİTİM: epoch animasyonu -->
+        <div class="card card-top reveal">
+          <div class="chip mb">🔁 Eğitim</div>
+          <p class="text-soft m-0 mb">Bir <b>epoch</b>, tüm verinin baştan sona bir kez geçmesidir. Model her kelimeyi sırayla okur, bir sonrakini tahmin eder, hatasına göre ağırlıklarını minik adımlarla düzeltir — ve bunu tekrar tekrar (epoch epoch) yapar. Aşağıdaki tarama, verinin baştan sona okunduğu <b>bir epoch’u</b> canlandırır; döngü her tekrarladığında yeni bir epoch demektir:</p>
+          <div class="epoch-track" aria-hidden="true">
+            <span class="epoch-tok">Yapay</span>
+            <span class="epoch-tok">zeka</span>
+            <span class="epoch-tok">veriyi</span>
+            <span class="epoch-tok">baştan</span>
+            <span class="epoch-tok">sona</span>
+            <span class="epoch-tok">okur,</span>
+            <span class="epoch-tok">tahmin</span>
+            <span class="epoch-tok">eder,</span>
+            <span class="epoch-tok">öğrenir.</span>
+          </div>
+          <div class="between mt">
+            <span class="src">← veri başı</span>
+            <span class="src">her epoch’ta ağırlıklar biraz daha iyileşir</span>
+            <span class="src">veri sonu →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · VERİ (GPT-3 karışımı) -->
+    <section class="fp-section tone-c" id="veri-gpt3" data-title="Veri">
+      <div class="fp-inner">
+        <div class="grid cols-2 items-center">
+          <div class="reveal">
+            <span class="eyebrow">📦 Hangi veriyle?</span>
+            <h2 class="slide-title">Her veri değil — <span class="text-green">seçilmiş</span> veri</h2>
+            <p class="slide-lead">
+              Modeller internetteki her şeyi gelişigüzel yutmaz. Veri temizlenir, elenir ve
+              <strong>kalitesine göre farklı sayıda okunur</strong>. Yandaki liste, açık kaynaklı
+              <b>The Pile</b> veri kümesinin gerçek içeriğidir: hangi kaynaktan ne kadar alındığı
+              ve her birinin eğitim boyunca kaç kez okunduğu tek tek yayımlanmıştır.
+            </p>
+            <p class="slide-lead">
+              Dikkat et: en büyük kaynak olan web taraması <em>bir kez</em> okunuyor; listenin
+              en küçüklerinden Wikipedia ise <em>üç kez</em>. Boyut değil, <strong>güvenilirlik</strong>
+              belirliyor.
+            </p>
+            <p class="src">Kalan %7’lik pay 10 kaynağa dağılır: film altyazıları, matematik
+              problemleri, Avrupa Parlamentosu çevirileri, Ubuntu sohbet kayıtları, HackerNews,
+              YouTube altyazıları, felsefe makaleleri, ABD sağlık araştırma özetleri, BookCorpus2
+              ve Enron şirketinin mahkemeye sunulmuş e-postaları.</p>
+            <p class="src kaynak-satir">Gao, L., vd. (2020). The Pile: An 800GB dataset of diverse text for language modeling. <a href="https://arxiv.org/abs/2101.00027" target="_blank" rel="noopener">https://arxiv.org/abs/2101.00027</a></p>
+          </div>
+          <div class="reveal">
+            <div class="card card-top tool-scroll">
+              <!-- ⚠️ GPT-3'ün karışımı KULLANILMAZ: makalesindeki "Books1"/"Books2"
+                   satırlarının ne olduğu hiç açıklanmadı. The Pile ise 22 kaynağının
+                   hepsini adıyla, oranıyla ve kaç kez okunduğuyla yayımlar.
+                   'Kaç kez okundu' = o kaynağın eğitim boyunca tekrar sayısı (epoch). -->
+              <table class="table">
+                <thead><tr><th>Veri kaynağı</th><th class="num">Boyut</th>
+                    <th class="num">Pay</th><th class="num">Kaç kez okundu</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Web sayfaları (Pile-CC)</b><div class="src">Common Crawl’ın süzülmüş hâli: internetin açık taraması.</div></td>
+                      <td class="num">227 GB</td><td class="num">%18,1</td>
+                      <td class="num text-green"><b>1×</b></td></tr>
+                  <tr><td><b>PubMed Central</b><div class="src">Tıp ve biyoloji makalelerinin tam metinleri.</div></td>
+                      <td class="num">90 GB</td><td class="num">%14,4</td>
+                      <td class="num text-green"><b>2×</b></td></tr>
+                  <tr><td><b>Books3 (kitaplar)</b><div class="src">Kitap arşivi. Telif hakkı davaları sonrası veri kümesinden çıkarıldı.</div></td>
+                      <td class="num">101 GB</td><td class="num">%12,1</td>
+                      <td class="num text-green"><b>1,5×</b></td></tr>
+                  <tr><td><b>OpenWebText2</b><div class="src">Reddit’te paylaşılıp beğenilen bağlantıların metinleri.</div></td>
+                      <td class="num">63 GB</td><td class="num">%10,0</td>
+                      <td class="num text-green"><b>2×</b></td></tr>
+                  <tr><td><b>arXiv</b><div class="src">Fizik, matematik, bilgisayar bilimi ön baskıları.</div></td>
+                      <td class="num">56 GB</td><td class="num">%9,0</td>
+                      <td class="num text-green"><b>2×</b></td></tr>
+                  <tr><td><b>GitHub</b><div class="src">Açık kaynak kod. Modellerin kod yazmayı öğrendiği yer.</div></td>
+                      <td class="num">95 GB</td><td class="num">%7,6</td>
+                      <td class="num text-green"><b>1×</b></td></tr>
+                  <tr><td><b>FreeLaw</b><div class="src">ABD mahkeme kararları ve hukuk metinleri.</div></td>
+                      <td class="num">51 GB</td><td class="num">%6,1</td>
+                      <td class="num text-green"><b>1,5×</b></td></tr>
+                  <tr><td><b>Stack Exchange</b><div class="src">Soru-cevap siteleri; “nasıl yapılır” bilgisinin kaynağı.</div></td>
+                      <td class="num">32 GB</td><td class="num">%5,1</td>
+                      <td class="num text-green"><b>2×</b></td></tr>
+                  <tr><td><b>Patentler (USPTO)</b><div class="src">ABD patent başvurularının teknik açıklamaları.</div></td>
+                      <td class="num">23 GB</td><td class="num">%3,7</td>
+                      <td class="num text-green"><b>2×</b></td></tr>
+                  <tr><td><b>PubMed özetleri</b><div class="src">Tıp makalelerinin kısa özetleri.</div></td>
+                      <td class="num">19 GB</td><td class="num">%3,1</td>
+                      <td class="num text-green"><b>2×</b></td></tr>
+                  <tr><td><b>Project Gutenberg</b><div class="src">Telifi düşmüş klasik edebiyat; serbestçe kullanılabilir.</div></td>
+                      <td class="num">11 GB</td><td class="num">%2,2</td>
+                      <td class="num text-green"><b>2,5×</b></td></tr>
+                  <tr><td><b>Wikipedia (İngilizce)</b><div class="src">Listenin en küçüklerinden — ama EN ÇOK okunanı. Kalite böyle ödüllendirilir.</div></td>
+                      <td class="num">6 GB</td><td class="num">%1,5</td>
+                      <td class="num text-green"><b>3×</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · VERİ PROJELERİ -->
+    <section class="fp-section tone-a" id="veri-projeleri" data-title="Veriyi kim düzenliyor?">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🗂️ Gerçek veri kümeleri</span>
+          <h2 class="slide-title reveal">Veriyi kim derliyor, kim etiketliyor?</h2>
+          <p class="slide-lead reveal lead-c">Kitaplar, fotoğraflar, kodlar… İnsanların tek tek toplayıp düzenlediği, adı bilinen gerçek projeler.</p>
+        </div>
+        <div class="grid cols-3 reveal">
+          <div class="card">
+            <div class="between"><h3 class="m-0">ImageNet</h3><span class="ref-tag">2009</span></div>
+            <div class="src mb">Stanford · Fei-Fei Li</div>
+            <p class="text-soft m-0">~14 milyon görsel, 1000 sınıf. Görseller insanlar tarafından (Amazon Mechanical Turk) ELLE etiketlendi. Görsel tanımanın temeli oldu.</p>
+          </div>
+          <div class="card">
+            <div class="between"><h3 class="m-0">LAION-5B</h3><span class="ref-tag">2022</span></div>
+            <div class="src mb">LAION (açık topluluk)</div>
+            <p class="text-soft m-0">~5,85 milyar görsel–metin çifti. Stable Diffusion gibi görsel üreten modeller bununla eğitildi.</p>
+          </div>
+          <div class="card">
+            <div class="between"><h3 class="m-0">Common Crawl</h3><span class="ref-tag">2008→</span></div>
+            <div class="src mb">Common Crawl (kâr amacı gütmeyen)</div>
+            <p class="text-soft m-0">İnternetin petabaytlarca açık taraması. Metin modellerinin ham kaynağı; ama ham hâliyle değil, temizlenerek kullanılır.</p>
+          </div>
+          <div class="card">
+            <div class="between"><h3 class="m-0">The Pile</h3><span class="ref-tag">2020</span></div>
+            <div class="src mb">EleutherAI</div>
+            <p class="text-soft m-0">825 GB metin: makale, kod, kitap, mahkeme kararı, soru-cevap. İçindeki 22 kaynağın her birini adıyla ve oranıyla yayımladığı için eğitim verisinin en şeffaf örneği.</p>
+          </div>
+          <div class="card">
+            <div class="between"><h3 class="m-0">C4</h3><span class="ref-tag">2020</span></div>
+            <div class="src mb">Google</div>
+            <p class="text-soft m-0">Common Crawl’ın temizlenmiş sürümü (~750 GB): tekrar eden, anlamsız ve uygunsuz içerik ayıklanmış hâli.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · EĞİTİM ENERJİSİ -->
+    <section class="fp-section tone-b" id="egitim-enerjisi" data-title="Eğitim enerjisi">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">⚡ Tek seferlik ama dev</span>
+          <h2 class="slide-title reveal">Bir modeli eğitmek ne harcar?</h2>
+          <p class="slide-lead reveal lead-c">Bilinen modeller (GPT · Llama · Claude · Qwen · DeepSeek) telefon şarjı ve baraj üretimi diliyle.</p>
+        </div>
+        <!-- data-wh = eğitimin toplam enerjisi (Wh). İki metrik kutusunu
+             modeller.js doldurur: milyon telefon şarjı ve baraj üretimi.
+             ⚠️ "tahmin" yazan satırların RESMÎ verisi YOKTUR. -->
+        <div class="grid cols-3 reveal">
+          <div class="card card-top egitim-kart" data-wh="1.287e9">
+            <h3 class="m-0">GPT (GPT-3, 175B)</h3>
+            <div class="src mb">~552 t CO₂ · Patterson vd., 2021</div>
+            <div class="metric mb"><div class="icon">📱</div>
+              <div class="v egitim-sarj"></div><div class="l">telefon şarjı kadar</div></div>
+            <div class="metric"><div class="icon">🏞️</div>
+              <div class="v v-sm egitim-baraj"></div><div class="l">eşdeğeri</div></div>
+            <p class="src mt mb-0">Binlerce GPU, haftalarca; tek seferlik.</p>
+          </div>
+          <div class="card card-top egitim-kart" data-wh="2.638e9">
+            <h3 class="m-0">Llama (Meta)</h3>
+            <div class="src mb">~1.015 t CO₂ · Meta model kartları</div>
+            <div class="metric mb"><div class="icon">📱</div>
+              <div class="v egitim-sarj"></div><div class="l">telefon şarjı kadar</div></div>
+            <div class="metric"><div class="icon">🏞️</div>
+              <div class="v v-sm egitim-baraj"></div><div class="l">eşdeğeri</div></div>
+            <p class="src mt mb-0">~2048 A100 GPU; Llama 2-70B tek başına ~1,7 milyon GPU-saat.</p>
+          </div>
+          <div class="card card-top egitim-kart" data-wh="8.0e9">
+            <h3 class="m-0">Claude (Anthropic)</h3>
+            <div class="src mb">tahmin · Resmî veri yok</div>
+            <div class="metric mb"><div class="icon">📱</div>
+              <div class="v egitim-sarj"></div><div class="l">telefon şarjı kadar</div></div>
+            <div class="metric"><div class="icon">🏞️</div>
+              <div class="v v-sm egitim-baraj"></div><div class="l">eşdeğeri</div></div>
+            <p class="src mt mb-0">Anthropic enerji rakamı yayımlamaz; en büyük modeller sınıfı için yapılmış bir tahmindir.</p>
+          </div>
+          <div class="card card-top egitim-kart" data-wh="3.5e9">
+            <h3 class="m-0">Qwen (Alibaba)</h3>
+            <div class="src mb">tahmin · Resmî veri yok</div>
+            <div class="metric mb"><div class="icon">📱</div>
+              <div class="v egitim-sarj"></div><div class="l">telefon şarjı kadar</div></div>
+            <div class="metric"><div class="icon">🏞️</div>
+              <div class="v v-sm egitim-baraj"></div><div class="l">eşdeğeri</div></div>
+            <p class="src mt mb-0">Çok dilli, açık ağırlıklı büyük bir aile; rakam benzer modellerden tahmin edilmiştir.</p>
+          </div>
+          <div class="card card-top egitim-kart" data-wh="2.0e9">
+            <h3 class="m-0">DeepSeek (V3)</h3>
+            <div class="src mb">düşük maliyet vurgusu · DeepSeek-V3 teknik raporu, 2024</div>
+            <div class="metric mb"><div class="icon">📱</div>
+              <div class="v egitim-sarj"></div><div class="l">telefon şarjı kadar</div></div>
+            <div class="metric"><div class="icon">🏞️</div>
+              <div class="v v-sm egitim-baraj"></div><div class="l">eşdeğeri</div></div>
+            <p class="src mt mb-0">~2,79 milyon H800 GPU-saat; verimlilikle dikkat çekti.</p>
+          </div>
+        </div>
+        <p class="src kaynak-satir">
+          Patterson, D., vd. (2021). Carbon emissions and large neural network training. <a href="https://arxiv.org/abs/2104.10350" target="_blank" rel="noopener">https://arxiv.org/abs/2104.10350</a><br>
+          Meta. (2024). <em>Llama 3.1 model card</em> (39,3 M GPU-saat; 11.390 tCO₂e). <a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md" target="_blank" rel="noopener">https://github.com/meta-llama/llama-models</a><br>
+          DeepSeek-AI. (2024). <em>DeepSeek-V3 technical report</em> (2,788 M H800 GPU-saat). <a href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">https://arxiv.org/abs/2412.19437</a>
+        </p>
+        <p class="src reveal center">“Tahmin” işaretli rakamlar resmî değildir; benzer büyüklükteki modellerden hesaplanmıştır.</p>
+      </div>
+    </section>
+
+    <!-- 7 · GÜVENLİK & ETİK AYARI -->
+    <section class="fp-section tone-c" id="guvenlik" data-title="Güvenlik & etik">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🛡️ Hizalama (alignment)</span>
+          <h2 class="slide-title reveal">Model nasıl “sakıncalı işlerden” sakındırılıyor?</h2>
+          <p class="slide-lead reveal lead-c">Ham model her şeyi söyleyebilir. Güvenlik, mahremiyet, müstehcenlik ve etik için ayrı bir eğitimden geçer.</p>
+        </div>
+        <div class="grid cols-4 reveal">
+          <div class="card card-top">
+            <div class="big-emoji">👍</div>
+            <h3>İnsan geri bildirimi (RLHF)</h3>
+            <p class="text-soft m-0">İnsanlar cevapları puanlar; model “yardımcı ve zararsız” olana yönlendirilir.</p>
+            <p class="src mt mb-0">Örn. OpenAI InstructGPT — Ouyang vd. (2022).</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">📜</div>
+            <h3>Anayasal YZ</h3>
+            <p class="text-soft m-0">Modele yazılı ilkeler (“anayasa”) verilir; kendi cevabını bu ilkelere göre eleştirip düzeltir.</p>
+            <p class="src mt mb-0">Örn. Anthropic — Bai vd. (2022).</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🧨</div>
+            <h3>Kırmızı takım</h3>
+            <p class="text-soft m-0">Uzmanlar modeli bilerek kötü promptlarla (silah tarifi, nefret, müstehcenlik) sınar; açıklar kapatılır.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🚦</div>
+            <h3>Filtre &amp; mahremiyet</h3>
+            <p class="text-soft m-0">Girdi/çıktı ayrı sınıflandırıcılardan geçer; yasa dışı içerik ve kişisel veri ayıklanır.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · NEDEN HERKES YAPAMIYOR + AİLELER -->
+    <section class="fp-section tone-a" id="aileler" data-title="Model aileleri">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🏢 Ölçek</span>
+          <h2 class="slide-title reveal">Neden herkes model yapamıyor?</h2>
+          <p class="slide-lead reveal lead-c">
+            En büyük modellerden birini sıfırdan eğitmek yüz milyonlarca dolar ve devasa enerji ister. Bu yüzden dünyada
+            bunu yapabilen yalnızca birkaç aile var. İşte başlıcaları ve menşeleri:
+          </p>
+        </div>
+        <!-- Kartlar bayrak emojisiyle çizilir; logo dosyası kullanılmaz. -->
+        <div class="grid cols-3 reveal">
+          <div class="card card-top">
+            <div class="big-emoji">🇺🇸</div>
+            <h3 class="m-0">ChatGPT (GPT)</h3>
+            <div class="src mb">ABD · OpenAI</div>
+            <p class="text-soft m-0">Üretken yapay zekâyı 2022’de ChatGPT ile kamuoyuna taşıyan GPT ailesi.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🇺🇸</div>
+            <h3 class="m-0">Gemini</h3>
+            <div class="src mb">ABD · Google DeepMind</div>
+            <p class="text-soft m-0">Metni, görseli, sesi ve videoyu birlikte işleyen aile; arama ve Android’e gömülü.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🇺🇸</div>
+            <h3 class="m-0">Claude</h3>
+            <div class="src mb">ABD · Anthropic</div>
+            <p class="text-soft m-0">Güvenlik odaklı; “Anayasal YZ” (Constitutional AI) yaklaşımını geliştirdi.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🇺🇸</div>
+            <h3 class="m-0">Grok</h3>
+            <div class="src mb">ABD · xAI</div>
+            <p class="text-soft m-0">Elon Musk’ın xAI’si; X (eski Twitter) platformuna entegre çalışır.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🇺🇸</div>
+            <h3 class="m-0">Llama</h3>
+            <div class="src mb">ABD · Meta</div>
+            <p class="text-soft m-0">Açık ağırlıklı (open-weight): indirip kendi cihazında çalıştırabilirsin.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🇫🇷</div>
+            <h3 class="m-0">Mistral</h3>
+            <div class="src mb">Fransa · Mistral AI</div>
+            <p class="text-soft m-0">Avrupa’nın YZ egemenliği; Paris merkezli, açık ağırlıklı modeller.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🇨🇳</div>
+            <h3 class="m-0">DeepSeek</h3>
+            <div class="src mb">Çin · DeepSeek (High-Flyer)</div>
+            <p class="text-soft m-0">Hangzhou’da 2023’te kuruldu; düşük maliyetli güçlü modelleriyle dikkat çekti.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🇨🇳</div>
+            <h3 class="m-0">Qwen</h3>
+            <div class="src mb">Çin · Alibaba</div>
+            <p class="text-soft m-0">Alibaba’nın çok dilli, açık ağırlıklı ailesi (Tongyi Qianwen).</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🇺🇸</div>
+            <h3 class="m-0">Nemotron</h3>
+            <div class="src mb">ABD · NVIDIA</div>
+            <p class="text-soft m-0">GPU üreticisi NVIDIA’nın açık ailesi; DeepSeek R1’den hızlandırılmış sürümleri var.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 · YAPAY ZEKA ÇAĞI (etkiler + değer grafiği) -->
+    <section class="fp-section tone-b" id="cag" data-title="Yapay Zeka Çağı">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🌍 Yapay Zeka Çağı</span>
+          <h2 class="slide-title reveal">Yapay Zeka Çağı</h2>
+          <p class="slide-lead reveal lead-c">YZ artık eğitimden sağlığa, üretimden savunmaya her alanda. Ve onu üreten şirketler dünyanın en değerlileri arasında — <b>Ağustos 2026</b> itibarıyla.</p>
+        </div>
+
+        <div class="grid cols-3 reveal mb-lg">
+          <div class="card card-top">
+            <div class="big-emoji">🎓</div>
+            <h3 class="m-0">Eğitim</h3>
+            <p class="text-soft m-0">Khan Academy’nin “Khanmigo” yapay zeka öğretmeni öğrencilere birebir özel ders veriyor; öğretmenler ders planı ve soruları YZ ile hazırlıyor.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🏭</div>
+            <h3 class="m-0">Üretim &amp; Sanayi</h3>
+            <p class="text-soft m-0">Fabrikalarda YZ’li görüntü işleme, üretim hattındaki kusurlu parçaları insandan hızlı ayıklıyor; arızalar olmadan önce tahmin ediliyor (kestirimci bakım).</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">💼</div>
+            <h3 class="m-0">İstihdam</h3>
+            <p class="text-soft m-0">Müşteri hizmetleri, çağrı merkezi ve yazılım geliştirmede YZ asistanları işin bir kısmını üstlendi; bazı işler dönüşürken “prompt” gibi yeni meslekler doğdu.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🛡️</div>
+            <h3 class="m-0">Savunma Sanayi</h3>
+            <p class="text-soft m-0">İnsansız hava araçları (İHA/SİHA) hedef tanıma ve otonom seyir için YZ kullanıyor; karar-destek ve durumsal farkındalık sistemleri yaygınlaştı.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🩺</div>
+            <h3 class="m-0">Sağlık</h3>
+            <p class="text-soft m-0">YZ, mamografi ve röntgende kanseri erken yakalıyor; DeepMind’ın AlphaFold’u 200M+ proteinin yapısını çözerek ilaç geliştirmeyi hızlandırdı.</p>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🚗</div>
+            <h3 class="m-0">Günlük Yaşam</h3>
+            <p class="text-soft m-0">Telefon kamerasında gece modu, navigasyonda trafik tahmini, çeviri ve sesli asistanlar hep YZ. Waymo robotaksileri ABD’de ücretli yolcu taşıyor.</p>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="card card-top">
+            <div class="label">YZ şirketlerinin değeri vs. Türkiye ekonomisi — yıllara göre eğim (trilyon $)</div>
+            <p class="text-soft m-0 mb">Karşılaştırma için: en değerli YZ şirketleri, T.C. ekonomi büyüklüğü (GSYİH) ve TCMB rezervi aynı eksende.</p>
+            <!-- Grafiği modeller.js çizer. anahtar = CSS renk sınıfı (era-<anahtar>);
+                 degerler[i], yillar[i] ile eşleşir. null = o yıl veri YOK.
+                 Değerler trilyon dolardır ve yaklaşıktır; piyasa değişir. -->
+            <script type="application/json" id="cagVerisi">
+            {
+              "yillar": [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+              "seriler": [
+                { "anahtar": "nvidia",    "ad": "NVIDIA",
+                  "degerler": [0.14, 0.32, 0.73, 0.36, 1.22, 3.28, 4.50, 5.14] },
+                { "anahtar": "openai",    "ad": "OpenAI",
+                  "degerler": [null, null, 0.014, 0.020, 0.029, 0.157, 0.50, 0.852] },
+                { "anahtar": "anthropic", "ad": "Anthropic",
+                  "degerler": [null, null, null, 0.004, 0.005, 0.018, 0.183, 0.965] },
+                { "anahtar": "trgdp",     "ad": "T.C. Ekonomi Büyüklüğü (GSYİH)",
+                  "degerler": [0.76, 0.72, 0.82, 0.91, 1.12, 1.32, 1.44, 1.64] },
+                { "anahtar": "trrez",     "ad": "T.C. Merkez Bankası Rezervi",
+                  "degerler": [0.11, 0.09, 0.11, 0.13, 0.14, 0.16, 0.17, 0.164] }
+              ]
+            }
+            </script>
+            <div id="eraChart"></div>
+          </div>
+        </div>
+        <p class="src kaynak-satir">
+          CompaniesMarketCap. (2026). <em>NVIDIA (NVDA) — market capitalization history</em> [veri]. <a href="https://companiesmarketcap.com/nvidia/marketcap/" target="_blank" rel="noopener">companiesmarketcap.com/nvidia/marketcap/</a><br>
+          Crunchbase. (2026). <em>OpenAI — funding rounds</em> [şirket profili]. <a href="https://www.crunchbase.com/organization/openai" target="_blank" rel="noopener">https://www.crunchbase.com/organization/openai</a><br>
+          Crunchbase. (2026). <em>Anthropic — funding rounds</em> [şirket profili]. <a href="https://www.crunchbase.com/organization/anthropic" target="_blank" rel="noopener">https://www.crunchbase.com/organization/anthropic</a><br>
+          International Monetary Fund. (2026). <em>World Economic Outlook database</em> [veri kümesi]. <a href="https://www.imf.org/en/Publications/SPROLLs/world-economic-outlook-databases" target="_blank" rel="noopener">https://www.imf.org/</a><br>
+          Türkiye Cumhuriyet Merkez Bankası. (2026). <em>Uluslararası rezervler</em> [veri]. <a href="https://evds2.tcmb.gov.tr/" target="_blank" rel="noopener">evds2.tcmb.gov.tr</a>
+        </p>
+        <p class="src reveal center">Değerler yaklaşıktır ve piyasa ile birlikte değişir.</p>
+      </div>
+    </section>
+
+    <!-- 10 · DİLLER VE TOKEN (Token Lab'dan buraya taşındı) -->
+    <section class="fp-section tone-a" id="diller" data-title="Diller ve token">
+      <div class="fp-inner">
+        <div class="grid cols-2 items-center">
+          <div class="reveal">
+            <span class="eyebrow">🌍 Mit yıkımı</span>
+            <h2 class="slide-title">Bütün dilleri İngilizceye mi çeviriyor?</h2>
+            <p class="slide-lead"><strong>Hayır.</strong> Ayrı bir çeviri adımı <em>yoktur</em>.</p>
+            <ul class="list-soft">
+              <li>Model, metni <strong>kendi dilinde</strong> doğrudan küçük parçalara böler.</li>
+              <li>Aynı model onlarca dili aynı anda işleyebilir; çünkü eğitim verisinde o diller de vardı.</li>
+              <li>Yeni nesil parçalayıcılar (o200k, Gemini) kısa ve yaygın kelimelerde Türkçe–İngilizce farkını büyük ölçüde kapattı.</li>
+              <li>Fark, <strong>uzun, ekli, nadir</strong> kelimelerde belirginleşir.</li>
+            </ul>
+            <p class="text-soft">
+              <b>İlginç nüans:</b> Modelin ara katmanlarında kavramlar çoğu zaman ortak bir iç temsile
+              yaklaşır — ama bu bir ön-çeviri değildir ve <b>token sayısını değiştirmez</b>.
+            </p>
+            <p class="src kaynak-satir">Kamali, O. (2024). <em>Tokenization &amp; multilingual</em>. Hugging Face Blog. <a href="https://huggingface.co/blog/omarkamali/tokenization" target="_blank" rel="noopener">https://huggingface.co/blog/omarkamali/tokenization</a></p>
+          </div>
+          <div class="reveal">
+            <div class="card card-top">
+              <div class="label">Kendi kelime çiftini ekle</div>
+              <div class="grid cols-2 grid-tight mb">
+                <input id="pairTr" class="field" type="text" placeholder="Türkçe kelime" aria-label="Türkçe kelime">
+                <input id="pairEn" class="field" type="text" placeholder="İngilizce karşılığı" aria-label="İngilizce karşılığı">
+              </div>
+              <button class="btn btn-ghost btn-sm mb" id="pairAdd" type="button">+ Tabloya ekle</button>
+              <!-- Token sayılarını modeller.js gerçek tokenizer ile doldurur.
+                   Eklenen çiftler oturum içidir; kaydedilmez. -->
+              <table class="table" id="pairTable">
+                <thead><tr><th>Türkçe</th><th class="num">tok</th>
+                    <th>İngilizce</th><th class="num">tok</th></tr></thead>
+                <tbody>
+                  <tr data-tr="Su" data-en="Water">
+                    <td class="text-soft">Su</td><td class="num text-green"></td>
+                    <td class="text-soft">Water</td><td class="num text-water"></td></tr>
+                  <tr data-tr="Merhaba" data-en="Hello">
+                    <td class="text-soft">Merhaba</td><td class="num text-green"></td>
+                    <td class="text-soft">Hello</td><td class="num text-water"></td></tr>
+                  <tr data-tr="Sürdürülebilirlik" data-en="Sustainability">
+                    <td class="text-soft">Sürdürülebilirlik</td><td class="num text-green"></td>
+                    <td class="text-soft">Sustainability</td><td class="num text-water"></td></tr>
+                  <tr data-tr="evlerimizdekilerden" data-en="from those in our houses">
+                    <td class="text-soft">evlerimizdekilerden</td><td class="num text-green"></td>
+                    <td class="text-soft">from those in our houses</td><td class="num text-water"></td></tr>
+                </tbody>
+              </table>
+              <p class="src">“Su” ve “Water” neredeyse aynı; “Sürdürülebilirlik” değil.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · SHOT TİPLERİ (Faz 4'ten arşive taşındı) -->
+    <section class="fp-section tone-c" id="shot" data-title="Shot tipleri">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">🎯 Örnekle öğretme</span>
+          <h2 class="slide-title reveal">Shot tipleri: zero · one · few</h2>
+          <p class="slide-lead reveal lead-c">
+            Modele kaç örnek verdiğine göre adlandırılır. İyi bir prompt mühendisliği konusudur —
+            ama <strong>yeşil</strong> prompt konusu değildir: hiçbir maliyet kaldıracını doğrudan
+            düşürmez. Bu yüzden atölye akışından çıkarılıp buraya alındı.
+          </p>
+        </div>
+        <div class="grid cols-3 reveal">
+          <div class="card card-top">
+            <div class="big-emoji">0️⃣</div>
+            <div class="chip mb">Zero-shot</div>
+            <h3 class="m-0">Örneksiz</h3>
+            <p class="text-soft">Hiç örnek/stil vermeden doğrudan ne çizilmesini istediğini yazarsın. Model stili kendi seçer.</p>
+            <div class="prompt-box prompt-good">Bir bardak suyun içinde yüzen küçük bir yeşil yaprak çiz.</div>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">1️⃣</div>
+            <div class="chip mb">One-shot</div>
+            <h3 class="m-0">Tek örnek</h3>
+            <p class="text-soft">Tek bir stil örneği vererek istediğin görünümü gösterir, sonra yeni nesneyi istersin.</p>
+            <div class="prompt-box prompt-good">Örnek stil: “düz vektör, pastel renkler, kalın dış çizgi.”
+Aynı stilde: bir bisiklet çiz.</div>
+          </div>
+          <div class="card card-top">
+            <div class="big-emoji">🔢</div>
+            <div class="chip mb">Few-shot</div>
+            <h3 class="m-0">Birkaç örnek</h3>
+            <p class="text-soft">Birkaç örnekle stili netçe öğretirsin; üretilen görsellerde tutarlılık artar.</p>
+            <div class="prompt-box prompt-good">elma → düz vektör, pastel, kalın çizgi
+ev → düz vektör, pastel, kalın çizgi
+kedi → düz vektör, pastel, kalın çizgi
+ağaç →</div>
+          </div>
+        </div>
+        <p class="src reveal center mt">Kaynak: Brown vd. (2020), “Language models are few-shot learners”.</p>
+      </div>
+    </section>
+
+    <!-- 12 · BU SAYFANIN KAYNAKÇASI -->
+    <section class="fp-section tone-c" id="kaynakca" data-title="Kaynakça">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📚 Kaynakça</span>
+          <h2 class="slide-title reveal">Kaynakça</h2>
+        </div>
+        <div class="card reveal tool-scroll">
+          <ol class="refs">
+            <li>Bai, Y., vd. (2022). Constitutional AI: Harmlessness from AI feedback. <em>Anthropic</em>. <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">https://arxiv.org/abs/2212.08073</a></li>
+            <li>Brown, T. B., vd. (2020). Language models are few-shot learners. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener">https://arxiv.org/abs/2005.14165</a></li>
+            <li>CompaniesMarketCap. (2026). <em>NVIDIA (NVDA) — market capitalization history</em> [veri]. <a href="https://companiesmarketcap.com/nvidia/marketcap/" target="_blank" rel="noopener">companiesmarketcap.com/nvidia/marketcap/</a></li>
+            <li>Crunchbase. (2026). <em>Anthropic — funding rounds</em> [şirket profili]. <a href="https://www.crunchbase.com/organization/anthropic" target="_blank" rel="noopener">https://www.crunchbase.com/organization/anthropic</a></li>
+            <li>Crunchbase. (2026). <em>OpenAI — funding rounds</em> [şirket profili]. <a href="https://www.crunchbase.com/organization/openai" target="_blank" rel="noopener">https://www.crunchbase.com/organization/openai</a></li>
+            <li>DeepSeek-AI. (2024). <em>DeepSeek-V3 technical report</em> (2,788 M H800 GPU-saat). <a href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">https://arxiv.org/abs/2412.19437</a></li>
+            <li>Epoch AI. (2026). <em>Notable AI models</em> [veri kümesi]. <a href="https://epoch.ai/data/notable-ai-models" target="_blank" rel="noopener">https://epoch.ai/data/notable-ai-models</a></li>
+            <li>Gao, L., vd. (2020). The Pile: An 800GB dataset of diverse text for language modeling. <a href="https://arxiv.org/abs/2101.00027" target="_blank" rel="noopener">https://arxiv.org/abs/2101.00027</a></li>
+            <li>International Monetary Fund. (2026). <em>World Economic Outlook database</em> [veri kümesi]. <a href="https://www.imf.org/en/Publications/SPROLLs/world-economic-outlook-databases" target="_blank" rel="noopener">https://www.imf.org/</a></li>
+            <li>Kamali, O. (2024). <em>Tokenization &amp; multilingual</em>. Hugging Face Blog. <a href="https://huggingface.co/blog/omarkamali/tokenization" target="_blank" rel="noopener">https://huggingface.co/blog/omarkamali/tokenization</a></li>
+            <li>Luccioni, S., Viguier, S., &amp; Ligozat, A.-L. (2022). Estimating the carbon footprint of BLOOM. <em>JMLR</em>. <a href="https://www.jmlr.org/papers/volume24/23-0069/23-0069.pdf" target="_blank" rel="noopener">https://www.jmlr.org/papers/volume24/23-0069/23-0069.pdf</a></li>
+            <li>Meta. (2024). <em>Llama 3.1 model card</em> (39,3 M GPU-saat; 11.390 tCO₂e yer bazlı, 0 piyasa bazlı). <a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md" target="_blank" rel="noopener">https://github.com/meta-llama/llama-models</a></li>
+            <li>Mistral AI, Carbone 4, &amp; ADEME. (2025). <em>Mistral Large 2 life-cycle analysis</em> (eğitim: 20.400 tCO₂e, 281.000 m³ su; 400 token: 1,14 g · 45 mL). <a href="https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai" target="_blank" rel="noopener">https://mistral.ai/</a></li>
+            <li>Patterson, D., vd. (2021). Carbon emissions and large neural network training. <a href="https://arxiv.org/abs/2104.10350" target="_blank" rel="noopener">https://arxiv.org/abs/2104.10350</a></li>
+            <li>Stanford CRFM. (2025). <em>The 2025 Foundation Model Transparency Index</em>. <a href="https://crfm.stanford.edu/fmti/" target="_blank" rel="noopener">https://crfm.stanford.edu/fmti/</a></li>
+            <li>Stanford HAI. (2025). <em>Artificial Intelligence Index Report</em>. <a href="https://hai.stanford.edu/ai-index" target="_blank" rel="noopener">https://hai.stanford.edu/ai-index</a></li>
+            <li>Turing, A. M. (1950). Computing machinery and intelligence. <em>Mind, 59</em>(236), 433–460. <a href="https://doi.org/10.1093/mind/LIX.236.433" target="_blank" rel="noopener">https://doi.org/10.1093/mind/LIX.236.433</a></li>
+            <li>Türkiye Cumhuriyet Merkez Bankası. (2026). <em>Uluslararası rezervler</em> [veri]. <a href="https://evds2.tcmb.gov.tr/" target="_blank" rel="noopener">evds2.tcmb.gov.tr</a></li>
+            <li>Vaswani, A., vd. (2017). Attention is all you need. <em>NeurIPS</em>. <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">https://arxiv.org/abs/1706.03762</a></li>
+          </ol>
+        </div>
+        <p class="src reveal center mt">Tam kaynakça ve atölye materyalleri: <a href="kaynaklar.html">Kaynaklar</a>.</p>
+      </div>
+    </section>
+
+    <!-- Son slayt (künye · site haritası · telif) ortak.js ile eklenir -->
+  </div></div>
+
+  <script src="ortak.js"></script>
+  <script src="modeller.js"></script>
+</body>
+</html>

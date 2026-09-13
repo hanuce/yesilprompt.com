@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sergi · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Her eserin altında çevre maliyetinin yer aldığı, yapay zekâ ile üretilmiş kürasyonlu bir resim galerisi." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+</head>
+<body class="gal-page">
+
+  <!-- Üst menüyü ortak.js doldurur -->
+  <nav class="nav"><div class="wrap"></div></nav>
+
+  <header class="gal-head">
+    <h1 class="gal-title">Yeşil Prompt <span class="text-grad">Resim Galerisi</span></h1>
+  </header>
+
+  <!-- ===================================================================
+       ESERLER  —  YENİ ESER EKLEMEK
+       ===================================================================
+       1) Resmi  resim/galeri/  klasörüne at.
+       2) Aşağıya bir <button class="gal-item"> bloğu kopyala-yapıştır ve
+          data-* değerlerini doldur.
+
+       data-wh       = TEK bir görselin enerjisi (Wh). Hesaplayıcı sayfası
+                       bu satırı hazır üretir; elle yazmak yerine oradan kopyala.
+       data-varyant  = tek "üret" tıklamasında kaç görsel çıktı (Midjourney 4).
+                       Seçmesen de hepsinin enerjisi harcandı. Yazmazsan 1.
+       data-deneme   = kaç kez üretmen gerekti. Yazmazsan 1.
+       data-tarih    = YIL-AY-GÜN ('2026-03-14'). Ekranda 14.03.2026 görünür.
+                       Bilmiyorsan boş bırak — uydurma.
+
+       Toplam enerji = data-wh × data-varyant × data-deneme  (⚡ rozetini
+       sergi.js hesaplar; elle çarpma).
+
+       Resim bulunamazsa kırık ikon çıkmaz; degrade yer tutucuya döner
+       (data-ph: ph-a/ph-b/ph-c/ph-d rengi, data-emoji ikonu seçer).
+       =================================================================== -->
+  <main id="galeri" class="gal-grid" aria-label="Yeşil Prompt Resim Galerisi">
+
+    <button class="gal-item" type="button"
+            data-baslik="Yenilenebilir İstanbul, 2050"
+            data-ureten="H.N.Çetinkaya"
+            data-tarih="2026-08-05"
+            data-model="GPT Image 2"
+            data-prompt="2050, güneş panelli çatılar, yeşil teraslar, izometrik illüstrasyon"
+            data-wh="0.5" data-varyant="1" data-deneme="1"
+            data-ph="ph-a" data-emoji="🌇">
+      <span class="gal-frame">
+        <img class="gal-img" src="../resim/galeri/Yenilenebilir_Istanbul2050.png"
+             alt="Yenilenebilir İstanbul, 2050" loading="lazy">
+      </span>
+      <span class="gal-cap">
+        <span class="gal-name">Yenilenebilir İstanbul, 2050</span>
+        <span class="gal-line">
+          <span class="gal-meta">
+            <span title="Üreten">👤 H.N.Çetinkaya</span>
+            <span title="Model">🧩 GPT Image 2</span>
+          </span>
+          <span class="gal-wh"></span>
+        </span>
+      </span>
+    </button>
+
+    <button class="gal-item" type="button"
+            data-baslik="Yeşil Veri Merkezi"
+            data-tarih="2026-08-05"
+            data-model="Qwen Image 2.0"
+            data-prompt="Doğayla uyumlu, su soğutmalı yeşil bir veri merkezi, gün ışığı"
+            data-wh="3.0" data-varyant="1" data-deneme="2"
+            data-ph="ph-b" data-emoji="🏞️">
+      <span class="gal-frame">
+        <img class="gal-img" src="../resim/galeri/Green_Data_Center.jpg"
+             alt="Yeşil Veri Merkezi" loading="lazy">
+      </span>
+      <span class="gal-cap">
+        <span class="gal-name">Yeşil Veri Merkezi</span>
+        <span class="gal-line">
+          <span class="gal-meta"><span title="Model">🧩 Qwen Image 2.0</span></span>
+          <span class="gal-wh"></span>
+        </span>
+      </span>
+    </button>
+
+    <button class="gal-item" type="button"
+            data-baslik="Suyu Koruyan Şehir"
+            data-tarih="2026-08-05"
+            data-model="Creen AI 2.0"
+            data-prompt="Yağmur suyu hasadı yapan gelecek şehri, dijital sanat"
+            data-wh="2.1" data-varyant="1" data-deneme="1"
+            data-ph="ph-c" data-emoji="💧">
+      <span class="gal-frame">
+        <img class="gal-img" src="../resim/galeri/Water_Protect_City.jpg"
+             alt="Suyu Koruyan Şehir" loading="lazy">
+      </span>
+      <span class="gal-cap">
+        <span class="gal-name">Suyu Koruyan Şehir</span>
+        <span class="gal-line">
+          <span class="gal-meta"><span title="Model">🧩 Creen AI 2.0</span></span>
+          <span class="gal-wh"></span>
+        </span>
+      </span>
+    </button>
+
+    <button class="gal-item" type="button"
+            data-baslik="Rüzgâr Tarlaları"
+            data-tarih="2026-08-05"
+            data-model="Seedream 4.5"
+            data-prompt="Tepelerde rüzgâr türbinleri, pastel gökyüzü, minimalist"
+            data-wh="0.5" data-varyant="1" data-deneme="1"
+            data-ph="ph-d" data-emoji="🌬️">
+      <span class="gal-frame">
+        <img class="gal-img" src="../resim/galeri/Wind_Farms.jpg"
+             alt="Rüzgâr Tarlaları" loading="lazy">
+      </span>
+      <span class="gal-cap">
+        <span class="gal-name">Rüzgâr Tarlaları</span>
+        <span class="gal-line">
+          <span class="gal-meta"><span title="Model">🧩 Seedream 4.5</span></span>
+          <span class="gal-wh"></span>
+        </span>
+      </span>
+    </button>
+
+    <button class="gal-item" type="button"
+            data-baslik="Güneşli Köy"
+            data-tarih="2026-08-05"
+            data-model="GPT Image 2"
+            data-prompt="Çatıları güneş panelli Anadolu köyü, sıcak ışık, suluboya"
+            data-wh="1.5" data-varyant="1" data-deneme="1"
+            data-ph="ph-a" data-emoji="☀️">
+      <span class="gal-frame">
+        <img class="gal-img" src="../resim/galeri/Sunny-Village.png"
+             alt="Güneşli Köy" loading="lazy">
+      </span>
+      <span class="gal-cap">
+        <span class="gal-name">Güneşli Köy</span>
+        <span class="gal-line">
+          <span class="gal-meta"><span title="Model">🧩 GPT Image 2</span></span>
+          <span class="gal-wh"></span>
+        </span>
+      </span>
+    </button>
+
+    <button class="gal-item" type="button"
+            data-baslik="Orman ve Devre"
+            data-tarih="2026-08-05"
+            data-model="Nano Banana 2"
+            data-prompt="Yaprakları devre kartına dönüşen ağaç, kavramsal, koyu zemin"
+            data-wh="6.3" data-varyant="1" data-deneme="3"
+            data-ph="ph-b" data-emoji="🌲">
+      <span class="gal-frame">
+        <img class="gal-img" src="../resim/galeri/Forest_Circuit.png"
+             alt="Orman ve Devre" loading="lazy">
+      </span>
+      <span class="gal-cap">
+        <span class="gal-name">Orman ve Devre</span>
+        <span class="gal-line">
+          <span class="gal-meta"><span title="Model">🧩 Nano Banana 2</span></span>
+          <span class="gal-wh"></span>
+        </span>
+      </span>
+    </button>
+
+  </main>
+
+  <!-- Sağ alt: atölye kapısı -->
+  <div class="fab-dock">
+    <a class="fab fab-primary" href="atolye.html" aria-label="Atölyeye gir">
+      <span class="fab-label">Atölyeye gir</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <path d="M10 16.5 14.5 12 10 7.5"/>
+        <path d="M14.5 12H3.5"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Esere tıklayınca açılan büyük görünüm — içeriğini sergi.js doldurur -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Eser detayı" hidden>
+    <button id="boxClose" class="box-btn box-close" type="button" aria-label="Kapat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+    <button id="boxPrev" class="box-btn box-prev" type="button" aria-label="Önceki eser">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14.5 5 7.5 12l7 7"/>
+      </svg>
+    </button>
+    <button id="boxNext" class="box-btn box-next" type="button" aria-label="Sonraki eser">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9.5 5l7 7-7 7"/>
+      </svg>
+    </button>
+    <div class="box-stage" id="boxMedia"></div>
+    <div class="box-bar" id="boxInfo"></div>
+  </div>
+
+  <script src="ortak.js"></script>
+  <script src="sergi.js"></script>
+</body>
+</html>

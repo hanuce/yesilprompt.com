@@ -1,0 +1,13 @@
+Islem,Tur,Arac,Enerji_Wh,Su_mL,Karbon_g,Kaynak
+Kisa sorgu,Metin,Gemini,0.24,0.26,0.03,Google 2025
+Kisa sorgu,Metin,ChatGPT,0.34,0.32,0.04,Altman 2025
+Kisa sorgu,Metin,DeepSeek-R1,0.05,0.18,0.01,HF Energy Score
+Derin dusunme sorgusu,Metin,DeepSeek-R1,7.63,28.15,0.95,HF Energy Score
+Uzun cevap,Metin,ChatGPT,1.10,4.06,0.14,Epoch AI
+Gorsel,Gorsel,FLUX.1-schnell,0.50,1.85,0.06,HF Energy Score
+Gorsel,Gorsel,SDXL,1.50,5.54,0.19,Luccioni 2024
+Gorsel,Gorsel,Buyuk difuzyon,2.90,10.70,0.36,ML.ENERGY
+Video 5 saniye,Video,CogVideoX,944.00,3483.36,118.00,MIT Tech Review 2025
+Google aramasi,Geleneksel,Yok,0.30,1.11,0.04,Site katsayisi
+LED ampul 1 saat,Geleneksel,Yok,8.00,29.52,1.00,Site katsayisi
+Telefon tam sarji,Geleneksel,Yok,12.00,44.28,1.50,Site katsayisi

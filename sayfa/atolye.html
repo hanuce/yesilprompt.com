@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giriş · Yeşil Prompt Atölyesi</title>
+  <meta name="description" content="Tartışma soruları ve yapay zekâ kullanımının yıllara göre büyümesi: kaç kişi kullanıyor, ne kadar kullanıyor?" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Üst menüyü ortak.js doldurur -->
+  <nav class="nav"><div class="wrap"></div></nav>
+
+  <!-- Eğitmen şeridi (?egitmen=1 ile açılır). Öğrenci ekranında GÖRÜNMEZ. -->
+  <script type="application/json" id="egitmenNotu">
+  {
+    "sure": 12,
+    "soyle": "Takımları SEN eşleştir (site yapmıyor). Tanıtım yapma; doğrudan tartışma sorularıyla aç. Grafik slaytında önce TAHMİN aldır: 'sizce kaç kat arttı?' — sonra kat şeridini göster.",
+    "sorular": [
+      "İki sütun da yükseliyor ama aynı hızda mı?",
+      "Kullanıcı 3 kat artarken kullanım 330 kat arttıysa, kişi başına ne değişti?",
+      "Bu büyümenin bedelini kim, nerede ödüyor?"
+    ]
+  }
+  </script>
+
+  <div class="fp-root"><div class="fp-track">
+
+    <!-- ==================================================================
+         1 · SORULAR &amp; TARTIŞMALAR — sayfa doğrudan soruyla açılır
+         ------------------------------------------------------------------
+         Önce iki terim tanımlanır (prompt · token), sonra altı soru gelir.
+         Sorular OKUNMAZ, KONUŞULUR. Cevap kutusu yoktur, cevap toplanmaz.
+
+         Bu altı sorunun cevabı atölyenin ilerleyen fazlarında tek tek açılır:
+           1 → Giriş, kullanıcı grafiği        4 → Token Lab, girdi/çıktı dökümü
+           2 → Token Lab, karşılaştırma       5 → Yeşil Prompt kuralları
+           3 → Veri, eğitim vs kullanım       6 → Token Lab, "senin elinde ne var"
+
+         Soru eklemek/çıkarmak için aşağıdaki kartlardan birini kopyala —
+         numarayı da elle güncelle. Altı soru 3'lü ızgaraya tam oturur.
+         ================================================================== -->
+    <section class="fp-section tone-hero" id="tartismalar" data-title="Sorular &amp; Tartışmalar">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">💬 Birlikte düşünelim</span>
+          <h2 class="slide-title reveal">Sorular &amp; Tartışmalar</h2>
+        </div>
+
+        <!-- İki temel terim, iki satır. Soruları okumadan önce ortak dil kurulur;
+             uzatma — terimlerin asıl anlatıldığı yer Token Lab'dir. -->
+        <p class="tanim reveal">
+          <b>✍️ Prompt:</b> LLM’den (yapay zekâ dil modeli) istenen sonucu almak için verilen yönlendirici metindir.
+        </p>
+        <p class="tanim reveal mb-lg">
+          <b>🧩 Token:</b> LLM’in promptu bölerek işleme aldığı birim — bir tür “LLM hecesi”.
+        </p>
+
+        <div class="grid cols-3 reveal">
+          <div class="card card-top q-card">
+            <span class="q-num">1</span>
+            <span class="q-txt text-soft">Dünyada yapay zekâyı haftalık aktif olarak kaç kişi kullanıyordur?</span>
+          </div>
+          <div class="card card-top q-card">
+            <span class="q-num">2</span>
+            <span class="q-txt text-soft">LLM ile üretilen bir metin / görsel / video için harcanan elektrikle bir telefonu ne kadar şarj edebiliriz?</span>
+          </div>
+          <div class="card card-top q-card">
+            <span class="q-num">3</span>
+            <span class="q-txt text-soft">LLM eğitimi mi daha çok enerji &amp; su tüketir, yoksa insanlar tarafından kullanımı mı?</span>
+          </div>
+          <div class="card card-top q-card">
+            <span class="q-num">4</span>
+            <span class="q-txt text-soft">Enerji tüketimi prompt ile mi yoksa çıktı (üretim) ile mi daha ilişkili?</span>
+          </div>
+          <div class="card card-top q-card">
+            <span class="q-num">5</span>
+            <span class="q-txt text-soft">Uzun / yüklü bir prompt mu yoksa kısa / hafif bir prompt mu az enerji &amp; su tükettirir?</span>
+          </div>
+          <div class="card card-top q-card">
+            <span class="q-num">6</span>
+            <span class="q-txt text-soft">Farklı ülkelerde iki farklı kullanıcı aynı LLM ve aynı prompt ile üretim yapsa, ikisinin de enerji &amp; su tüketimi ve karbon ayak izi aynı olur mu?</span>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        Kaydır ya da sağ-alttaki okları kullan
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         2 · KULLANIM NE KADAR BÜYÜDÜ?
+         ------------------------------------------------------------------
+         İki AYRI sütun grafiği — bilerek ayrı. Tek grafikte çift eksen
+         kullanılsaydı iki seri de tepeye çıkar ve "aynı hızda büyümüşler"
+         yanılsaması doğardı. Ayrı grafikler + altındaki KAT ŞERİDİ bunu
+         önler. Şerit kaldırılmaz.
+
+         ⚠️ SAYILARIN DÜRÜSTLÜĞÜ
+         "Kullanıcı" satırı ChatGPT'nin haftalık aktif kullanıcısıdır —
+         çünkü yayımlanmış tek düzenli seri budur. Bütün LLM'lerin toplamı
+         için kimse doğrulanabilir bir sayı yayımlamıyor; o yüzden burada
+         en büyük ürünün rakamı kullanılır ve bu ALT SINIRDIR (gerçek
+         toplam daha yüksektir). Uydurulmuş bir "toplam" yazılmaz.
+
+         Veri olmayan yıl null bırakılır — o yılın sütunu çizilmez.
+         ================================================================== -->
+    <script type="application/json" id="kullanimVerisi">
+    {
+      "kullanici": {
+        "anahtar": "kullanici",
+        "ad": "Kaç kişi kullanıyor?",
+        "kisa": "kullanıcı",
+        "altAd": "ChatGPT haftalık aktif kullanıcı",
+        "birim": "milyon kişi",
+        "yillar": ["2023", "2024", "2025", "2026"],
+        "degerler": [100, 300, 700, 1000],
+        "notlar": ["Kas 2023", "Ara 2024", "Eyl 2025", "Tem 2026"]
+      },
+      "token": {
+        "anahtar": "token",
+        "ad": "Ne kadar kullanılıyor?",
+        "kisa": "işlenen token",
+        "altAd": "Google’ın bir ayda işlediği token",
+        "birim": "trilyon token / ay",
+        "yillar": ["2023", "2024", "2025", "2026"],
+        "degerler": [null, 9.7, 480, 3200],
+        "notlar": ["veri yok", "Nis 2024", "May 2025", "May 2026"]
+      }
+    }
+    </script>
+
+    <section class="fp-section tone-a" id="kullanim" data-title="Kullanım ne kadar büyüdü?">
+      <div class="fp-inner">
+        <div class="section-head">
+          <h2 class="slide-title reveal">Yapay zekâyı <span class="text-grad">ne kadar</span> kullanıyoruz?</h2>
+        </div>
+
+        <!-- Grafikleri atolye.js çizer. Her grafiğin ALTINDA kendi APA
+             kaynağı durur — sayının nereden geldiği grafikten ayrılmaz. -->
+        <div class="grid cols-2 reveal items-stretch">
+          <div class="card card-top">
+            <div class="label" id="kullaniciBaslik"></div>
+            <p class="src m-0 mb" id="kullaniciAlt"></p>
+            <div id="kullaniciChart"></div>
+            <p class="src kaynak-satir">
+               <a href="https://openai.com/news/" target="_blank" rel="noopener">https://openai.com/news/</a>
+            </p>
+          </div>
+          <div class="card card-top">
+            <div class="label" id="tokenBaslik"></div>
+            <p class="src m-0 mb" id="tokenAlt"></p>
+            <div id="tokenChart"></div>
+            <p class="src kaynak-satir">
+              <a href="https://io.google/" target="_blank" rel="noopener">https://io.google/</a>
+            </p>
+          </div>
+        </div>
+
+
+
+        <div class="grid cols-2 reveal mt items-start">
+
+        </div>
+
+        <p class="src reveal center mt">
+          Kullanıcı sayısı, tüm yapay zekâ araçlarının toplamı değil örnek bir şirketin
+          rakamıdır. Yani gerçek toplam bundan <b>yüksektir</b>.
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- ==================================================================
+         3 · ŞİRKET DEĞERLERİ — zaman serisi
+         ------------------------------------------------------------------
+         Aynı büyümenin para tarafı. Kıyas çizgisi olarak Türkiye'nin
+         ekonomi büyüklüğü (GSYİH) aynı eksende durur — trilyon dolar
+         herkes için soyut bir sayı; yanına tanıdık bir büyüklük konunca
+         okunur hâle gelir.
+
+         anahtar = CSS renk sınıfı (era-<anahtar>), style.css 15.3.
+         degerler[i], yillar[i] ile eşleşir. null = O YIL VERİ YOK
+         (OpenAI ve Anthropic o yıllarda henüz değerlenmemişti).
+
+         ⚠️ NVIDIA halka açık: değeri borsa kapanışıdır.
+            OpenAI ve Anthropic halka açık DEĞİL: değerleri ancak yeni bir
+            yatırım turunda belli olur, o yüzden basamak basamak artar.
+            İkisi aynı şey değildir; grafik bunu gizlemez.
+         ================================================================== -->
+    <script type="application/json" id="degerVerisi">
+    {
+      "birim": "trilyon $",
+      "yillar": [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+      "seriler": [
+        { "anahtar": "nvidia",    "ad": "NVIDIA",
+          "degerler": [0.14, 0.32, 0.73, 0.36, 1.22, 3.28, 4.50, 5.14] },
+        { "anahtar": "openai",    "ad": "OpenAI",
+          "degerler": [null, null, 0.014, 0.020, 0.029, 0.157, 0.50, 0.852] },
+        { "anahtar": "anthropic", "ad": "Anthropic",
+          "degerler": [null, null, null, 0.004, 0.005, 0.018, 0.183, 0.965] },
+        { "anahtar": "trgdp",     "ad": "T.C. Ekonomi Büyüklüğü (GSYİH)",
+          "degerler": [0.76, 0.72, 0.82, 0.91, 1.12, 1.32, 1.44, 1.64] }
+      ]
+    }
+    </script>
+
+    <section class="fp-section tone-b" id="deger" data-title="Şirketlerin değeri">
+      <div class="fp-inner">
+        <div class="section-head">
+          <h2 class="slide-title reveal">Yapay zekâ şirketleri <span class="text-grad">ne kadar değerlendi?</span></h2>
+
+        </div>
+
+        <div class="card card-top reveal">
+          <div class="label">Trilyon Dolar</div>
+          <div id="degerChart"></div>
+          <p class="src kaynak-satir">
+            CompaniesMarketCap. (2026). <em>NVIDIA (NVDA) </em>.
+            <a href="https://companiesmarketcap.com/nvidia/marketcap/" target="_blank" rel="noopener">https://companiesmarketcap.com/nvidia/marketcap/</a><br>
+            Wikipedia. (2026). <em>OpenAI</em> ve <em>Anthropic</em>
+            <a href="https://en.wikipedia.org/wiki/OpenAI" target="_blank" rel="noopener">OpenAI</a> & <a href="https://www.theguardian.com/technology/2026/may/28/anthropic-ai-valuation" target="_blank" rel="noopener">Anthropic</a><br>
+            International Monetary Fund. (2026). <em>World Economic Outlook database</em>
+            <a href="https://www.worldbank.org/ext/tr/country/turkey" target="_blank" rel="noopener">https://www.worldbank.org/</a>
+          </p>
+        </div>
+
+        
+
+        <p class="src reveal center mt">
+          Değerler yaklaşıktır.
+        </p>
+
+        <div class="reveal center mt-lg">
+          <a class="btn btn-primary" href="veri-labi.html">Sırada: Veri Laboratuvarı →</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 4 · KAYNAKÇA -->
+    <section class="fp-section tone-c" id="kaynakca" data-title="Kaynakça">
+      <div class="fp-inner">
+        <div class="section-head">
+          <span class="eyebrow reveal">📚 Kaynakça</span>
+          <h2 class="slide-title reveal">Kaynakça</h2>
+        </div>
+        <div class="card reveal tool-scroll">
+        <!-- Bu sayfadaki her grafiğin kaynağı, grafiğin ALTINDA da yazar.
+             Buradaki liste onların APA biçiminde toplanmış hâlidir. -->
+          <ol class="refs">
+            <li>CompaniesMarketCap. (2026). <em>NVIDIA (NVDA) — market capitalization</em> [veri]. <a href="https://companiesmarketcap.com/nvidia/marketcap/" target="_blank" rel="noopener">https://companiesmarketcap.com/nvidia/marketcap/</a></li>
+            <li>Crunchbase. (2026). <em>Anthropic — funding rounds</em> [şirket profili]. <a href="https://www.crunchbase.com/organization/anthropic" target="_blank" rel="noopener">https://www.crunchbase.com/organization/anthropic</a></li>
+            <li>Crunchbase. (2026). <em>OpenAI — funding rounds</em> [şirket profili]. <a href="https://www.crunchbase.com/organization/openai" target="_blank" rel="noopener">https://www.crunchbase.com/organization/openai</a></li>
+            <li>Google. (2024–2026). <em>Google I/O açılış konuşmaları</em> [etkinlik sunumu]. <a href="https://io.google/" target="_blank" rel="noopener">https://io.google/</a></li>
+            <li>International Monetary Fund. (2026). <em>World Economic Outlook database</em> [veri kümesi]. <a href="https://www.imf.org/en/Publications/SPROLLs/world-economic-outlook-databases" target="_blank" rel="noopener">https://www.imf.org/</a></li>
+            <li>OpenAI. (2023–2026). <em>ChatGPT haftalık aktif kullanıcı sayısı duyuruları</em> [şirket açıklamaları]. <a href="https://openai.com/news/" target="_blank" rel="noopener">https://openai.com/news/</a></li>
+            <li>Stanford HAI. (2025). <em>Artificial Intelligence Index Report</em>. <a href="https://hai.stanford.edu/ai-index" target="_blank" rel="noopener">https://hai.stanford.edu/ai-index</a></li>
+          </ol>
+        </div>
+        <p class="src reveal center mt">Tam kaynakça ve atölye materyalleri: <a href="kaynaklar.html">Kaynaklar</a>.</p>
+      </div>
+    </section>
+
+    <!-- Son slayt (künye · site haritası · telif) ortak.js ile eklenir -->
+
+  </div></div>
+
+  <script src="ortak.js"></script>
+  <script src="atolye.js"></script>
+</body>
+</html>
